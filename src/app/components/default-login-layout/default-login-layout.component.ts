@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { trigger, transition, style, animate } from '@angular/animations';
 
 
 @Component({
