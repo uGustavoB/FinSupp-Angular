@@ -7,11 +7,11 @@
         </div>
       </div>
       <h1 class="text-3xl font-bold text-foreground">FinSupp</h1>
-      <p class="text-muted-foreground mt-2">Your complete financial management solution</p>
+      <p class="text-muted-foreground mt-2">Sua solução completa de gestão financeira</p>
     </div>
-    <div class="grid md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
-      <div class="hidden md:flex flex-col space-y-6 p-6 bg-card rounded-xl shadow-sm border">
-        <h2 class="text-2xl font-semibold text-card-foreground">Manage your finances with ease</h2>
+    <div class="grid md:grid-cols-2 gap-4 items-center max-w-5xl mx-auto">
+      <div class="hidden md:flex flex-col space-y-3 p-6 bg-card rounded-xl shadow-sm border">
+        <h2 class="text-2xl font-semibold text-card-foreground">Controle suas despesas com facilidade</h2>
 
         <div *ngFor="let benefit of benefits; let i = index" class="flex items-start gap-3">
           <div class="rounded-full bg-primary/10 p-1.5 mt-0.5">
@@ -24,7 +24,114 @@
         </div>
 
         <img alt="App Dashboard Preview" loading="lazy" decoding="async" data-nimg="fill" class="" src="/assets/svg/undraw_pay-online_806n.svg" style="height: 200px; width: 100%; inset: 0px; color: transparent;">
-      </div>
+      </div><!-- Fim da tela de descrições -->
+
+      <div class="w-full max-w-md mx-auto">
+        <div class="bg-card rounded-xl shadow-sm border overflow-hidden">
+          <div class="w-full">
+            <div class="px-4 pt-4">
+              <div class="items-center justify-center rounded-md bg-muted p-1 text-muted-foreground grid w-full grid-cols-2">
+                <button (click)="activeTab = 'login'" [attr.data-state]="activeTab === 'login' ? 'active' : null" class="inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-md text-sm" data-state="active">
+                  Entre
+                </button>
+                <button (click)="activeTab = 'register'" [attr.data-state]="activeTab === 'register' ? 'active' : null" class="inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-md text-sm">
+                  Cadastre-se
+                </button>
+              </div><!-- Fim do botão de login e cadastro -->
+            </div>
+            <div class="p-6">
+              <div class="ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 mt-0 space-y-4">
+                <div class="text-center mb-2">
+                  <h2 class="text-xl font-semibold">
+                  {{ activeTab === 'login' ? 'Bem-vindo de volta' : 'Criar nova conta' }}
+                  </h2>
+                  <p class="text-sm text-muted-foreground">
+                    {{ activeTab === 'login' ? 'Entre para acessar sua conta' : 'Preencha os campos abaixo' }}
+                  </p>
+                </div>
+              </div><!-- Fim do título de boas-vindas -->
+
+              <form action="POST" class="space-y-4" *ngIf="activeTab === 'login'">
+                <div class="space-y-2">
+                  <label for="login-email" class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium">Email:</label>
+                  <div class="relative">
+                    <mat-icon fontSet="material-symbols-rounded" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      mail
+                    </mat-icon>
+                    <input type="email" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10" id="login-email" placeholder="Digite seu email" required>
+                  </div>
+                </div><!-- Fim do campo de email -->
+
+                <div class="space-y-2">
+                  <label for="login-password" class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium">Senha:</label>
+                  <div class="relative">
+                    <mat-icon fontSet="material-symbols-rounded" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      lock
+                    </mat-icon>
+                    <input type="password" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10" id="login-password" placeholder="Digite sua senha" required>
+                  </div>
+                </div><!-- Fim do campo de senha -->
+
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 w-full h-11">
+                  Entrar
+                  <mat-icon fontSet="material-symbols-rounded" class="text-primary-foreground">
+                    arrow_forward
+                  </mat-icon>
+                </button>
+
+                <div class="text-center text-sm text-muted-foreground pt-2">
+                  Não tem uma conta?
+                  <button type="button" (click)="activeTab = 'register'" class="text-primary hover:underline font-medium">Crie uma</button>
+                </div>
+              </form><!-- Fim do formulário de login -->
+
+              <form action="POST" class="space-y-4" *ngIf="activeTab === 'register'">
+                <div class="space-y-2">
+                  <label for="register-email" class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium">Email:</label>
+                  <div class="relative">
+                    <mat-icon fontSet="material-symbols-rounded" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      person
+                    </mat-icon>
+                    <input type="text" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10" id="register-name" placeholder="Digite seu nome" required>
+                  </div>
+                </div><!-- Fim do campo de nome -->
+                <div class="space-y-2">
+                  <label for="register-email" class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium">Email:</label>
+                  <div class="relative">
+                    <mat-icon fontSet="material-symbols-rounded" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      mail
+                    </mat-icon>
+                    <input type="email" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10" id="register-email" placeholder="Digite seu email" required>
+                  </div>
+                </div><!-- Fim do campo de email -->
+
+                <div class="space-y-2">
+                  <label for="register-password" class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium">Senha:</label>
+                  <div class="relative">
+                    <mat-icon fontSet="material-symbols-rounded" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      lock
+                    </mat-icon>
+                    <input type="password" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10" id="register-password" placeholder="Digite sua senha" required>
+                  </div>
+                </div><!-- Fim do campo de senha -->
+
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+                disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 w-full h-11 mt-2">
+                  Criar conta
+                  <mat-icon fontSet="material-symbols-rounded" class="text-primary-foreground">
+                    arrow_forward
+                  </mat-icon>
+                </button>
+
+                <div class="text-center text-sm text-muted-foreground pt-2">
+                  Já tem uma conta?
+                  <button (click)="activeTab = 'login'" type="button" class="text-primary hover:underline font-medium">Entre</button>
+                </div>
+              </form><!-- Fim do formulário de cadastro -->
+            </div>
+          </div>
+        </div>
+      </div><!-- Fim do formulário de autenticação -->
     </div>
   </div>
 </main>

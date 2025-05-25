@@ -1,13 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { trigger, transition, style, animate } from '@angular/animations';
+
 
 @Component({
   selector: 'app-default-login-layout',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatFormFieldModule
+  ],
   templateUrl: './default-login-layout.component.html',
   styleUrl: './default-login-layout.component.css',
 })
 export class DefaultLoginLayoutComponent {
+  activeTab: 'login' | 'register' = 'login';
+
   benefits = [
     {
       title: 'Rastreie suas despesas',
@@ -26,4 +37,8 @@ export class DefaultLoginLayoutComponent {
       description: 'Fique de olho em suas despesas recorrentes.',
     }
   ];
+
+  switchForm(activeTab: 'login' | 'register') {
+    this.activeTab = activeTab;
+  }
 }
