@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "FinSupp-Angular1": {
+    "FinSupp-Angular": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/fin-supp-angular1",
+            "outputPath": "dist/fin-supp-angular",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -21,6 +21,7 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
@@ -59,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "FinSupp-Angular1:build:production"
+              "buildTarget": "FinSupp-:build:production"
             },
             "development": {
-              "buildTarget": "FinSupp-Angular1:build:development"
+              "buildTarget": "FinSupp-Angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -92,5 +93,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "dc1fda21-2dd3-4062-ad85-9822a4eb47ed"
   }
 }

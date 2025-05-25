@@ -1,0 +1,30 @@
+<main class="min-h-screen bg-gradient-to-b from-primary/5 to-background">
+  <div class="container mx-auto px-4 py-8 md:py-16">
+    <div class="mb-8 text-center">
+      <div class="inline-flex items-center justify-center rounded-full bg-primary/10 p-2 mb-4">
+        <div class="rounded-full bg-primary p-2">
+          <img src="assets/svg/logo.svg" class="h-6 w-6" alt="Logo">
+        </div>
+      </div>
+      <h1 class="text-3xl font-bold text-foreground">FinSupp</h1>
+      <p class="text-muted-foreground mt-2">Your complete financial management solution</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
+      <div class="hidden md:flex flex-col space-y-6 p-6 bg-card rounded-xl shadow-sm border">
+        <h2 class="text-2xl font-semibold text-card-foreground">Manage your finances with ease</h2>
+
+        <div *ngFor="let benefit of benefits; let i = index" class="flex items-start gap-3">
+          <div class="rounded-full bg-primary/10 p-1.5 mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big h-5 w-5 text-primary"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg>
+          </div>
+          <div>
+            <h3 class="font-medium text-card-foreground">{{ benefit.title }}</h3>
+            <p class="text-sm text-muted-foreground">{{ benefit.description }}</p>
+          </div>
+        </div>
+
+        <img alt="App Dashboard Preview" loading="lazy" decoding="async" data-nimg="fill" class="" src="/assets/svg/undraw_pay-online_806n.svg" style="height: 200px; width: 100%; inset: 0px; color: transparent;">
+      </div>
+    </div>
+  </div>
+</main>
