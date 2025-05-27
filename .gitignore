@@ -1,17 +1,47 @@
 # See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# Compiled output
+### Angular ###
+## Compiled output
 /dist
 /tmp
 /out-tsc
 /bazel-out
+*.ngsummary.json
+*.ngfactory.ts
 
-# Node
+## Build
+/.angular
+/build
+
+## Cache
+.cache
+
+## Production
+.env
+.env.prod
+.env.production
+
+## Staging
+.env.stage
+.env.staging
+
+## Development
+.env.dev
+.env.development
+.env.local
+
+### Node ###
 /node_modules
-npm-debug.log
-yarn-error.log
+/.npm
+/.yarn
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
 
-# IDEs and editors
+### IDEs and editors ###
 .idea/
 .project
 .classpath
@@ -29,15 +59,53 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
-# Miscellaneous
+### Testing ###
+/coverage
+/karma-report.xml
+/test-results.xml
+/cypress/screenshots/
+/cypress/videos/
+/e2e/screenshots/
+/e2e/videos/
+
+### Miscellaneous ###
 /.angular/cache
 .sass-cache/
 /connect.lock
-/coverage
 /libpeerconnection.log
 testem.log
 /typings
+*.log
+*.seed
+*.pid
+*.pid.lock
+*.tsbuildinfo
+*.swp
+*.swo
+*.pot
 
-# System files
+### System Files ###
 .DS_Store
 Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+### OS ###
+# Windows
+[Tt]humbs.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+*~
+
+# macOS
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
