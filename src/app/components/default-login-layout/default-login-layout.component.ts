@@ -15,6 +15,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrl: './default-login-layout.component.css',
 })
 export class DefaultLoginLayoutComponent {
+  theme = localStorage.getItem("theme") || 'dark';
+
+  ngOnInit() {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'light') {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
+  }
+
   activeTab: 'login' | 'register' = 'login';
 
   benefits = [
