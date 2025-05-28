@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { MatInputModule } from '@angular/material/input';
@@ -12,6 +13,7 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
   declarations: [],
   imports: [
     MatInputModule,
+    MatMenuModule,
     MatIconModule,
     MatFormFieldModule,
     MatDialogModule,
