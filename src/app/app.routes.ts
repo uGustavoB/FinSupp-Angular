@@ -3,6 +3,7 @@ import { DefaultLoginLayoutComponent } from './components/default-login-layout/d
 import { MainLayoutComponent } from './components/core/main-layout/main-layout.component';
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
 
 export const routes: Routes = [
   {
@@ -16,6 +17,10 @@ export const routes: Routes = [
       {
         path: "categories",
         component: CategoriesComponent
+      },
+      {
+        path: "subscriptions",
+        component: SubscriptionsComponent
       }
     ]
   },

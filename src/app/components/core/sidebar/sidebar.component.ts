@@ -34,7 +34,7 @@ export class SidebarComponent {
       route: '/transactions'
     },
     {
-      name: 'Assinaturaes',
+      name: 'Assinaturas',
       icon: 'autorenew',
       route: '/subscriptions'
     },
