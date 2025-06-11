@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-subscriptions',
   imports: [
     MatIconModule,
-    CommonModule
+    CommonModule,
+    MatDialogModule
   ],
   templateUrl: './subscriptions.component.html',
   styleUrl: './subscriptions.component.css'
@@ -18,11 +19,12 @@ export class SubscriptionsComponent {
   constructor(private dialog: MatDialog) { }
 
   openDeleteModal(): void {
-    const dialogRef = this.dialog.open(DeleteModalComponent,
+    this.dialog.open(DeleteModalComponent,
       {
         data: {
-          name: "Categoria"
-        }
+          name: "assinatura"
+        },
+        backdropClass: 'blurred-backdrop'
       }
     );
   }

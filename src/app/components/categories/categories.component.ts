@@ -56,7 +56,8 @@ export class CategoriesComponent {
       {
         data: {
           name: "Categoria"
-        }
+        },
+        backdropClass: 'blurred-backdrop'
       }
     );
   }

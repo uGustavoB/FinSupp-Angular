@@ -210,6 +210,12 @@ button:focus-visible {
   }
 }
 
+@layer utilities {
+  .blurred-backdrop {
+    @apply backdrop-blur-[2px] bg-black/40;
+  }
+}
+
 /* Improve mobile tap targets */
 @media (max-width: 640px) {
   button,

@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-accounts',
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   templateUrl: './accounts.component.html',
   styleUrl: './accounts.component.css'
@@ -47,11 +48,12 @@ export class AccountsComponent {
   constructor(private dialog: MatDialog) { }
 
   openDeleteModal(): void {
-    const dialogRef = this.dialog.open(DeleteModalComponent,
+    this.dialog.open(DeleteModalComponent,
       {
         data: {
           name: "conta"
-        }
+        },
+        backdropClass: 'blurred-backdrop'
       }
     );
   }

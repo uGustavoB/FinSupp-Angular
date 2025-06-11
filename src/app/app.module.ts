@@ -6,24 +6,37 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MAT_ICON_DEFAULT_OPTIONS } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { DeleteModalComponent } from './components/util/delete-modal/delete-modal.component';
+import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
+import { CommonModule } from '@angular/common';
+import { DialogConfigModule } from './modules/dialog-config.module';
+import { AccountsComponent } from './components/accounts/accounts.component';
+import { CategoriesComponent } from './components/categories/categories.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    AppComponent,
+    DeleteModalComponent,
+    SubscriptionsComponent,
+    AccountsComponent,
+    CategoriesComponent
+  ],
   imports: [
+    CommonModule,
+    DialogConfigModule,
+    MatDialogModule,
     MatInputModule,
     MatMenuModule,
     MatIconModule,
     MatFormFieldModule,
-    MatDialogModule,
-    MatDialog,
-    MatDialogRef,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
   ],
   providers: [
-    { provide: MAT_ICON_DEFAULT_OPTIONS, useValue: { fontSet: 'material-symbols-rounded' } }
+    {
+      provide: MAT_ICON_DEFAULT_OPTIONS,
+      useValue: { fontSet: 'material-symbols-rounded' }
+    }
   ],
   bootstrap: [AppComponent]
 })
