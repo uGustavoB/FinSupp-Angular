@@ -1,0 +1,28 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment.development';
+import { Observable } from 'rxjs';
+
+export interface Account {
+  id: number;
+  description: string;
+  bank: string;
+  accountType: string;
+  balance: number;
+  closingDay: number;
+  paymentDueDay: number;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AccountsService {
+
+  private apiUrl = environment.apiUrl;
+
+  constructor(private http: HttpClient) { }
+
+  getAccounts(): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.apiUrl}/accounts`);
+  }
+}

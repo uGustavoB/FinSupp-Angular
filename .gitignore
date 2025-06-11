@@ -21,6 +21,8 @@
 .env.prod
 .env.production
 
+src/environments/*
+
 ## Staging
 .env.stage
 .env.staging
