@@ -2,12 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { LoginService } from '../../services/auth/login/login.service';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-default-login-layout',
   imports: [
     CommonModule,
+    FormsModule,
     MatIconModule,
     MatFormFieldModule
   ],
@@ -49,5 +53,35 @@ export class DefaultLoginLayoutComponent {
 
   switchForm(activeTab: 'login' | 'register') {
     this.activeTab = activeTab;
+  }
+
+  name: string = '';
+  email: string = '';
+  password: string = '';
+  confirmPassword: string = '';
+
+  constructor(private loginService: LoginService, private router: Router) { }
+
+  onSubmit(): void {
+    if (this.activeTab === 'login') {
+      if (!this.email || !this.password) {
+        alert('Please enter both email and password.');
+        return;
+      }
+
+      this.loginService.login(this.email, this.password).subscribe({
+        next: (response) => {
+          localStorage.setItem('token', response?.data?.token);
+          this.router.navigate(['/accounts']);
+        },
+        error: (error) => {
+          console.error('Login error:', error);
+        }
+      });
+    } else if (this.activeTab === 'register') {
+      // Handle registration logic here
+      console.log('Registering user:', this.email, this.password, this.confirmPassword);
+      // You can call a registration service here
+    }
   }
 }

@@ -13,6 +13,7 @@ import { DialogConfigModule } from './modules/dialog-config.module';
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface Account {
   id: number;
@@ -23,6 +24,9 @@ export class AccountsService {
   constructor(private http: HttpClient) { }
 
   getAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.apiUrl}/accounts`);
-  }
+  return this.http.get<{ dataList: Account[] }>(`${this.apiUrl}/accounts/`)
+    .pipe(
+      map(response => response.dataList)
+    );
+}
 }
