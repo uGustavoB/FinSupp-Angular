@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
-import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
+import { tap, catchError, throwError } from 'rxjs';
+import { ApiService } from '../../API/api.service';
 
 interface LoginResponse {
   message: string;
@@ -19,18 +19,21 @@ export class LoginService {
 
   private apiUrl = `${environment.apiUrl}/auth/login`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private api: ApiService) {}
 
   login(email: string, password: string) {
-    return this.http.post<LoginResponse>(`${this.apiUrl}`, { email, password }).pipe(
+    return this.api.post<LoginResponse>(this.apiUrl, { email, password }).pipe(
       tap(response => {
-        // Handle successful login response
         console.log('Login successful:', response);
-      }, error => {
-        // Handle login error
+        const token = response.data?.token;
+        if (token) {
+          localStorage.setItem('token', token);
+        }
+      }),
+      catchError(error => {
         console.error('Login failed:', error);
+        return throwError(() => error);
       })
     );
   }
 }
-

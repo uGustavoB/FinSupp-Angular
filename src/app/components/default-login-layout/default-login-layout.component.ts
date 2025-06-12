@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../services/auth/login/login.service';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-default-login-layout',
@@ -16,21 +15,16 @@ import { Router } from '@angular/router';
     MatFormFieldModule
   ],
   templateUrl: './default-login-layout.component.html',
-  styleUrl: './default-login-layout.component.css',
+  styleUrls: ['./default-login-layout.component.css']
 })
-export class DefaultLoginLayoutComponent {
+export class DefaultLoginLayoutComponent implements OnInit {
   theme = localStorage.getItem("theme") || 'dark';
-
-  ngOnInit() {
-    const stored = localStorage.getItem('theme');
-    if (stored === 'light') {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  }
-
   activeTab: 'login' | 'register' = 'login';
+
+  name: string = '';
+  email: string = '';
+  password: string = '';
+  confirmPassword: string = '';
 
   benefits = [
     {
@@ -51,16 +45,19 @@ export class DefaultLoginLayoutComponent {
     }
   ];
 
-  switchForm(activeTab: 'login' | 'register') {
-    this.activeTab = activeTab;
+  constructor(private loginService: LoginService, private router: Router) {}
+
+  ngOnInit(): void {
+    if (this.theme === 'light') {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
   }
 
-  name: string = '';
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = '';
-
-  constructor(private loginService: LoginService, private router: Router) { }
+  switchForm(tab: 'login' | 'register') {
+    this.activeTab = tab;
+  }
 
   onSubmit(): void {
     if (this.activeTab === 'login') {
@@ -71,17 +68,16 @@ export class DefaultLoginLayoutComponent {
 
       this.loginService.login(this.email, this.password).subscribe({
         next: (response) => {
-          localStorage.setItem('token', response?.data?.token);
+          console.log('Login completo:', response);
           this.router.navigate(['/accounts']);
         },
-        error: (error) => {
-          console.error('Login error:', error);
+        error: (err) => {
+          console.error('Erro no login:', err);
+          alert('Erro ao fazer login. Verifique as credenciais.');
         }
       });
     } else if (this.activeTab === 'register') {
-      // Handle registration logic here
-      console.log('Registering user:', this.email, this.password, this.confirmPassword);
-      // You can call a registration service here
+      console.log('Registrando usuário:', this.email, this.password, this.confirmPassword);
     }
   }
 }
