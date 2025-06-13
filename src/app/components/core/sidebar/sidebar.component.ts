@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -48,5 +49,12 @@ export class SidebarComponent {
       icon: 'person',
       route: '/profile'
     }
-  ]
+  ];
+
+  constructor(private Router: Router) {}
+
+  logout() {
+    localStorage.removeItem('token');
+    this.Router.navigate(['/auth']);
+  }
 }

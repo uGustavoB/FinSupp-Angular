@@ -34,7 +34,7 @@ export class ApiService {
   }
 
   get<T>(url: string, params?: HttpParams): Observable<T> {
-    return this.http.get<ApiResponse<T>>(url, { params }).pipe(
+    return this.http.get<ApiResponse<any>>(url, { params }).pipe(
       tap(response => {
         if (response.token) {
           localStorage.setItem('token', response.token);
@@ -43,10 +43,15 @@ export class ApiService {
           ? `GET: ${response.message}`
           : `GET failed: ${response.message}`);
       }),
-      map(response => response.data as T),
-      catchError(error => this.handleError(error)) // <== use aqui
+      map(response => {
+        if (response.dataList) return response.dataList as T;
+        if (response.data) return response.data as T;
+        return {} as T;
+      }),
+      catchError(error => this.handleError(error))
     );
   }
+
 
   post<T>(url: string, body: any): Observable<T> {
     return this.http.post<ApiResponse<T>>(url, body).pipe(
