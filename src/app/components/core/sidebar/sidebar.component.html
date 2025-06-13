@@ -8,10 +8,10 @@
     </div><!-- Logo and Title -->
 
     <div class="space-y-1 px-3 py-2">
-      <a *ngFor="let link of links; let i = index" href="{{ link.route }}" class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:text-primary text-muted-foreground hover:bg-muted">
+      <button (click)="redirectTo(link.route)" *ngFor="let link of links; let i = index" class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:text-primary text-muted-foreground hover:bg-muted">
         <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-{{link.icon}} h-5 w-5 ">{{link.icon}}</mat-icon>
-        <span class="flex-1">{{link.name}}</span>
-      </a>
+        <span class="flex-1 text-left">{{link.name}}</span>
+      </button>
     </div>
 
     <div class="mt-auto px-3 py-2">

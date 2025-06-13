@@ -53,6 +53,10 @@ export class SidebarComponent {
 
   constructor(private Router: Router) {}
 
+  redirectTo(route: string) {
+    this.Router.navigate([route]);
+  }
+
   logout() {
     localStorage.removeItem('token');
     this.Router.navigate(['/auth']);

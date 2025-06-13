@@ -27,7 +27,7 @@
           </div>
 
           <div class="text-sm text-muted-foreground">
-            <span>{{ subscription.interval | titlecase }} • {{ subscription.accountId }}</span>
+            <span>{{ subscription.interval | titlecase }} • {{ getAccountDescription(subscription.accountId) }}</span>
           </div>
         </div>
 
