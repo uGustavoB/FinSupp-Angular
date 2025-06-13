@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Subscription, SubscriptionsService } from '../../services/subscriptions/subscriptions.service';
 
 @Component({
   selector: 'app-subscriptions',
@@ -15,8 +16,19 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
   styleUrl: './subscriptions.component.css'
 })
 export class SubscriptionsComponent {
+  subscriptions: Subscription[] = [];
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private accountsService: SubscriptionsService,
+    private dialog: MatDialog
+  ) { }
+
+  ngOnInit(): void {
+    this.accountsService.getSubscriptions().subscribe({
+      next: (data) => this.subscriptions = data,
+      error: (err) => console.error('Erro ao buscar assinaturas', err)
+    });
+  }
 
   openDeleteModal(): void {
     this.dialog.open(DeleteModalComponent,
@@ -28,41 +40,4 @@ export class SubscriptionsComponent {
       }
     );
   }
-
-  subscriptions = [
-    {
-      "id": 67,
-      "description": "Spotify",
-      "price": 12,
-      "interval": "YEARLY",
-      "status": "ACTIVE",
-      "accountId": 100
-    },
-    {
-      "id": 133,
-      "description": "teste",
-      "price": 1,
-      "interval": "MONTHLY",
-      "status": "INACTIVE",
-      "accountId": 100
-    },
-    {
-      "id": 68,
-      "description": "Youtube Member",
-      "price": 13,
-      "interval": "SEMI_ANNUAL",
-      "status": "ACTIVE",
-      "accountId": 100
-    },
-    {
-      "id": 166,
-      "description": "Youtube Premium",
-      "price": 16.9,
-      "interval": "QUARTERLY",
-      "status": "ACTIVE",
-      "accountId": 100
-    }
-  ];
-
-
 }
