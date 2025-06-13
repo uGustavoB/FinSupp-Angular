@@ -24,9 +24,8 @@ export class AccountsService {
   constructor(private http: HttpClient) { }
 
   getAccounts(): Observable<Account[]> {
-  return this.http.get<{ dataList: Account[] }>(`${this.apiUrl}/accounts/`)
-    .pipe(
-      map(response => response.dataList)
+    return this.http.get<{ dataList: Account[] }>(`${this.apiUrl}/accounts/`).pipe(
+      map(response => response.dataList || [])
     );
-}
+  }
 }

@@ -68,7 +68,6 @@ export class DefaultLoginLayoutComponent implements OnInit {
 
       this.loginService.login(this.email, this.password).subscribe({
         next: (response) => {
-          console.log('Login completo:', response);
           this.router.navigate(['/accounts']);
         },
         error: (err) => {

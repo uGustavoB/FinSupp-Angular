@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
   message: string;
   type: string;
   email?: string;
@@ -22,7 +23,15 @@ interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class ApiService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
+
+  private handleError(error: any): Observable<never> {
+    if (error.status === 401) {
+      localStorage.removeItem('token');
+      this.router.navigate(['/auth']);
+    }
+    return throwError(() => error);
+  }
 
   get<T>(url: string, params?: HttpParams): Observable<T> {
     return this.http.get<ApiResponse<T>>(url, { params }).pipe(
@@ -34,11 +43,8 @@ export class ApiService {
           ? `GET: ${response.message}`
           : `GET failed: ${response.message}`);
       }),
-      map(response => response.data as T), // 🔧 Aqui transforma o tipo corretamente
-      catchError(error => {
-        console.error('GET error:', error);
-        return throwError(() => error);
-      })
+      map(response => response.data as T),
+      catchError(error => this.handleError(error)) // <== use aqui
     );
   }
 
@@ -53,10 +59,7 @@ export class ApiService {
           : `POST failed: ${response.message}`);
       }),
       map(response => response.data as T),
-      catchError(error => {
-        console.error('POST error:', error);
-        return throwError(() => error);
-      })
+      catchError(error => this.handleError(error))
     );
   }
 
@@ -68,10 +71,7 @@ export class ApiService {
           : `PUT failed: ${response.message}`);
       }),
       map(response => response.data as T),
-      catchError(error => {
-        console.error('PUT error:', error);
-        return throwError(() => error);
-      })
+      catchError(error => this.handleError(error))
     );
   }
 
@@ -83,10 +83,7 @@ export class ApiService {
           : `DELETE failed: ${response.message}`);
       }),
       map(response => response.data as T),
-      catchError(error => {
-        console.error('DELETE error:', error);
-        return throwError(() => error);
-      })
+      catchError(error => this.handleError(error))
     );
   }
 }

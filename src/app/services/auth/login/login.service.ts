@@ -4,12 +4,8 @@ import { tap, catchError, throwError } from 'rxjs';
 import { ApiService } from '../../API/api.service';
 
 interface LoginResponse {
-  message: string;
-  type: string;
-  data: {
-    name: string;
-    token: string;
-  };
+  name: string;
+  token: string;
 }
 
 @Injectable({
@@ -24,8 +20,7 @@ export class LoginService {
   login(email: string, password: string) {
     return this.api.post<LoginResponse>(this.apiUrl, { email, password }).pipe(
       tap(response => {
-        console.log('Login successful:', response);
-        const token = response.data?.token;
+        const token = response.token;
         if (token) {
           localStorage.setItem('token', token);
         }
