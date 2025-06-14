@@ -4,6 +4,7 @@ import { MainLayoutComponent } from './components/core/main-layout/main-layout.c
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,10 @@ export const routes: Routes = [
       {
         path: "subscriptions",
         component: SubscriptionsComponent
+      },
+      {
+        path: "profile",
+        component: ProfileComponent
       }
     ]
   },
