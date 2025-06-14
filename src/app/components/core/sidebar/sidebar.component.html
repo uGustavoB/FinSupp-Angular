@@ -1,5 +1,5 @@
-<nav class="hidden w-64 flex-shrink-0 border-r md:block">
-  <div class="flex h-screen flex-col fixed w-64 border-r">
+<nav [@sidebarAnimation]="navBarOpen ? 'open' : 'closed'" class="hidden w-64 flex-shrink-0 border-r md:block" #sidebarRef>
+  <div class="flex h-screen flex-col fixed w-64 border-r bg-background shadow-lg">
     <div class="flex items-center justify-between px-4 py-2">
       <a href="" class="flex items-center gap-2">
         <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-wallet h-6 w-6 text-primary mt-2">account_balance_wallet</mat-icon>
@@ -24,3 +24,7 @@
     </div>
   </div>
 </nav>
+
+<button #sidebarButtonRef (click)="openSidebar()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 w-10 fixed left-4 top-[10px] z-50 md:hidden bg-background shadow-sm" aria-label="Open menu">
+  <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-menu h-5 w-5 ">menu</mat-icon>
+</button>
