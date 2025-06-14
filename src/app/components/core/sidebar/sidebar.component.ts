@@ -3,6 +3,7 @@ import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { itemAnimation } from '../../animations/ItemAnimation';
 
 
 @Component({
@@ -13,17 +14,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
-  animations: [
-    trigger('sidebarAnimation', [
-      state('closed', style({
-        transform: 'translateX(-100%)',
-        opacity: 0
-      })),
-      transition('open <=> closed', [
-        animate('300ms ease-in-out')
-      ])
-    ])
-  ],
+  animations: [itemAnimation],
 })
 export class SidebarComponent {
   links = [
@@ -64,6 +55,7 @@ export class SidebarComponent {
     }
   ];
 
+  loaded = false;
   navBarOpen = false;
   screenWidth = window.innerWidth;
 
@@ -71,6 +63,9 @@ export class SidebarComponent {
   @ViewChild('sidebarButtonRef') sidebarButton!: ElementRef;
 
   ngOnInit() {
+    setTimeout(() => {
+      this.loaded = true;
+    }, 50);
     this.checkScreenSize();
   }
 

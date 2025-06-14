@@ -5,6 +5,7 @@ import { DeleteModalComponent } from '../util/delete-modal/delete-modal.componen
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Subscription, SubscriptionsService } from '../../services/subscriptions/subscriptions.service';
 import { AccountsService } from '../../services/accounts/accounts.service';
+import { itemAnimation } from '../animations/ItemAnimation';
 
 @Component({
   selector: 'app-subscriptions',
@@ -15,9 +16,11 @@ import { AccountsService } from '../../services/accounts/accounts.service';
     MatDialogModule
   ],
   templateUrl: './subscriptions.component.html',
-  styleUrl: './subscriptions.component.css'
+  styleUrl: './subscriptions.component.css',
+  animations: [itemAnimation]
 })
 export class SubscriptionsComponent {
+  loaded: boolean = false;
   subscriptions: Subscription[] = [];
   accountDescriptions = new Map<number, string>();
 
@@ -32,6 +35,7 @@ export class SubscriptionsComponent {
       next: (subs) => {
         this.subscriptions = subs;
         this.loadAccountsForSubscriptions(subs);
+        this.loaded = true;
       },
       error: (err) => console.error('Erro ao buscar assinaturas', err)
     });

@@ -9,14 +9,16 @@
       </button>
     </div><!-- Fim do cabeçalho -->
 
-    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-      <div *ngFor="let category of categories" class="rounded-lg border bg-card text-card-foreground shadow-sm">
+    <div *ngIf="loaded" @itemAnimation class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <div *ngFor="let category of categories"
+       class="rounded-lg border bg-card text-card-foreground shadow-sm mb-4">
+
         <div class="flex flex-col space-y-1.5 p-4 sm:p-6 pb-2">
           <div class="text-xl sm:text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 mb-1">
             <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-tag h-5 w-5 text-primary font-light">sell</mat-icon>
             {{ category.description }}
           </div>
-        </div><!-- Fim da descrição da categoria -->
+        </div>
 
         <div class="p-4 pt-0">
           <div class="flex flex-wrap justify-end gap-2">
@@ -30,7 +32,7 @@
               <span class="text-sm">Excluir</span>
             </button>
           </div>
-        </div><!-- Fim dos botões de ação -->
+        </div>
       </div>
     </div>
   </div>
