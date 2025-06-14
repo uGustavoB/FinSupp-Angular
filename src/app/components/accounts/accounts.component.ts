@@ -24,10 +24,17 @@ export class AccountsComponent {
   ) { }
 
   ngOnInit(): void {
+    this.accountsService.loadBanks();
+
     this.accountsService.getAccounts().subscribe({
       next: (data) => this.accounts = data,
       error: (err) => console.error('Erro ao buscar contas', err)
     });
+  }
+
+  getBankNameById(id: number): string {
+    const bank = this.accountsService.getBankNameById(id);
+    return bank ? bank : 'Banco Desconhecido';
   }
 
   openDeleteModal(): void {

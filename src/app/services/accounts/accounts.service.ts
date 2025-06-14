@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Observable, of, tap } from 'rxjs';
 import { ApiService } from '../API/api.service';
@@ -6,11 +6,16 @@ import { ApiService } from '../API/api.service';
 export interface Account {
   id: number;
   description: string;
-  bank: string;
+  bank: number;
   accountType: string;
   balance: number;
   closingDay: number;
   paymentDueDay: number;
+}
+
+export interface Bank {
+  id: number;
+  name: string;
 }
 
 @Injectable({
@@ -20,6 +25,7 @@ export class AccountsService {
 
   private apiUrl = environment.apiUrl;
   private accountCache = new Map<number, Account>();
+  private bankSignal = signal<Bank[]>([]);
 
   constructor(private api: ApiService) { }
 
@@ -41,5 +47,16 @@ export class AccountsService {
     return this.api.get<Account>(`${this.apiUrl}/accounts/${id}`).pipe(
       tap(account => this.accountCache.set(id, account))
     );
+  }
+
+  loadBanks(): void {
+    this.api.get<Bank[]>(`${this.apiUrl}/bank/`).subscribe(banks => {
+      this.bankSignal.set(banks);
+    });
+  }
+
+  getBankNameById(id: number): string {
+    const bank = this.bankSignal().find(b => b.id === id);
+    return bank ? bank.name : 'Banco Desconhecido';
   }
 }
