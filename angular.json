@@ -67,7 +67,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "FinSupp-:build:production"
+              "buildTarget": "FinSupp-Angular:build:production"
             },
             "development": {
               "buildTarget": "FinSupp-Angular:build:development"

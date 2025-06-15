@@ -21,7 +21,7 @@
         </div><!-- Fim da descrição da conta-->
 
         <div class="p-4 sm:px-6 sm:pb-6 pt-0 space-y-2">
-          <div class="text-xl sm:text-2xl font-bold">R$ {{ account.balance | number:'1.2-3' }}</div>
+          <div class="text-xl sm:text-2xl font-bold">{{ account.balance | currency:'BRL':'symbol':'1.2-2' }}</div>
           <p class="text-sm text-muted-foreground">{{ account.accountType }}</p>
           <p class="text-sm text-muted-foreground">
             Dia de fechamento: {{ account.closingDay }}, pagamento até: {{ account.paymentDueDay }}

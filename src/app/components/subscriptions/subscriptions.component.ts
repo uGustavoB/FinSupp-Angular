@@ -54,6 +54,7 @@ export class SubscriptionsComponent {
   }
 
   getAccountDescription(accountId: number): string {
+    console.log(this.accountDescriptions.get(accountId));
     return this.accountDescriptions.get(accountId) || 'Carregando...';
   }
 
