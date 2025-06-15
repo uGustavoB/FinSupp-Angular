@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
 import { CategoriesService, Category } from '../../services/categories/categories.service';
 import { trigger, style, animate, transition, query, stagger } from '@angular/animations';
-import { itemAnimation } from '../animations/ItemAnimation';
+import { itemAnimation } from '../../animations/ItemAnimation';
 
 @Component({
   selector: 'app-categories',

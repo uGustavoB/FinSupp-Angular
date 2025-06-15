@@ -5,7 +5,7 @@ import { DeleteModalComponent } from '../util/delete-modal/delete-modal.componen
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Subscription, SubscriptionsService } from '../../services/subscriptions/subscriptions.service';
 import { AccountsService } from '../../services/accounts/accounts.service';
-import { itemAnimation } from '../animations/ItemAnimation';
+import { itemAnimation } from '../../animations/ItemAnimation';
 
 @Component({
   selector: 'app-subscriptions',

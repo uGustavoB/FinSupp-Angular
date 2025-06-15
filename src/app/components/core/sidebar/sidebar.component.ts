@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { itemAnimation } from '../../animations/ItemAnimation';
+import { itemAnimation } from '../../../animations/ItemAnimation';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
 @Component({
@@ -14,7 +14,17 @@ import { itemAnimation } from '../../animations/ItemAnimation';
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
-  animations: [itemAnimation],
+  animations: [itemAnimation,
+    trigger('sidebarAnimation', [
+      state('closed', style({
+        transform: 'translateX(-100%)',
+        opacity: 0
+      })),
+      transition('open <=> closed', [
+        animate('300ms ease-in-out')
+      ]),
+    ])
+  ],
 })
 export class SidebarComponent {
   links = [

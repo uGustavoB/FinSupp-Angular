@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Account, AccountsService } from '../../services/accounts/accounts.service';
-import { itemAnimation } from '../animations/ItemAnimation';
+import { itemAnimation } from '../../animations/ItemAnimation';
 
 @Component({
   selector: 'app-accounts',
