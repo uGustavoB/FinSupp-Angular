@@ -4,6 +4,9 @@ module.exports = {
   content: [
     './src/**/*.{html,ts}'
   ],
+  safelist: [
+    'blurred-backdrop'
+  ],
   theme: {
     extend: {
       colors: {
@@ -79,5 +82,8 @@ module.exports = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate')]
+  plugins: [
+    require('tailwindcss-animate'),
+    require('tailwindcss-filters')
+  ]
 };

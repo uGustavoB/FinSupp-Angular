@@ -1,48 +1,45 @@
-<main class="flex-1 overflow-y-auto p-4 pt-16 md:pt-4 md:p-6">
+<main class="flex-1 overflow-y-auto p-4 md:p-6">
   <div class="space-y-6">
-    <div class="flex items-center justify-between">
-      <h1 class="text-3xl font-bold">Contas</h1>
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <h1 class="text-2xl sm:text-3xl font-bold">Contas</h1>
 
-      <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-        <mat-icon class="">add</mat-icon>
-        <span>Adicionar Conta</span>
+      <button class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+        <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-plus mr-2 h-4 w-4">add</mat-icon>
+        <span>Adicionar conta</span>
       </button>
-    </div><!-- descrição e botões iniciais -->
+    </div><!-- Fim do header -->
 
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <div class="rounded-lg border bg-card text-card-foreground shadow-sm" *ngFor="let account of accounts; let i = index">
-        <div class="flex flex-col space-y-1.5 p-6">
-          <div class="text-2xl font-semibold leading-none tracking-tight">
+    <div *ngIf="loaded" @itemAnimation class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <div *ngFor="let account of accounts; let i = index" class="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-4 sm:px-6">
+          <div class="text-xl sm:text-2xl font-semibold leading-none tracking-tight">
             {{ account.description }}
           </div>
-
           <div class="text-sm text-muted-foreground">
-            {{ account.bank }}
+            {{ getBankNameById(account.bank) }}
           </div>
-        </div>
+        </div><!-- Fim da descrição da conta-->
 
-        <div class="p-6 pt-0">
-          <div class="space-y-2">
-            <div class="text-2xl font-bold">R$ {{ account.balance }}</div>
+        <div class="p-4 sm:px-6 sm:pb-6 pt-0 space-y-2">
+          <div class="text-xl sm:text-2xl font-bold">R$ {{ account.balance | number:'1.2-3' }}</div>
+          <p class="text-sm text-muted-foreground">{{ account.accountType }}</p>
+          <p class="text-sm text-muted-foreground">
+            Dia de fechamento: {{ account.closingDay }}, pagamento até: {{ account.paymentDueDay }}
+          </p>
+        </div><!-- Fim do saldo e detalhes da conta -->
 
-            <p class="text-sm text-muted-foreground">{{ account.accountType }}</p>
-
-            <p class="text-sm text-muted-foreground">Dia de fechamento: {{ account.closingDay }}, pagamento até: {{ account.paymentDueDay }}</p>
-          </div>
-        </div>
-
-        <div class="items-center p-6 pt-0 flex justify-between">
-          <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+        <div class="flex flex-wrap justify-between gap-2 items-center p-4 sm:px-6 sm:pb-6 pt-0">
+          <button class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
             <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-pencil mr-2 h-4 w-4 font-light">ink_pen</mat-icon>
             <span class="text-sm">Editar</span>
           </button>
 
-          <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 rounded-md px-3">
+          <button (click)="openDeleteModal()" class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 rounded-md px-3">
             <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-trash mr-2 h-4 w-4 font-light">delete</mat-icon>
             <span class="text-sm">Excluir</span>
-
           </button>
-        </div>
+        </div><!-- Fim das ações -->
+
       </div>
     </div>
   </div>

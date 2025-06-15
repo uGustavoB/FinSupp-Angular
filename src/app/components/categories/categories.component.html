@@ -1,0 +1,39 @@
+<main class="flex-1 overflow-y-auto p-4 md:p-6">
+  <div class="space-y-6">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <h1 class="text-2xl sm:text-3xl font-bold">Categorias</h1>
+
+      <button class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" type="button">
+        <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-plus mr-2 h-4 w-4">add</mat-icon>
+        Adicionar categoria
+      </button>
+    </div><!-- Fim do cabeçalho -->
+
+    <div *ngIf="loaded" @itemAnimation class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <div *ngFor="let category of categories"
+       class="rounded-lg border bg-card text-card-foreground shadow-sm mb-4">
+
+        <div class="flex flex-col space-y-1.5 p-4 sm:p-6 pb-2">
+          <div class="text-xl sm:text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 mb-1">
+            <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-tag h-5 w-5 text-primary font-light">sell</mat-icon>
+            {{ category.description }}
+          </div>
+        </div>
+
+        <div class="p-4 pt-0">
+          <div class="flex flex-wrap justify-end gap-2">
+            <button class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+              <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-pencil mr-2 h-4 w-4 font-light">ink_pen</mat-icon>
+              <span class="text-sm">Editar</span>
+            </button>
+
+            <button (click)="openDeleteModal()" class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 rounded-md px-3">
+              <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-trash mr-2 h-4 w-4 font-light">delete</mat-icon>
+              <span class="text-sm">Excluir</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
