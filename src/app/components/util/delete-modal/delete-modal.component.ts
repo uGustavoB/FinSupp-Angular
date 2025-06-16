@@ -1,27 +1,34 @@
-import { Component, inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-delete-modal',
   imports: [
-    MatDialogModule,
     MatIconModule
   ],
   templateUrl: './delete-modal.component.html',
-  styleUrl: './delete-modal.component.css'
+  styleUrl: './delete-modal.component.css',
+  animations: [
+    trigger('fadeSlide', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('200ms ease-in', style({ opacity: 1 })),
+      ])
+    ])
+  ]
 })
 export class DeleteModalComponent {
-  constructor(public dialogRef: MatDialogRef<DeleteModalComponent>,) {}
+  @Input() title: string = '';
 
-  data = inject(MAT_DIALOG_DATA);
+  @Output() confirm = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 
-  close(): void {
-    this.dialogRef.close(false);
+  onConfirm(): void {
+    this.confirm.emit();
   }
 
-  confirm(): void {
-    // Gustavo - Futuramente implementar a lógica de exclusão aqui
-    this.dialogRef.close(true);
+  onCancel(): void {
+    this.cancel.emit();
   }
 }

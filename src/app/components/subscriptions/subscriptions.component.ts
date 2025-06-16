@@ -13,7 +13,8 @@ import { itemAnimation } from '../../animations/ItemAnimation';
   imports: [
     MatIconModule,
     CommonModule,
-    MatDialogModule
+    MatDialogModule,
+    DeleteModalComponent
   ],
   templateUrl: './subscriptions.component.html',
   styleUrl: './subscriptions.component.css',
@@ -21,6 +22,7 @@ import { itemAnimation } from '../../animations/ItemAnimation';
 })
 export class SubscriptionsComponent {
   loaded: boolean = false;
+  showDeleteModal: boolean = false;
   subscriptions: Subscription[] = [];
   accountDescriptions = new Map<number, string>();
 
@@ -53,15 +55,22 @@ export class SubscriptionsComponent {
     });
   }
 
-  getAccountDescription(accountId: number): string {
-    console.log(this.accountDescriptions.get(accountId));
+  getAccountDescription(accountId: number): string {;
     return this.accountDescriptions.get(accountId) || 'Carregando...';
   }
 
   openDeleteModal(): void {
-    this.dialog.open(DeleteModalComponent, {
-      data: { name: "assinatura" },
-      backdropClass: 'blurred-backdrop'
-    });
+    this.showDeleteModal = true;
+  }
+
+  handleConfirm() {
+    console.log('Usuário confirmou a exclusão');
+    this.showDeleteModal = false;
+
+  }
+
+  handleCancel() {
+    console.log('Usuário cancelou');
+    this.showDeleteModal = false;
   }
 }

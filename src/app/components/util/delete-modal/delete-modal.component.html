@@ -1,25 +1,26 @@
-<!-- delete-modal.component.html -->
-<div class="grid w-full max-w-md sm:max-w-lg gap-4 border bg-background p-6 rounded-md sm:p-6 shadow-lg sm:rounded-lg">
+<div [@fadeSlide] (click)="onCancel()" class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm"></div>
+
+<div [@fadeSlide] class="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg">
   <div class="flex flex-col space-y-3 text-center sm:text-left">
     <h2 class="text-lg font-semibold leading-none tracking-tight">
-      Deletar {{ data.name.toLowerCase() }}
+      Deletar {{ title }}
     </h2>
     <p class="text-sm text-muted-foreground">
-      Você tem certeza que deseja deletar esta {{ data.name.toLowerCase() }}? Esta ação não pode ser revertida.
+      Você tem certeza que deseja deletar esta {{ title.toLowerCase() }}? Esta ação não pode ser revertida.
     </p>
   </div>
 
   <div class="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:gap-2">
-    <button (click)="close()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+    <button (click)="onCancel()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
       Cancelar
     </button>
 
-    <button (click)="confirm()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2">
+    <button (click)="onConfirm()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-10 px-4 py-2">
       Deletar
     </button>
   </div>
 
-  <button (click)="close()" type="button" aria-label="Fechar diálogo"
+  <button (click)="onCancel()" type="button" aria-label="Fechar diálogo"
     class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

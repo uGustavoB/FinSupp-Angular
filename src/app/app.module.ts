@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localePt);
 
@@ -29,6 +30,7 @@ registerLocaleData(localePt);
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     DialogConfigModule,
     MatDialogModule,

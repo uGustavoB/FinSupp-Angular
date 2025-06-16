@@ -39,7 +39,6 @@ export class AccountsService {
 
   getAccountById(id: number): Observable<Account> {
     const cached = this.accountCache.get(id);
-    console.log(cached);
     if (cached) {
       return of(cached);
     }

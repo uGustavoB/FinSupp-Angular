@@ -36,7 +36,7 @@
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <span class="text-sm text-muted-foreground">Preço:</span>
-              <span class="font-medium">{{ subscription.price |currency:'BRL':'symbol':'1.2-2' }}</span>
+              <span class="font-medium">{{ subscription.price | currency:'BRL':'symbol':'1.2-2' }}</span>
             </div>
 
             <div class="flex items-center justify-between">
@@ -63,3 +63,10 @@
     </div>
   </div>
 </main>
+
+<app-delete-modal
+  *ngIf="showDeleteModal"
+  [title]="'Assinatura'"
+  (cancel)="handleCancel()"
+  (confirm)="handleConfirm()">
+</app-delete-modal>
