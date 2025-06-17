@@ -25,6 +25,7 @@ export class AccountsService {
 
   private apiUrl = environment.apiUrl;
   private accountCache = new Map<number, Account>();
+  private bankCache = new Map<number, Bank>();
   private bankSignal = signal<Bank[]>([]);
 
   constructor(private api: ApiService) { }
@@ -51,7 +52,12 @@ export class AccountsService {
   loadBanks(): void {
     this.api.get<Bank[]>(`${this.apiUrl}/bank/`).subscribe(banks => {
       this.bankSignal.set(banks);
+      banks.forEach(bank => this.bankCache.set(bank.id, bank));
     });
+  }
+
+  getBanks(): Bank[] {
+    return this.bankSignal();
   }
 
   getBankNameById(id: number): string {

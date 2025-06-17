@@ -59,6 +59,7 @@ export class SubscriptionsComponent {
     return this.accountDescriptions.get(accountId) || 'Carregando...';
   }
 
+  // Lidar com a exclusão de assinatura
   openDeleteModal(): void {
     this.showDeleteModal = true;
   }

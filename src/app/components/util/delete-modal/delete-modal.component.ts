@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { fadeSlide } from '../../../animations/FadeSlide';
 
 @Component({
   selector: 'app-delete-modal',
@@ -9,14 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   templateUrl: './delete-modal.component.html',
   styleUrl: './delete-modal.component.css',
-  animations: [
-    trigger('fadeSlide', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('200ms ease-in', style({ opacity: 1 })),
-      ])
-    ])
-  ]
+  animations: [fadeSlide]
 })
 export class DeleteModalComponent {
   @Input() title: string = '';

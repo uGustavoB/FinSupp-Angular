@@ -1,9 +1,9 @@
-<main class="flex-1 overflow-y-auto p-4 md:p-6">
+  <main class="flex-1 overflow-y-auto p-4 md:p-6">
   <div class="space-y-6">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <h1 class="text-2xl sm:text-3xl font-bold">Contas</h1>
 
-      <button class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+      <button (click)="openCreateAccountModal()" class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
         <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-plus mr-2 h-4 w-4">add</mat-icon>
         <span>Adicionar conta</span>
       </button>
@@ -34,7 +34,7 @@
             <span class="text-sm">Editar</span>
           </button>
 
-          <button (click)="openDeleteModal()" class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 rounded-md px-3">
+          <button (click)="openDeleteAccountModal()" class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 rounded-md px-3">
             <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-trash mr-2 h-4 w-4 font-light">delete</mat-icon>
             <span class="text-sm">Excluir</span>
           </button>
@@ -44,3 +44,19 @@
     </div>
   </div>
 </main>
+
+<app-delete-modal
+  *ngIf="showDeleteModal"
+  [title]="'Conta'"
+  (cancel)="handleDeleteAccountCancel()"
+  (confirm)="handleDeleteAccountConfirm()">
+</app-delete-modal>
+
+<app-create-account-modal
+  *ngIf="showCreateAccountModal"
+  (cancel)="handleCreateAccountCancel()"
+  (confirm)="handleCreateAccountConfirm()"
+  [banks]="banks"
+  [accountTypes]="accountTypes"
+>
+</app-create-account-modal>
