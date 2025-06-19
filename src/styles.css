@@ -230,3 +230,20 @@ button:focus-visible {
     @apply mobile-input-text-size;
   }
 }
+
+.toast-container div.ngx-toastr {
+  box-shadow: none;
+}
+
+.toast-container .toast-success {
+  background-color: oklch(69.6% 0.17 162.48)
+}
+.toast-container .toast-error {
+  background-color: hsl(var(--destructive));
+}
+.toast-container .toast-info {
+  background-color: oklch(62.3% 0.214 259.815);
+}
+.toast-container .toast-warning {
+  background-color: oklch(79.5% 0.184 86.047);
+}

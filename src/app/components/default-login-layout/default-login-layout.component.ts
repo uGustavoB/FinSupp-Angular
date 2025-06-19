@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginService } from '../../services/auth/login/login.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-default-login-layout',
@@ -45,7 +46,7 @@ export class DefaultLoginLayoutComponent implements OnInit {
     }
   ];
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     if (this.theme === 'light') {
@@ -62,17 +63,18 @@ export class DefaultLoginLayoutComponent implements OnInit {
   onSubmit(): void {
     if (this.activeTab === 'login') {
       if (!this.email || !this.password) {
-        alert('Please enter both email and password.');
+        this.toastr.warning('Por favor, preencha todos os campos de login.');
         return;
       }
 
       this.loginService.login(this.email, this.password).subscribe({
         next: (response) => {
+          this.toastr.success('Login realizado com sucesso!');
           this.router.navigate(['/accounts']);
         },
         error: (err) => {
           console.error('Erro no login:', err);
-          alert('Erro ao fazer login. Verifique as credenciais.');
+          this.toastr.error('Erro ao fazer login. Verifique as credenciais.');
         }
       });
     } else if (this.activeTab === 'register') {

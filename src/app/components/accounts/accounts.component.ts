@@ -6,6 +6,7 @@ import { Account, AccountsService, Bank } from '../../services/accounts/accounts
 import { itemAnimation } from '../../animations/ItemAnimation';
 import { CreateAccountModalComponent } from '../inputs/create-accont-modal/create-accont-modal.component';
 import { map } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-accounts',
@@ -28,7 +29,8 @@ export class AccountsComponent {
   accountTypes: ('CHECKING' | 'SAVINGS' | 'INVESTMENT')[] = ['CHECKING'];
 
   constructor(
-    private accountsService: AccountsService
+    private accountsService: AccountsService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -69,6 +71,7 @@ export class AccountsComponent {
 
   handleDeleteAccountConfirm(): void {
     this.showDeleteModal = false;
+    this.toastr.error('Conta excluída com sucesso!');
   }
 
   handleDeleteAccountCancel(): void {

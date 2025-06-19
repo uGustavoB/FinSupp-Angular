@@ -38,7 +38,7 @@ registerLocaleData(localePt);
     MatMenuModule,
     MatIconModule,
     MatFormFieldModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     {
