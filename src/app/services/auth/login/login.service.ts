@@ -13,12 +13,12 @@ interface LoginResponse {
 })
 export class LoginService {
 
-  private apiUrl = `${environment.apiUrl}/auth/login`;
+  private apiUrl = `${environment.apiUrl}/auth`;
 
   constructor(private api: ApiService) {}
 
   login(email: string, password: string) {
-    return this.api.post<LoginResponse>(this.apiUrl, { email, password }).pipe(
+    return this.api.post<LoginResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap(response => {
         const token = response.token;
         if (token) {
@@ -27,6 +27,21 @@ export class LoginService {
       }),
       catchError(error => {
         console.error('Login failed:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  register(name: string, email: string, password: string) {
+    return this.api.post<LoginResponse>(`${this.apiUrl}/register`, { name, email, password }).pipe(
+      tap(response => {
+        const token = response.token;
+        if (token) {
+          localStorage.setItem('token', token);
+        }
+      }),
+      catchError(error => {
+        console.error('Registration failed:', error);
         return throwError(() => error);
       })
     );

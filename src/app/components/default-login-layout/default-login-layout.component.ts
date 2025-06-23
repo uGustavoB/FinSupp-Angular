@@ -25,7 +25,6 @@ export class DefaultLoginLayoutComponent implements OnInit {
   name: string = '';
   email: string = '';
   password: string = '';
-  confirmPassword: string = '';
 
   benefits = [
     {
@@ -67,18 +66,40 @@ export class DefaultLoginLayoutComponent implements OnInit {
         return;
       }
 
-      this.loginService.login(this.email, this.password).subscribe({
-        next: (response) => {
-          this.toastr.success('Login realizado com sucesso!');
-          this.router.navigate(['/accounts']);
-        },
-        error: (err) => {
-          console.error('Erro no login:', err);
-          this.toastr.error('Erro ao fazer login. Verifique as credenciais.');
-        }
-      });
+      this.login(this.email, this.password);
     } else if (this.activeTab === 'register') {
-      console.log('Registrando usuário:', this.email, this.password, this.confirmPassword);
+      if (!this.name || !this.email || !this.password) {
+        this.toastr.warning('Por favor, preencha todos os campos de registro.');
+        return;
+      }
+
+      this.register(this.name, this.email, this.password);
     }
+  }
+
+  login(email: string, password: string): void {
+    this.loginService.login(email, password).subscribe({
+      next: (response) => {
+        this.toastr.success('Login realizado com sucesso!');
+        this.router.navigate(['/accounts']);
+      },
+      error: (err) => {
+        console.error('Erro no login:', err);
+        this.toastr.error('Erro ao fazer login. Verifique as credenciais.');
+      }
+    });
+  }
+
+  register(name: string, email: string, password: string): void {
+    this.loginService.register(name, email, password).subscribe({
+      next: (response) => {
+        this.toastr.success('Registro realizado com sucesso!');
+        this.router.navigate(['/accounts']);
+      },
+      error: (err) => {
+        console.error('Erro no registro:', err);
+        this.toastr.error('Erro ao registrar. Verifique os dados.');
+      }
+    });
   }
 }

@@ -85,7 +85,7 @@
                 </div>
               </form><!-- Fim do formulário de login -->
 
-              <form action="POST" class="space-y-4" *ngIf="activeTab === 'register'">
+              <form action="POST" (ngSubmit)="onSubmit()" class="space-y-4" *ngIf="activeTab === 'register'">
                 <div class="space-y-2">
                   <label for="register-email" class="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm font-medium">Email:</label>
                   <div class="relative">
