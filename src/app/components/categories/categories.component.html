@@ -27,7 +27,7 @@
               <span class="text-sm">Editar</span>
             </button>
 
-            <button (click)="openDeleteModal()" class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 rounded-md px-3">
+            <button (click)="openDeleteCategoryModal()" class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 rounded-md px-3">
               <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-trash mr-2 h-4 w-4 font-light">delete</mat-icon>
               <span class="text-sm">Excluir</span>
             </button>
@@ -37,3 +37,11 @@
     </div>
   </div>
 </main>
+
+
+<app-delete-modal
+  *ngIf="showDeleteModal"
+  [title]="'Categoria'"
+  (cancel)="handleDeleteCategoryCancel()"
+  (confirm)="handleDeleteCategoryConfirm()">
+</app-delete-modal>

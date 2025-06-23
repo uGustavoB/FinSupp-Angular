@@ -4,14 +4,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
 import { CategoriesService, Category } from '../../services/categories/categories.service';
-import { trigger, style, animate, transition, query, stagger } from '@angular/animations';
 import { itemAnimation } from '../../animations/ItemAnimation';
 
 @Component({
   selector: 'app-categories',
   imports: [
     MatIconModule,
-    CommonModule
+    CommonModule,
+    DeleteModalComponent
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css',
@@ -19,6 +19,7 @@ import { itemAnimation } from '../../animations/ItemAnimation';
 })
 export class CategoriesComponent {
   categories: Category[] = [];
+  showDeleteModal: boolean = false;
 
   constructor(
     private categoriesService: CategoriesService,
@@ -37,14 +38,15 @@ export class CategoriesComponent {
     });
   }
 
-  openDeleteModal(): void {
-    const dialogRef = this.dialog.open(DeleteModalComponent,
-      {
-        data: {
-          name: "Categoria"
-        },
-        backdropClass: 'blurred-backdrop'
-      }
-    );
+  openDeleteCategoryModal(): void {
+    this.showDeleteModal = true;
+  }
+
+  handleDeleteCategoryConfirm(): void {
+    this.showDeleteModal = false;
+  }
+
+  handleDeleteCategoryCancel(): void {
+    this.showDeleteModal = false;
   }
 }
