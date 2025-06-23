@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
 import { Account, AccountsService, Bank } from '../../services/accounts/accounts.service';
 import { itemAnimation } from '../../animations/ItemAnimation';
-import { CreateAccountModalComponent } from '../inputs/create-accont-modal/create-accont-modal.component';
+import { CreateAccountData, CreateAccountModalComponent } from '../inputs/create-accont-modal/create-accont-modal.component';
 import { map } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
@@ -26,7 +26,9 @@ export class AccountsComponent {
   showCreateAccountModal: boolean = false;
   showDeleteModal: boolean = false;
   banks: Bank[] = [];
-  accountTypes: ('CHECKING' | 'SAVINGS' | 'INVESTMENT')[] = ['CHECKING'];
+  accountTypes: ('CHECKING' | 'SAVINGS' | 'INVESTMENT')[] = ['CHECKING', 'SAVINGS', 'INVESTMENT'];
+
+  selectedAccountIdToDelete: number | null = null;
 
   constructor(
     private accountsService: AccountsService,
@@ -56,7 +58,20 @@ export class AccountsComponent {
     this.showCreateAccountModal = true;
   }
 
-  handleCreateAccountConfirm(): void {
+  handleCreateAccountCreate(formData: CreateAccountData): void {
+    this.accountsService.createAccount(formData).pipe(
+      map(account => {
+        this.accounts.push(account);
+        this.toastr.success('Conta criada com sucesso!');
+      })
+    ).subscribe({
+      error: (err) => {
+        if (err.status === 409) {
+          this.toastr.error('Já existe uma conta com essa descrição.');
+        }
+      }
+    });
+
     this.showCreateAccountModal = false;
   }
 
@@ -65,13 +80,31 @@ export class AccountsComponent {
   }
 
   // Lidar com a exclusão de conta
-  openDeleteAccountModal(): void {
+  openDeleteAccountModal(accountId: number): void {
+    this.selectedAccountIdToDelete = accountId;
     this.showDeleteModal = true;
   }
 
   handleDeleteAccountConfirm(): void {
+    if (this.selectedAccountIdToDelete) {
+      this.accountsService.deleteAccount(this.selectedAccountIdToDelete).subscribe({
+        next: () => {
+          this.toastr.success('Conta excluída com sucesso!');
+          this.accounts = this.accounts.filter(acc => acc.id !== this.selectedAccountIdToDelete);
+        },
+        error: (err) => {
+          if (err.status === 404) {
+            this.toastr.error('Conta não encontrada.');
+          } else if (err.status === 409) {
+            this.toastr.error('Não é possível excluir uma conta que possui transações ou assinaturas associadas.');
+          }
+        }
+      });
+    } else {
+      this.toastr.error('Nenhuma conta selecionada para exclusão.');
+    }
+
     this.showDeleteModal = false;
-    this.toastr.error('Conta excluída com sucesso!');
   }
 
   handleDeleteAccountCancel(): void {

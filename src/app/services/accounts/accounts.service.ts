@@ -2,6 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, of, tap } from 'rxjs';
 import { ApiService } from '../API/api.service';
+import { CreateAccountData } from '../../components/inputs/create-accont-modal/create-accont-modal.component';
 
 export interface Account {
   id: number;
@@ -34,6 +35,21 @@ export class AccountsService {
     return this.api.get<Account[]>(`${this.apiUrl}/accounts/`).pipe(
       tap(accounts => {
         accounts.forEach(acc => this.accountCache.set(acc.id, acc));
+      })
+    );
+  }
+
+  createAccount(account: CreateAccountData): Observable<Account> {
+    return this.api.post<Account>(`${this.apiUrl}/accounts/`, account).pipe(
+      tap(newAccount => this.accountCache.set(newAccount.id, newAccount))
+    );
+  }
+
+  deleteAccount(id: number): Observable<void> {
+    return this.api.delete<void>(`${this.apiUrl}/accounts/${id}`).pipe(
+      tap(() => {
+        this.accountCache.delete(id);
+        this.bankCache.delete(id);
       })
     );
   }
