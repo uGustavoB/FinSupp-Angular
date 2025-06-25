@@ -12,7 +12,6 @@ registerLocaleData(localePt);
 bootstrapApplication(AppComponent, {
   providers: [
     ...appConfig.providers,
-    provideHttpClient(),
     provideAnimations(),
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]

@@ -36,7 +36,7 @@ export class AccountsComponent {
   ) { }
 
   ngOnInit(): void {
-    this.accountsService.loadBanks();
+    this.accountsService.getBanks();
 
     this.accountsService.getAccounts().subscribe({
       next: (data) => {

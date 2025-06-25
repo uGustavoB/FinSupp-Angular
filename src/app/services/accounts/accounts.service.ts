@@ -26,7 +26,6 @@ export class AccountsService {
 
   private apiUrl = environment.apiUrl;
   private accountCache = new Map<number, Account>();
-  private bankCache = new Map<number, Bank>();
   private bankSignal = signal<Bank[]>([]);
 
   constructor(private api: ApiService) { }
@@ -49,7 +48,6 @@ export class AccountsService {
     return this.api.delete<void>(`${this.apiUrl}/accounts/${id}`).pipe(
       tap(() => {
         this.accountCache.delete(id);
-        this.bankCache.delete(id);
       })
     );
   }
@@ -68,11 +66,13 @@ export class AccountsService {
   loadBanks(): void {
     this.api.get<Bank[]>(`${this.apiUrl}/bank/`).subscribe(banks => {
       this.bankSignal.set(banks);
-      banks.forEach(bank => this.bankCache.set(bank.id, bank));
     });
   }
 
   getBanks(): Bank[] {
+    if (this.bankSignal().length === 0) {
+      this.loadBanks();
+    }
     return this.bankSignal();
   }
 
