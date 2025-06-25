@@ -22,13 +22,13 @@
 
               <div>
                 <h3 class="font-medium">{{ transaction.description }}</h3>
-                <p class="text-sm text-muted-foreground">{{ transaction.transactionDate | date: 'shortDate' }} • {{ transaction.category }}</p>
+                <p class="text-sm text-muted-foreground">{{ transaction.transactionDate | date: "d 'de' MMM 'de' y" }} • {{ getCategoryDescription(transaction.category) }}</p>
               </div>
             </div>
 
             <div class="flex flex-col items-end">
-              <span *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" class="font-medium text-destructive">- {{ transaction.amount | currency }}</span>
-              <span *ngIf="transaction.type === 'DEPOSIT'" class="font-medium text-emerald-500">+ {{ transaction.amount | currency }}</span>
+              <span *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" class="font-medium text-destructive">- {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
+              <span *ngIf="transaction.type === 'DEPOSIT'" class="font-medium text-emerald-500">+ {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
               <span class="text-sm text-muted-foreground">Conta Principal</span>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, throwError } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 
@@ -23,12 +24,26 @@ export interface ApiResponse<T> {
   providedIn: 'root'
 })
 export class ApiService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private toast: ToastrService) {}
 
   private handleError(error: any): Observable<never> {
     if (error.status === 401) {
+      this.toast.error('Sessão expirada. Por favor, faça login novamente.', 'Erro de Autenticação');
       localStorage.removeItem('token');
       this.router.navigate(['/auth']);
+    } else if (error.status === 403) {
+      this.toast.error('Acesso negado. Você não tem permissão para realizar esta ação.', 'Erro de Permissão');
+    } else if (error.status === 409) {
+      console.log("Erro já tratado no componente");
+    } else if (error.status === 422) {
+      for (const validationError of error.error.dataList) {
+        this.toast.error(validationError.description, 'Erro de Validação');
+      }
+    } else if (error.status === 500) {
+      this.toast.error('Erro interno do servidor. Tente novamente mais tarde.', 'Erro de Servidor');
+    } else {
+      this.toast.error('Ocorreu um erro inesperado', 'Erro Inesperado');
+      console.error('Erro inesperado:', error);
     }
     return throwError(() => error);
   }

@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { User, UsersService } from '../../../services/users/users.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +16,10 @@ import { MatMenuModule } from '@angular/material/menu';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
-  user_inicial = 'A';
+
+  constructor(private userService: UsersService) { }
+
+  user_inicial = 'A ';
 
   theme = localStorage.getItem("theme") || 'dark';
 
@@ -25,6 +30,17 @@ export class NavbarComponent implements OnInit {
     } else {
       document.documentElement.classList.add('dark');
     }
+
+    const user: Observable<User> = this.userService.getUser();
+
+    user.subscribe({
+      next: (data) => {
+        this.user_inicial = data.name.charAt(0).toUpperCase() + ' ';
+      },
+      error: (err) => {
+        console.error('Error fetching user data:', err);
+      }
+    });
   }
 
   @ViewChild('menuRef') menuRef!: ElementRef;
