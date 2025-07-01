@@ -56,7 +56,7 @@ export class SidebarComponent {
     {
       name: 'Faturas',
       icon: 'receipt_long',
-      route: '/bills'
+      route: '/invoices'
     },
     {
       name: 'Perfil',

@@ -1,0 +1,87 @@
+<main class="flex-1 overflow-y-auto p-4 sm:p-6">
+  <div class="space-y-6">
+    <!-- Cabeçalho -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <h1 class="text-2xl sm:text-3xl font-bold">Faturas</h1>
+    </div>
+
+    <!-- Filtros -->
+    <div *ngIf="invoices().length > 0" class="w-full">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 rounded-md bg-muted p-2 text-muted-foreground mb-4">
+        <button (click)="setOpenTab('OPEN')" [attr.data-state]="openTab === 'OPEN' ? 'active' : 'inactive'" type="button" class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">
+          Abertas
+        </button>
+        <button (click)="setOpenTab('OVERDUE')" [attr.data-state]="openTab === 'OVERDUE' ? 'active' : 'inactive'" type="button" class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">
+          Vencidas
+        </button>
+        <button (click)="setOpenTab('PAID')" [attr.data-state]="openTab === 'PAID' ? 'active' : 'inactive'" type="button" class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">
+          Pagas
+        </button>
+        <button (click)="setOpenTab('ALL')" [attr.data-state]="openTab === 'ALL' ? 'active' : 'inactive'" type="button" class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">
+          Todas
+        </button>
+      </div>
+
+      <!-- Cards de faturas -->
+      <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        <div *ngFor="let invoice of invoices()" class="rounded-lg border bg-card text-card-foreground shadow-sm flex flex-col">
+          <div class="flex flex-col space-y-1.5 p-6 pb-2">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <span class="text-xl sm:text-2xl font-semibold leading-none tracking-tight">Fatura #{{ invoice.id }}</span>
+              <span *ngIf="invoice.status === 'PAID'" class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-green-50 text-green-700">
+                {{ invoice.status }}
+              </span>
+              <span *ngIf="invoice.status === 'OPEN'" class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-yellow-50 text-yellow-700">
+                {{ invoice.status }}
+              </span>
+              <span *ngIf="invoice.status === 'OVERDUE'" class="inline-flex
+  items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold bg-red-50 text-destructive">
+                  {{ invoice.status }}
+              </span>
+            </div>
+            <div class="text-sm text-muted-foreground">Account: Conta Principal</div>
+          </div>
+
+          <div class="p-6 pt-0">
+            <div class="space-y-2">
+              <span class="text-xl sm:text-2xl font-bold">{{ invoice.totalAmount | currency }}</span>
+
+              <div class="grid grid-cols-3 gap-2 text-sm">
+                <div>
+                  <p class="text-muted-foreground">Data de Início</p>
+                  <p>{{ invoice.startDate | date }}</p>
+                </div>
+                <div>
+                  <p class="text-muted-foreground">Data de Fim</p>
+                  <p>{{ invoice.endDate | date }}</p>
+                </div>
+                <div>
+                  <p class="text-muted-foreground">Data de Vencimento</p>
+                  <p>{{ invoice.dueDate | date }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-6 pt-0">
+            <button class="flex items-center justify-center gap-2 text-sm font-medium border rounded-md h-9 px-3 bg-background hover:bg-accent hover:text-accent-foreground">
+              <mat-icon fontSet="material-symbols-rounded" class="mr-2 h-4 w-4">visibility</mat-icon>
+              Ver Detalhes
+            </button>
+
+            <button *ngIf="invoice.status === 'OPEN' || invoice.status === 'OVERDUE'" class="flex items-center justify-center gap-2 text-sm font-medium rounded-md h-9 px-3 bg-primary text-primary-foreground hover:bg-primary/90">
+              <mat-icon fontSet="material-symbols-rounded" class="mr-2 h-4 w-4">credit_card</mat-icon>
+              Pagar Fatura
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensagem quando não há faturas -->
+    <div *ngIf="invoices().length === 0" class="text-center text-muted-foreground">
+      <p class="text-lg">Nenhuma fatura encontrada.</p>
+      <p class="text-sm">Você pode criar uma fatura na seção de cobranças.</p>
+    </div>
+  </div>
+</main>

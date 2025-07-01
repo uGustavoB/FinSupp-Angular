@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { itemAnimation } from '../../animations/ItemAnimation';
-import { Transaction, TransactionsService } from '../../services/transcations/transactions.service';
+import { Transaction, TransactionsService } from '../../services/transactions/transactions.service';
 import { CategoriesService } from '../../services/categories/categories.service';
 
 @Component({

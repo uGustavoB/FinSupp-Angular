@@ -6,6 +6,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
+import { InvoicesComponent } from './components/invoices/invoices.component';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,10 @@ export const routes: Routes = [
       {
         path: "profile",
         component: ProfileComponent
+      },
+      {
+        path: "invoices",
+        component: InvoicesComponent
       }
     ]
   },
