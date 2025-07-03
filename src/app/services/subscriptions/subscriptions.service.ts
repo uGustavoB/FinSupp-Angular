@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../API/api.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 export interface Subscription {
@@ -22,6 +22,8 @@ export class SubscriptionsService {
   constructor(private api: ApiService) { }
 
   getSubscriptions(): Observable<Subscription[]> {
-    return this.api.get<Subscription[]>(`${this.apiUrl}/subscriptions/`);
+    return this.api.get<Subscription[]>(`${this.apiUrl}/subscriptions/`).pipe(
+      map(res => res.data)
+    );
   }
 }

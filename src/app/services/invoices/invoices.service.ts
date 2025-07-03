@@ -1,7 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { ApiService } from '../API/api.service';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 
 export type InvoiceStatus = 'OPEN' | 'PAID' | 'OVERDUE' | 'CANCELLED';
 
@@ -28,13 +28,14 @@ export class InvoicesService {
 
   getInvoices(): Observable<Invoice[]> {
     return this.api.get<Invoice[]>(`${this.apiUrl}/bills/`).pipe(
-      tap(invoices => {
-        console.log('Invoices fetched:', invoices);
-        this.invoices.set(invoices);
-        invoices.forEach(inv => this.invoiceCache.set(inv.id, inv));
-      })
+      tap(response => {
+        this.invoices.set(response.data);
+        response.data.forEach(inv => this.invoiceCache.set(inv.id, inv));
+      }),
+      map(response => response.data)
     );
   }
+
 
   getInvoiceById(id: number): Observable<Invoice> {
     const cached = this.invoiceCache.get(id);
@@ -46,6 +47,7 @@ export class InvoicesService {
     }
 
     return this.api.get<Invoice>(`${this.apiUrl}/invoices/${id}`).pipe(
+      map(response => response.data),
       tap(invoice => {
         this.invoiceCache.set(id, invoice);
         const current = this.invoices();

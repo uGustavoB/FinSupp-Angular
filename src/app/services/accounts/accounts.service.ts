@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Observable, of, tap } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { ApiService } from '../API/api.service';
 import { CreateAccountData } from '../../components/inputs/create-accont-modal/create-accont-modal.component';
 
@@ -59,7 +59,8 @@ export class AccountsService {
   // Fetch
   fetchAccountById(id: number): void {
     this.api.get<Account>(`${this.apiUrl}/accounts/${id}`).subscribe({
-      next: (account) => {
+      next: response => {
+        const account = response.data;
         const exists = this.accountSignal().some(a => a.id === account.id);
         if (!exists) {
           this.accountSignal.update(accounts => [...accounts, account]);
@@ -71,6 +72,7 @@ export class AccountsService {
     });
   }
 
+
   // Reset
   resetAccounts(): void {
     this.accountSignal.set([]);
@@ -80,8 +82,8 @@ export class AccountsService {
   // LOADERS
   loadAccounts(): void {
     this.api.get<Account[]>(`${this.apiUrl}/accounts/`).subscribe({
-      next: accounts => {
-        this.accountSignal.set(accounts);
+      next: response => {
+        this.accountSignal.set(response.data);
         this.accountsLoaded.set(true);
       },
       error: err => {
@@ -92,16 +94,18 @@ export class AccountsService {
     });
   }
 
+
   loadBanks(): void {
     this.api.get<Bank[]>(`${this.apiUrl}/bank/`).subscribe({
-      next: banks => {
-        this.bankSignal.set(banks);
+      next: response => {
+        this.bankSignal.set(response.data);
       },
       error: err => {
         console.error('Erro ao carregar bancos:', err);
       }
     });
   }
+
 
   // CRUD
   createAccount(account: CreateAccountData): Observable<Account> {

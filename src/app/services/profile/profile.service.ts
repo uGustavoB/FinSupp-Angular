@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { ApiService } from '../API/api.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 export interface UserProfile {
   id: string;
@@ -19,6 +19,8 @@ export class ProfileService {
   constructor(private api: ApiService) { }
 
   getProfile(): Observable<UserProfile> {
-    return this.api.get<UserProfile>(`${this.apiUrl}/users/me/`);
+    return this.api.get<UserProfile>(`${this.apiUrl}/users/me/`).pipe(
+      map(res => res.data)
+    );
   }
 }

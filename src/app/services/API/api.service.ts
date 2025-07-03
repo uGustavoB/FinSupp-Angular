@@ -48,7 +48,7 @@ export class ApiService {
     return throwError(() => error);
   }
 
-  get<T>(url: string, params?: HttpParams): Observable<T> {
+  get<T>(url: string, params?: HttpParams): Observable<{ data: T; pagination?: ApiResponse<any>['pagination'] }> {
     return this.http.get<ApiResponse<any>>(url, { params }).pipe(
       tap(response => {
         if (response.token) {
@@ -58,11 +58,10 @@ export class ApiService {
           ? `GET: ${response.message}`
           : `GET failed: ${response.message}`);
       }),
-      map(response => {
-        if (response.dataList) return response.dataList as T;
-        if (response.data) return response.data as T;
-        return {} as T;
-      }),
+      map(response => ({
+        data: response.dataList ?? response.data,
+        pagination: response.pagination
+      })),
       catchError(error => this.handleError(error))
     );
   }

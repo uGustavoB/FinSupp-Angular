@@ -20,6 +20,7 @@ export class CategoriesService {
 
   getCategories(): Observable<Category[]> {
     return this.api.get<Category[]>(`${this.apiUrl}/categories/`).pipe(
+      map(response => response.data),
       tap(categories => {
         categories.forEach(category => this.categoryCache.set(category.id, category));
       })
@@ -35,7 +36,7 @@ export class CategoriesService {
     }
 
     return this.api.get<Category[]>(`${this.apiUrl}/categories/?id=${id}`).pipe(
-      map(categories => categories[0]) // Pega o primeiro da lista
+      map(categories => categories.data[0]) // Pega o primeiro da lista
     );
   }
 }

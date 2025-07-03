@@ -18,7 +18,12 @@ import { AccountsService } from '../../services/accounts/accounts.service';
 })
 export class TransactionsComponent implements OnInit {
   loaded: boolean = false;
+
+  currentPage: number = 0;
+  totalPages: number = 1;
+
   transactions: Transaction[] = [];
+
   categoriesDescriptions = new Map<number, string>();
   accountsDescriptions = new Map<number, string>();
 
@@ -30,11 +35,18 @@ export class TransactionsComponent implements OnInit {
 
   ngOnInit() {
     this.loadAccounts();
-    this.transactionsService.getTransactions().subscribe({
-      next: (trans) => {
-        this.transactions = trans;
+    this.loadTransactions(this.currentPage);
+  }
+
+  loadTransactions(page: number) {
+    this.loaded = false;
+    this.transactionsService.getTransactions(page).subscribe({
+      next: ({data, pagination}) => {
+        this.transactions = data;
         this.loaded = true;
-        this.loadCategoriesForTransactions(trans);
+        this.currentPage = pagination ? pagination?.currentPage : 1;
+        this.totalPages = pagination ? pagination?.totalPages : 1;
+        this.loadCategoriesForTransactions(data);
       },
       error: (err) => {
         this.loaded = true;
@@ -79,5 +91,15 @@ export class TransactionsComponent implements OnInit {
     }
 
     return account ? account : 'Carregando...';
+  }
+
+  nextPage() {
+    this.currentPage++;
+    this.loadTransactions(this.currentPage);
+  }
+
+  previousPage() {
+    this.currentPage--;
+    this.loadTransactions(this.currentPage)
   }
 }

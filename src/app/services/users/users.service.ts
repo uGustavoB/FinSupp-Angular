@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../API/api.service';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 // "id": "123e4567-e89b-12d3-a456-426614174000",
 //     "name": "João Silva",
@@ -23,6 +23,8 @@ export class UsersService {
   constructor(private api: ApiService) { }
 
   getUser(): Observable<User> {
-    return this.api.get<User>(`${this.apiUrl}/users/me/`);
+    return this.api.get<User>(`${this.apiUrl}/users/me/`).pipe(
+      map(res => res.data)
+    );
   }
 }
