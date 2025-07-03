@@ -25,50 +25,21 @@ export interface Bank {
 export class AccountsService {
 
   private apiUrl = environment.apiUrl;
-  private accountCache = new Map<number, Account>();
+
   private bankSignal = signal<Bank[]>([]);
+  private accountSignal = signal<Account[]>([]);
+  private accountsLoaded = signal(false);
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService) {}
 
-  getAccounts(): Observable<Account[]> {
-    return this.api.get<Account[]>(`${this.apiUrl}/accounts/`).pipe(
-      tap(accounts => {
-        accounts.forEach(acc => this.accountCache.set(acc.id, acc));
-      })
-    );
-  }
-
-  createAccount(account: CreateAccountData): Observable<Account> {
-    return this.api.post<Account>(`${this.apiUrl}/accounts/`, account).pipe(
-      tap(newAccount => this.accountCache.set(newAccount.id, newAccount))
-    );
-  }
-
-  deleteAccount(id: number): Observable<void> {
-    return this.api.delete<void>(`${this.apiUrl}/accounts/${id}`).pipe(
-      tap(() => {
-        this.accountCache.delete(id);
-      })
-    );
-  }
-
-  getAccountById(id: number): Observable<Account> {
-    const cached = this.accountCache.get(id);
-    if (cached) {
-      return of(cached);
+  getAccountsSignal(): Account[] {
+    if (!this.accountsLoaded()) {
+      this.loadAccounts();
     }
-
-    return this.api.get<Account>(`${this.apiUrl}/accounts/${id}`).pipe(
-      tap(account => this.accountCache.set(id, account))
-    );
+    return this.accountSignal();
   }
 
-  loadBanks(): void {
-    this.api.get<Bank[]>(`${this.apiUrl}/bank/`).subscribe(banks => {
-      this.bankSignal.set(banks);
-    });
-  }
-
+  // Getters
   getBanks(): Bank[] {
     if (this.bankSignal().length === 0) {
       this.loadBanks();
@@ -79,5 +50,83 @@ export class AccountsService {
   getBankNameById(id: number): string {
     const bank = this.bankSignal().find(b => b.id === id);
     return bank ? bank.name : 'Banco Desconhecido';
+  }
+
+  getAccountByIdSignal(id: number): Account | undefined {
+    return this.accountSignal().find(acc => acc.id === id);
+  }
+
+  // Fetch
+  fetchAccountById(id: number): void {
+    this.api.get<Account>(`${this.apiUrl}/accounts/${id}`).subscribe({
+      next: (account) => {
+        const exists = this.accountSignal().some(a => a.id === account.id);
+        if (!exists) {
+          this.accountSignal.update(accounts => [...accounts, account]);
+        }
+      },
+      error: (err) => {
+        console.error(`Erro ao buscar conta com ID ${id}`, err);
+      }
+    });
+  }
+
+  // Reset
+  resetAccounts(): void {
+    this.accountSignal.set([]);
+    this.accountsLoaded.set(false);
+  }
+
+  // LOADERS
+  loadAccounts(): void {
+    this.api.get<Account[]>(`${this.apiUrl}/accounts/`).subscribe({
+      next: accounts => {
+        this.accountSignal.set(accounts);
+        this.accountsLoaded.set(true);
+      },
+      error: err => {
+        this.accountsLoaded.set(true);
+        this.accountSignal.set([]);
+        console.error('Erro ao carregar contas:', err);
+      }
+    });
+  }
+
+  loadBanks(): void {
+    this.api.get<Bank[]>(`${this.apiUrl}/bank/`).subscribe({
+      next: banks => {
+        this.bankSignal.set(banks);
+      },
+      error: err => {
+        console.error('Erro ao carregar bancos:', err);
+      }
+    });
+  }
+
+  // CRUD
+  createAccount(account: CreateAccountData): Observable<Account> {
+    return this.api.post<Account>(`${this.apiUrl}/accounts/`, account).pipe(
+      tap(newAccount => {
+        this.accountSignal.update(accounts => [...accounts, newAccount]);
+      })
+    );
+  }
+
+  deleteAccount(id: number): Observable<void> {
+    return this.api.delete<void>(`${this.apiUrl}/accounts/${id}`).pipe(
+      tap(() => {
+        this.accountSignal.update(accounts => accounts.filter(acc => acc.id !== id));
+      })
+    );
+  }
+
+  updateAccount(account: Account): Observable<Account> {
+    return this.api.put<Account>(`${this.apiUrl}/accounts/${account.id}`, account).pipe(
+      tap(updated => {
+        this.accountSignal.update(accounts =>
+          accounts.map(acc => acc.id === updated.id ? updated : acc)
+        );
+      })
+    );
   }
 }

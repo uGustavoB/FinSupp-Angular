@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -46,18 +46,32 @@ export class SubscriptionsComponent {
   }
 
   loadAccountsForSubscriptions(subs: Subscription[]) {
+  subs.forEach(sub => {
+    const accId = sub.accountId;
+
+    const acc = this.accountsService.getAccountByIdSignal(accId);
+
+    if (acc) {
+      this.accountDescriptions.set(accId, acc.description);
+    } else {
+      this.accountsService.fetchAccountById(accId);
+
+      this.accountDescriptions.set(accId, 'Carregando...');
+    }
+  });
+
+  effect(() => {
     subs.forEach(sub => {
-      const accId = sub.accountId;
-      if (!this.accountDescriptions.has(accId)) {
-        this.accountsService.getAccountById(accId).subscribe({
-          next: (acc) => this.accountDescriptions.set(accId, acc.description),
-          error: (err) => console.warn(`Erro ao carregar conta ${accId}`, err)
-        });
+      const acc = this.accountsService.getAccountByIdSignal(sub.accountId);
+      if (acc && this.accountDescriptions.get(sub.accountId) === 'Carregando...') {
+        this.accountDescriptions.set(sub.accountId, acc.description);
       }
     });
-  }
+  });
+}
 
-  getAccountDescription(accountId: number): string {;
+
+  getAccountDescription(accountId: number): string {
     return this.accountDescriptions.get(accountId) || 'Carregando...';
   }
 
