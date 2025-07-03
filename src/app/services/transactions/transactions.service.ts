@@ -35,7 +35,7 @@ export class TransactionsService {
   constructor(private api: ApiService) {}
 
   getTransactions(page: number): Observable<{ data: Transaction[]; pagination?: TransactionPagination }> {
-    return this.api.get<Transaction[]>(`${this.apiUrl}/transactions/?page=${page}`).pipe(
+    return this.api.get<Transaction[]>(`${this.apiUrl}/transactions/?page=${page}&size=20`).pipe(
       tap(response => {
         response.data.forEach(tra => this.transactionCache.set(tra.id, tra));
       })

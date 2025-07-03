@@ -11,35 +11,72 @@
       </div>
     </div>
 
-    <div *ngIf="loaded && transactions.length > 0" @itemAnimation class="space-y-4">
-      <div *ngFor="let transaction of transactions" class="rounded-lg border bg-card text-card-foreground shadow-sm">
-        <div class="p-4">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <mat-icon *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" fontSet="material-symbols-rounded" class="lucide h-5 w-5 text-destructive">output_circle</mat-icon>
-              <mat-icon *ngIf="transaction.type === 'DEPOSIT'" fontSet="material-symbols-rounded" class="lucide h-5 w-5 text-emerald-500">input_circle</mat-icon>
+    <div *ngIf="loaded && transactions.length > 0" class="space-y-4">
+      <div class="rounded-lg border bg-card text-card-foreground shadow-2xs">
+        <div class="p-0">
+          <div class="md:block overflow-x-auto">
+            <div class="rounded-lg relative w-full overflow-auto">
+              <table class="w-full caption-bottom text-sm">
+                <thead class="bg-background">
+                  <tr class="transition-colors hover:bg-muted/50 border-b">
+                    <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground w-12"></th>
+                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Descrição</th>
+                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Categoria</th>
+                    <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground">Conta</th>
+                    <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground">Data</th>
+                    <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground">Valor</th>
+                    <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground w-12"></th>
+                  </tr>
+                </thead>
 
+                <tbody @itemAnimation>
+                  <tr @itemAnimation *ngFor="let transaction of transactions" class="border-b transition-colors data-[state=selected]:bg-muted hover:bg-muted/50">
+                    <td class="p-4 text-center">
+                      <mat-icon *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" fontSet="material-symbols-rounded" class="lucide h-7 w-7 text-destructive">output_circle</mat-icon>
+                      <mat-icon *ngIf="transaction.type === 'DEPOSIT'" fontSet="material-symbols-rounded" class="lucide h-5 w-5 text-emerald-500">input_circle</mat-icon>
+                    </td>
+                    <td class="p-4 align-middle">
+                      <div class="space-y-1">
+                        <div class="font-medium">{{ transaction.description }}</div>
+                        <div class="flex items-center gap-2 text-sm text-muted-foreground">
+                          <div *ngIf="transaction.addToBill" class="text-xs inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card h-4 w-4 mr-1"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+                            Fatura
+                          </div>
+                          <div *ngIf="transaction.installments > 1" class="text-xs inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors">
+                            {{ transaction.installments }}x
+                          </div>
+                        </div>
+                      </div>
+                    </td>
 
-              <div>
-                <h3 class="font-medium">{{ transaction.description }}</h3>
-                <p class="text-sm text-muted-foreground">{{ transaction.transactionDate | date: "d 'de' MMM 'de' y" }} • {{ getCategoryDescription(transaction.category) }}</p>
-              </div>
+                    <td class="p-4 align-middle">
+                      <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">
+                        {{ getCategoryDescription(transaction.category) }}
+                      </div>
+                    </td>
+
+                    <td class="p-4 align-middle text-center text-sm text-muted-foreground">{{ getAccountDescription(transaction.accountId) }}</td>
+
+                    <td class="p-4 align-middle text-center text-sm text-muted-foreground">{{ transaction.transactionDate | date: "d 'de' MMM 'de' y" }}</td>
+
+                    <td class="p-4 align-middle text-center">
+                      <span *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" class="font-medium text-red-600">- {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
+                      <span *ngIf="transaction.type === 'DEPOSIT'" class="text-sm text-emerald-500">+ {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
+                    </td>
+
+                    <td class="align-middle">
+                      <button type="button" class="ring-offset-background focus-visible:outline-hidden focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground rounded-md h-8 w-8 p-0">
+                        <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-dots-vertical">more_horiz</mat-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-
-            <div class="flex flex-col items-end">
-              <span *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" class="font-medium text-destructive">- {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
-              <span *ngIf="transaction.type === 'DEPOSIT'" class="font-medium text-emerald-500">+ {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
-              <span class="text-sm text-muted-foreground">{{ getAccountDescription(transaction.accountId) }}</span>
-            </div>
-          </div>
-
-          <div class="mt-4 flex justify-end gap-2">
-            <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" type="button" id="radix-«rck»" aria-haspopup="menu" aria-expanded="false" data-state="closed">
-              Ações
-              <mat-icon fontSet="material-symbols-rounded" class="lucide ml-2 h-4 w-4">keyboard_arrow_down</mat-icon>
-            </button>
           </div>
         </div>
+
       </div>
 
       <div class="flex items-center justify-center space-x-2 py-4">

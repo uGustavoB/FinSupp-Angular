@@ -6,7 +6,7 @@
     </div>
 
     <!-- Filtros -->
-    <div *ngIf="invoices().length > 0" class="w-full">
+    <div class="w-full">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 rounded-md bg-muted p-2 text-muted-foreground mb-4">
         <button (click)="setOpenTab('OPEN')" [attr.data-state]="openTab === 'OPEN' ? 'active' : 'inactive'" type="button" class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">
           Abertas
@@ -23,7 +23,7 @@
       </div>
 
       <!-- Cards de faturas -->
-      <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+      <div *ngIf="invoices().length > 0" class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         <div *ngFor="let invoice of invoices()" class="rounded-lg border bg-card text-card-foreground shadow-sm flex flex-col">
           <div class="flex flex-col space-y-1.5 p-6 pb-2">
             <div class="flex items-center justify-between gap-2 flex-wrap">
@@ -76,13 +76,13 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Mensagem quando não há faturas -->
-    <div *ngIf="invoices().length === 0" class="text-center text-muted-foreground">
-      <img src="assets/svg/Ghost.svg" alt="Fatura" class="mx-auto h-80" />
-      <p class="text-lg font-semibold">Nenhuma fatura encontrada.</p>
-      <p class="text-sm">Para criar faturas, crie transações ou assinaturas.</p>
+      <!-- Mensagem quando não há faturas -->
+      <div *ngIf="invoices().length === 0" class="text-center text-muted-foreground">
+        <img src="assets/svg/Ghost.svg" alt="Fatura" class="mx-auto h-80" />
+        <p class="text-lg font-semibold">Nenhuma fatura encontrada.</p>
+        <p class="text-sm">Para criar faturas, crie transações ou assinaturas.</p>
+      </div>
     </div>
   </div>
 </main>
