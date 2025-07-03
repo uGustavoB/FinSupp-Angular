@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
 import { CategoriesService, Category } from '../../services/categories/categories.service';
 import { itemAnimation } from '../../animations/ItemAnimation';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-categories',
@@ -23,7 +24,7 @@ export class CategoriesComponent {
 
   constructor(
     private categoriesService: CategoriesService,
-    private dialog: MatDialog
+    private toastr: ToastrService,
   ) { }
 
   loaded: boolean = false;
@@ -34,7 +35,11 @@ export class CategoriesComponent {
         this.categories = data;
         this.loaded = true;
       },
-      error: (err) => console.error('Erro ao buscar categorias', err)
+      error: (err) => {
+        this.loaded = true;
+        this.toastr.error('Erro ao buscar categorias');
+        console.error('Erro ao buscar categorias', err)
+      }
     });
   }
 

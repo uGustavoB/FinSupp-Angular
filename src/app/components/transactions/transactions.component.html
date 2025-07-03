@@ -1,4 +1,4 @@
-<main class="flex-1 overflow-y-auto p-4 md:pt-4 md:p-6">
+<main class="flex-1 overflow-y-auto p-4 md:p-6">
   <div class="space-y-6">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <h1 class="text-2xl sm:text-3xl font-bold">Transações</h1>
@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div *ngIf="loaded" @itemAnimation class="space-y-4">
+    <div *ngIf="loaded && transactions.length > 0" @itemAnimation class="space-y-4">
       <div *ngFor="let transaction of transactions" class="rounded-lg border bg-card text-card-foreground shadow-sm">
         <div class="p-4">
           <div class="flex items-center justify-between">
@@ -49,6 +49,12 @@
 
         <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" disabled="">Next</button>
       </div>
+    </div>
+
+    <div *ngIf="loaded && transactions.length === 0" class="text-center text-muted-foreground">
+      <img src="assets/svg/Social.svg" alt="No transactions" class="mx-auto h-80">
+      <h2 class="text-lg font-semibold">Nenhuma transação encontrada</h2>
+      <p class="text-sm">Parece que você ainda não registrou nenhuma transação. Comece adicionando uma!</p>
     </div>
   </div>
 </main>

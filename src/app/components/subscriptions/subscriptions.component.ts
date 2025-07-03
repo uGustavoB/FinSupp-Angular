@@ -28,8 +28,7 @@ export class SubscriptionsComponent {
 
   constructor(
     private subscriptionsService: SubscriptionsService,
-    private accountsService: AccountsService,
-    private dialog: MatDialog
+    private accountsService: AccountsService
   ) { }
 
   ngOnInit(): void {
@@ -39,7 +38,10 @@ export class SubscriptionsComponent {
         this.loadAccountsForSubscriptions(subs);
         this.loaded = true;
       },
-      error: (err) => console.error('Erro ao buscar assinaturas', err)
+      error: (err) => {
+        this.loaded = true;
+        console.error('Erro ao buscar assinaturas', err)
+      }
     });
   }
 

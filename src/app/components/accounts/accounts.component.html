@@ -9,7 +9,7 @@
       </button>
     </div><!-- Fim do header -->
 
-    <div *ngIf="loaded" @itemAnimation class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    <div *ngIf="loaded && accounts.length > 0" @itemAnimation class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
       <div *ngFor="let account of accounts; let i = index" class="rounded-lg border bg-card text-card-foreground shadow-sm">
         <div class="flex flex-col space-y-1.5 p-4 sm:px-6">
           <div class="text-xl sm:text-2xl font-semibold leading-none tracking-tight">
@@ -41,6 +41,12 @@
         </div><!-- Fim das ações -->
 
       </div>
+    </div>
+
+    <div *ngIf="loaded && accounts.length === 0" class="text-center text-muted-foreground">
+      <img src="assets/svg/Wallet.svg" alt="Conta" class="mx-auto h-80 w-80" />
+      <p class="text-lg font-semibold">Nenhuma conta encontrada.</p>
+      <p class="text-sm">Clique em "Adicionar conta" para começar a adicionar suas contas.</p>
     </div>
   </div>
 </main>

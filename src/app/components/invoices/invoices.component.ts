@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, Signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Invoice, InvoicesService } from '../../services/invoices/invoices.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-invoices',
@@ -13,14 +14,19 @@ import { Invoice, InvoicesService } from '../../services/invoices/invoices.servi
   styleUrl: './invoices.component.css'
 })
 export class InvoicesComponent implements OnInit {
-  constructor(private invoiceService: InvoicesService) {}
+  constructor(private invoiceService: InvoicesService, private toastr: ToastrService) {}
 
   invoices!: Signal<Invoice[]>;
 
   ngOnInit() {
     this.setOpenTab('OPEN');
 
-    this.invoiceService.getInvoices().subscribe();
+    this.invoiceService.getInvoices().subscribe({
+      error: (err) => {
+        this.toastr.error('Erro ao buscar faturas');
+        console.error('Erro ao buscar faturas', err);
+      }
+    });
 
     this.invoices = this.invoiceService.filteredInvoices;
   }
@@ -29,7 +35,7 @@ export class InvoicesComponent implements OnInit {
 
   setOpenTab(tab: 'OPEN' | 'PAID' | 'OVERDUE' | 'ALL') {
     this.openTab = tab;
-    
+
     this.invoiceService.setFilter(tab);
   }
 }

@@ -32,7 +32,10 @@ export class TransactionsComponent implements OnInit {
         this.loadCategoriesForTransactions(trans);
         this.loaded = true;
       },
-      error: (err) => console.error('Erro ao buscar transações', err)
+      error: (err) => {
+        this.loaded = true;
+        console.error('Erro ao buscar transações', err)
+      }
     });
   }
 

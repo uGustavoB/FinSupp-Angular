@@ -43,7 +43,11 @@ export class AccountsComponent {
         this.accounts = data;
         this.loaded = true;
       },
-      error: (err) => console.error('Erro ao buscar contas', err)
+      error: (err) => {
+        this.loaded = true;
+        this.toastr.error('Erro ao buscar contas');
+        console.error('Erro ao buscar contas', err);
+      }
     });
   }
 
