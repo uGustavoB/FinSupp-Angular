@@ -75,8 +75,9 @@ export class TransactionsComponent implements OnInit {
   loadAccounts() {
     this.accountsService.getAccountsSignal().forEach(account => {
       this.accountsDescriptions.set(account.id, account.description);
-    })
+    });
   }
+
 
   getAccountDescription(accountId: number): string {
     let account = this.accountsDescriptions.get(accountId);

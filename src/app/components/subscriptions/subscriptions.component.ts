@@ -9,7 +9,6 @@ import { itemAnimation } from '../../animations/ItemAnimation';
 
 @Component({
   selector: 'app-subscriptions',
-  standalone: true,
   imports: [
     MatIconModule,
     CommonModule,
@@ -29,7 +28,18 @@ export class SubscriptionsComponent {
   constructor(
     private subscriptionsService: SubscriptionsService,
     private accountsService: AccountsService
-  ) { }
+  ) {
+    effect(() => {
+      const accounts = this.accountsService.getAccountsSignal();
+      this.subscriptions.forEach(sub => {
+        const acc = accounts.find(a => a.id === sub.accountId);
+        if (acc) {
+          this.accountDescriptions.set(sub.accountId, acc.description);
+        }
+      });
+    });
+
+  }
 
   ngOnInit(): void {
     this.subscriptionsService.getSubscriptions().subscribe({
@@ -46,29 +56,17 @@ export class SubscriptionsComponent {
   }
 
   loadAccountsForSubscriptions(subs: Subscription[]) {
-  subs.forEach(sub => {
-    const accId = sub.accountId;
-
-    const acc = this.accountsService.getAccountByIdSignal(accId);
-
-    if (acc) {
-      this.accountDescriptions.set(accId, acc.description);
-    } else {
-      this.accountsService.fetchAccountById(accId);
-
-      this.accountDescriptions.set(accId, 'Carregando...');
-    }
-  });
-
-  effect(() => {
     subs.forEach(sub => {
-      const acc = this.accountsService.getAccountByIdSignal(sub.accountId);
-      if (acc && this.accountDescriptions.get(sub.accountId) === 'Carregando...') {
-        this.accountDescriptions.set(sub.accountId, acc.description);
+      const account = this.accountsService.getAccountByIdSignal(sub.accountId);
+
+      if (account) {
+        this.accountDescriptions.set(sub.accountId, account.description);
+      } else {
+        this.accountDescriptions.set(sub.accountId, 'Carregando...');
+        this.accountsService.fetchAccountById(sub.accountId);
       }
     });
-  });
-}
+  }
 
 
   getAccountDescription(accountId: number): string {
