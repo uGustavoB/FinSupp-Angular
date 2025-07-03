@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { ApiService } from '../API/api.service';
 import { Observable, tap } from 'rxjs';
+import { Account } from '../accounts/accounts.service';
 
 export interface Transaction {
   id: number,
@@ -23,6 +24,7 @@ export class TransactionsService {
 
   private apiUrl = environment.apiUrl;
   private transactionCache = new Map<number, Transaction>();
+  private accountSignal = signal<Account[]>([]);
 
   constructor(private api: ApiService) { }
 

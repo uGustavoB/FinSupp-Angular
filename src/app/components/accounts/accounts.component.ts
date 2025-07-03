@@ -23,6 +23,7 @@ export class AccountsComponent implements OnInit, OnDestroy{
   showCreateAccountModal = false;
   showDeleteModal = false;
   selectedAccountIdToDelete: number | null = null;
+  selectedAccountToEdit: CreateAccountData | null = null;
 
   loaded = signal(false);
   accountTypes: ('CHECKING' | 'SAVINGS' | 'INVESTMENT')[] = ['CHECKING', 'SAVINGS', 'INVESTMENT'];
@@ -55,28 +56,63 @@ export class AccountsComponent implements OnInit, OnDestroy{
   }
 
   openCreateAccountModal(): void {
+    this.selectedAccountToEdit = null;
     this.showCreateAccountModal = true;
   }
 
-  handleCreateAccountCreate(formData: CreateAccountData): void {
-    this.accountsService.createAccount(formData).subscribe({
-      next: () => {
-        this.toastr.success('Conta criada com sucesso!');
-      },
-      error: (err) => {
-        if (err.status === 409) {
-          this.toastr.error('Já existe uma conta com essa descrição.');
-        } else {
-          this.toastr.error('Erro ao criar conta.');
-        }
-      }
-    });
-
-    this.showCreateAccountModal = false;
+  openEditAccountModal(account: Account): void {
+    this.selectedAccountToEdit = {
+      id: account.id,
+      description: account.description,
+      accountType: account.accountType as 'CHECKING' | 'SAVINGS' | 'INVESTMENTS',
+      bank: account.bank,
+      balance: account.balance,
+      closingDay: account.closingDay,
+      paymentDueDay: account.paymentDueDay
+    };
+    this.showCreateAccountModal = true;
   }
 
-  handleCreateAccountCancel(): void {
+  handleAccountSave(formData: CreateAccountData): void {
+    if (formData.id) {
+      // EDIT
+      this.accountsService.updateAccount(formData).subscribe({
+        next: () => {
+          this.toastr.success('Conta atualizada com sucesso!');
+        },
+        error: (err) => {
+          if (err.status === 404) {
+            this.toastr.error('Conta não encontrada.');
+          } else if (err.status === 409) {
+            this.toastr.error('Já existe uma conta com essa descrição.');
+          } else {
+            this.toastr.error('Erro ao atualizar conta.');
+          }
+        }
+      });
+    } else {
+      // CREATE
+      this.accountsService.createAccount(formData).subscribe({
+        next: () => {
+          this.toastr.success('Conta criada com sucesso!');
+        },
+        error: (err) => {
+          if (err.status === 409) {
+            this.toastr.error('Já existe uma conta com essa descrição.');
+          } else {
+            this.toastr.error('Erro ao criar conta.');
+          }
+        }
+      });
+    }
+
     this.showCreateAccountModal = false;
+    this.selectedAccountToEdit = null;
+  }
+
+  handleAccountCancel(): void {
+    this.showCreateAccountModal = false;
+    this.selectedAccountToEdit = null;
   }
 
   openDeleteAccountModal(accountId: number): void {
@@ -112,3 +148,4 @@ export class AccountsComponent implements OnInit, OnDestroy{
     this.showDeleteModal = false;
   }
 }
+

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, output, Output, SimpleChanges } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { fadeSlide } from '../../../animations/FadeSlide';
 import { Bank } from '../../../services/accounts/accounts.service';
@@ -13,6 +13,7 @@ export interface CreateAccountData {
   balance: number;
   closingDay: number;
   paymentDueDay: number;
+  id?: number;
 }
 
 @Component({
@@ -26,7 +27,7 @@ export interface CreateAccountData {
   styleUrl: './create-accont-modal.component.css',
   animations: [fadeSlide]
 })
-export class CreateAccountModalComponent {
+export class CreateAccountModalComponent implements OnInit, OnChanges {
   constructor(private toastr: ToastrService) {}
 
   bankDropdownOpen = false;
@@ -41,9 +42,69 @@ export class CreateAccountModalComponent {
 
   @Input() banks: Bank[] = [];
   @Input() accountTypes: any[] = [];
+  @Input() accountToEdit: CreateAccountData | null = null;
 
-  @Output() create = new EventEmitter<CreateAccountData>();
+  @Output() save = new EventEmitter<CreateAccountData>();
   @Output() cancel = new EventEmitter<void>();
+
+  get isEditMode(): boolean {
+    return this.accountToEdit !== null;
+  }
+
+  get modalTitle(): string {
+    return this.isEditMode ? 'Editar conta' : 'Crie uma conta';
+  }
+
+  get modalDescription(): string {
+    return this.isEditMode
+      ? 'Atualize as informações da sua conta bancária'
+      : 'Adicione uma nova conta bancária para acompanhar suas finanças';
+  }
+
+  get submitButtonText(): string {
+    return this.isEditMode ? 'Atualizar conta' : 'Criar conta';
+  }
+
+  ngOnInit(): void {
+    if (this.accountToEdit) {
+      setTimeout(() => this.populateFormWithAccountData(), 0);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['accountToEdit']) {
+      if (this.accountToEdit) {
+        setTimeout(() => this.populateFormWithAccountData(), 0);
+      } else {
+        this.resetForm();
+      }
+    }
+  }
+
+  private populateFormWithAccountData(): void {
+    if (!this.accountToEdit) return;
+
+    this.description = this.accountToEdit.description || null;
+    this.initialBalance = this.accountToEdit.balance ?? null;
+    this.closingDay = this.accountToEdit.closingDay ?? null;
+    this.paymentDueDay = this.accountToEdit.paymentDueDay ?? null;
+    this.selectedAccountType = this.accountToEdit.accountType || null;
+
+    if (this.banks && this.banks.length > 0) {
+      this.selectedBank = this.banks.find(bank => bank.id === this.accountToEdit!.bank) || null;
+    }
+  }
+
+  private resetForm(): void {
+    this.description = null;
+    this.initialBalance = null;
+    this.selectedBank = null;
+    this.selectedAccountType = null;
+    this.closingDay = null;
+    this.paymentDueDay = null;
+    this.bankDropdownOpen = false;
+    this.accountTypeDropdownOpen = false;
+  }
 
   onCreate(event?: Event): void {
     event?.preventDefault();
@@ -71,15 +132,22 @@ export class CreateAccountModalComponent {
       paymentDueDay: this.paymentDueDay
     };
 
-    this.create.emit(accountData);
+    // Incluir ID se estiver em modo de edição
+    if (this.isEditMode && this.accountToEdit?.id) {
+      accountData.id = this.accountToEdit.id;
+    }
+
+    this.save.emit(accountData);
   }
 
   onCancel(): void {
+    this.resetForm();
     this.cancel.emit();
   }
 
   toggleBankDropdown() {
     this.bankDropdownOpen = !this.bankDropdownOpen;
+    this.accountTypeDropdownOpen = false;
   }
 
   selectBank(bank: Bank) {
@@ -89,6 +157,7 @@ export class CreateAccountModalComponent {
 
   toggleAccountTypeDropdown() {
     this.accountTypeDropdownOpen = !this.accountTypeDropdownOpen;
+    this.bankDropdownOpen = false;
   }
 
   selectAccountType(type: 'CHECKING' | 'SAVINGS' | 'INVESTMENTS') {

@@ -29,7 +29,7 @@
         </div><!-- Fim do saldo e detalhes da conta -->
 
         <div class="flex flex-wrap justify-between gap-2 items-center p-4 sm:px-6 sm:pb-6 pt-0">
-          <button class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+          <button (click)="openEditAccountModal(account)" class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
             <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-pencil mr-2 h-4 w-4 font-light">ink_pen</mat-icon>
             <span class="text-sm">Editar</span>
           </button>
@@ -60,9 +60,11 @@
 
 <app-create-account-modal
   *ngIf="showCreateAccountModal"
-  (cancel)="handleCreateAccountCancel()"
-  (create)="handleCreateAccountCreate($event)"
+  [accountToEdit]="selectedAccountToEdit"
+  (cancel)="handleAccountCancel()"
+  (save)="handleAccountSave($event)"
   [banks]="banks()"
   [accountTypes]="accountTypes"
 >
 </app-create-account-modal>
+

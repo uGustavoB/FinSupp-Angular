@@ -8,7 +8,7 @@ export interface Account {
   id: number;
   description: string;
   bank: number;
-  accountType: string;
+  accountType: 'CHECKING' | 'SAVINGS' | 'INVESTMENTS';
   balance: number;
   closingDay: number;
   paymentDueDay: number;
@@ -120,7 +120,7 @@ export class AccountsService {
     );
   }
 
-  updateAccount(account: Account): Observable<Account> {
+  updateAccount(account: CreateAccountData): Observable<Account> {
     return this.api.put<Account>(`${this.apiUrl}/accounts/${account.id}`, account).pipe(
       tap(updated => {
         this.accountSignal.update(accounts =>

@@ -29,7 +29,7 @@
             <div class="flex flex-col items-end">
               <span *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" class="font-medium text-destructive">- {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
               <span *ngIf="transaction.type === 'DEPOSIT'" class="font-medium text-emerald-500">+ {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
-              <span class="text-sm text-muted-foreground">Conta Principal</span>
+              <span class="text-sm text-muted-foreground">{{ getAccountDescription(transaction.accountId) }}</span>
             </div>
           </div>
 

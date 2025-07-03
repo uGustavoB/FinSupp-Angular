@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { itemAnimation } from '../../animations/ItemAnimation';
 import { Transaction, TransactionsService } from '../../services/transactions/transactions.service';
 import { CategoriesService } from '../../services/categories/categories.service';
+import { AccountsService } from '../../services/accounts/accounts.service';
 
 @Component({
   selector: 'app-transactions',
@@ -19,18 +20,21 @@ export class TransactionsComponent implements OnInit {
   loaded: boolean = false;
   transactions: Transaction[] = [];
   categoriesDescriptions = new Map<number, string>();
+  accountsDescriptions = new Map<number, string>();
 
   constructor(
     private transactionsService: TransactionsService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private accountsService: AccountsService
   ) {}
 
   ngOnInit() {
+    this.loadAccounts();
     this.transactionsService.getTransactions().subscribe({
       next: (trans) => {
         this.transactions = trans;
-        this.loadCategoriesForTransactions(trans);
         this.loaded = true;
+        this.loadCategoriesForTransactions(trans);
       },
       error: (err) => {
         this.loaded = true;
@@ -54,5 +58,26 @@ export class TransactionsComponent implements OnInit {
 
   getCategoryDescription(categoryId: number): string {
     return this.categoriesDescriptions.get(categoryId) || 'Carregando...';
+  }
+
+  loadAccounts() {
+    this.accountsService.getAccountsSignal().forEach(account => {
+      this.accountsDescriptions.set(account.id, account.description);
+    })
+  }
+
+  getAccountDescription(accountId: number): string {
+    let account = this.accountsDescriptions.get(accountId);
+
+    if (!account) {
+      const accountData = this.accountsService.getAccountByIdSignal(accountId);
+      if (accountData) {
+        account = accountData.description;
+        this.accountsDescriptions.set(accountId, accountData.description);
+        return accountData.description;
+      }
+    }
+
+    return account ? account : 'Carregando...';
   }
 }
