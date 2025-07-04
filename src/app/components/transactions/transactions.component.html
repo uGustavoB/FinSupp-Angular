@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div *ngIf="loaded && transactions.length > 0" class="space-y-4">
+    <div *ngIf="loaded && transactions.length > 0" class="space-y-4 hidden sm:block">
       <div class="rounded-lg border bg-card text-card-foreground shadow-2xs">
         <div class="p-0">
           <div class="md:block overflow-x-auto">
@@ -78,14 +78,52 @@
         </div>
 
       </div>
+    </div>
 
-      <div class="flex items-center justify-center space-x-2 py-4">
-        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" [disabled]="currentPage === 0" (click)="previousPage()">Previous</button>
+    <div *ngIf="loaded && transactions.length > 0" class="block md:hidden">
+      <div class="divide-y">
+        <div @itemAnimation *ngFor="let transaction of transactions" class="p-4 space-y-3 border-x first:rounded-t-md first:border-t last:rounded-b-md last:border-b">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center justify-between gap-3 flex-1 min-w-0">
+              <div>
+                <div class="flex gap-4 items-center">
+                  <mat-icon *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" fontSet="material-symbols-rounded" class="lucide h-7 w-7 text-destructive">output_circle</mat-icon>
+                  <mat-icon *ngIf="transaction.type === 'DEPOSIT'" fontSet="material-symbols-rounded" class="lucide h-5 w-5 text-emerald-500">input_circle</mat-icon>
 
-        <span class="text-sm">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+                  <h3 class="font-medium text-sm align-middle">{{ transaction.description }}</h3>
+                </div>
 
-        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" [disabled]="currentPage + 1 === totalPages" (click)="nextPage()">Next</button>
+                <div class="flex flex-wrap items-center gap-2 mt-1">
+                  <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs" data-v0-t="badge">Shopping</div>
+                  <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 text-xs" data-v0-t="badge"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card h-3 w-3 mr-1"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>Bill</div>
+                </div>
+              </div>
+
+              <button type="button" class="ring-offset-background focus-visible:outline-hidden focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground rounded-md h-8 w-8 p-0">
+                <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-dots-vertical">more_horiz</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-sm">
+            <div class="text-muted-foreground">
+              <div>{{ getAccountDescription(transaction.accountId) }}</div>
+              <div>{{ transaction.transactionDate | date: "d 'de' MMM 'de' y" }}</div>
+            </div>
+
+            <span *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" class="font-medium text-red-600">- {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
+            <span *ngIf="transaction.type === 'DEPOSIT'" class="text-sm text-emerald-500">+ {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
+          </div>
+        </div>
       </div>
+    </div>
+
+    <div class="flex items-center justify-center space-x-2 py-4">
+        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-4" [disabled]="currentPage === 0" (click)="previousPage()">Previous</button>
+
+        <span class="text-sm px-4">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+
+        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-4" [disabled]="currentPage + 1 === totalPages" (click)="nextPage()">Next</button>
     </div>
 
     <div *ngIf="loaded && transactions.length === 0" class="text-center text-muted-foreground">
