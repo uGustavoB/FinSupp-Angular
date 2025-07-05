@@ -1,0 +1,112 @@
+<div [@fadeSlide] (click)="onCancel()" class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm"></div>
+
+<div class="fixed left-[50%] top-[50%] z-50 w-full translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg max-w-4xl max-h-[90vh] overflow-hidden flex flex-col mx-4 sm:mx-auto">
+  <div class="flex flex-col space-y-1.5 text-center sm:text-left">
+    <h2 class="font-semibold tracking-tight text-xl flex items-center gap-2">
+      <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-file-text h-5 w-5">docs</mat-icon>
+      Detalhes da Fatura
+    </h2>
+
+    <div class="text-sm text-muted-foreground flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 mt-2">
+
+      <div class="flex items-center gap-2">
+        <span class="font-medium">Data de Vencimento: </span>
+        <span class="font-semibold">
+          {{ invoice?.dueDate | date }}
+        </span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="font-medium">Status: </span>
+        <span class="text-lg font-semibold">
+          <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-green-50 text-green-700 border-green-200">
+            <img src="assets/svg/checked.svg" alt="Pago" class="lucide lucide-check-circle w-3 h-3 mr-1">
+            Pago
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-1 overflow-y-auto py-4 -mx-6 px-6">
+    <div class="space-y-6">
+      <div class="space-y-4">
+        <h3 class="text-lg font-semibold flex items-center gap-2">
+          <mat-icon class="lucide lucide-receipt h-4 w-4">receipt_long</mat-icon>
+          Itens da Fatura
+        </h3>
+
+        <div class="rounded-md border">
+          <div class="relative w-full overflow-auto">
+            <table class="w-full caption-bottom text-sm">
+              <thead>
+                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                  <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[40%] ">Description</th>
+                  <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[20%]">Tipo</th>
+                  <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[20%]">Parcela</th>
+                  <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[20%]">Valor</th>
+                  <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-8"></th>
+                </tr>
+              </thead>
+
+              <tbody class="[&_tr:last-child]:border-0">
+                <tr *ngFor="let item of invoiceItens" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted group">
+                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{{ item.description }}</td>
+
+                  <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0 text-center">
+                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-purple-50 text-purple-700">
+                      {{ item.transactionId ? 'Transação' : 'Assinatura' }}
+                    </div>
+                  </td>
+
+                  <td class="p-4 align-middle text-center [&:has([role=checkbox])]:pr-0">
+                    <span *ngIf="!item.installmentNumber" class="text-muted-foreground">-</span>
+                    <span *ngIf="item.installmentNumber">{{ item.installmentNumber }}</span>
+                  </td>
+
+                  <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right font-medium">{{ item.amount | currency: 'BRL': 'symbol' }}</td>
+
+                  <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                    <button type="button" class="ring-offset-background focus-visible:outline-hidden focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0 opacity-0 group-hover:opacity-100">
+                      <mat-icon class="lucide h-4 w-4">more_horiz</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="rounded-lg border p-4 bg-muted/20">
+          <h3 class="text-lg font-semibold mb-3">Resumo da Fatura</h3>
+
+          <div class="space-y-2">
+            <div class="flex justify-between">
+              <span>Transações ({{ transactionCount.length }})</span>
+              <span>{{ transactionCount.total | currency: 'BRL': 'symbol' }}</span>
+            </div>
+
+            <div class="flex justify-between">
+              <span>Assinaturas ({{ subscriptionCount.length }})</span>
+              <span>{{ subscriptionCount.total | currency: 'BRL': 'symbol' }}</span>
+            </div>
+
+            <div data-orientation="horizontal" role="none" class="shrink-0 bg-border h-px w-full"></div>
+
+            <div class="flex justify-between font-bold">
+              <span>Total</span>
+              <span>{{ invoice?.totalAmount | currency: 'BRL': 'symbol' }}</span>
+            </div>
+          </div>
+        </div>
+    <div class="sm:justify-end sm:space-x-2 pt-4 flex flex-col sm:flex-row gap-2">
+      <button class="ring-offset-background focus-visible:outline-hidden focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border-input bg-background hover:bg-accent hover:text-accent-foreground border h-10 px-4 py-2 w-full sm:w-auto">Close</button>
+    </div>
+  </div>
+</div>

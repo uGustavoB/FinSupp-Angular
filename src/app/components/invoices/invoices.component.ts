@@ -3,17 +3,22 @@ import { Component, OnInit, Signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Invoice, InvoicesService } from '../../services/invoices/invoices.service';
 import { ToastrService } from 'ngx-toastr';
+import { InvoiceDetailsComponent } from './details/invoice-details.component';
 
 @Component({
   selector: 'app-invoices',
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    InvoiceDetailsComponent
   ],
   templateUrl: './invoices.component.html',
   styleUrl: './invoices.component.css'
 })
 export class InvoicesComponent implements OnInit {
+  showDetailsModal: boolean = false;
+  selectedInvoice!: Invoice;
+
   constructor(private invoiceService: InvoicesService, private toastr: ToastrService) {}
 
   invoices!: Signal<Invoice[]>;
@@ -37,5 +42,18 @@ export class InvoicesComponent implements OnInit {
     this.openTab = tab;
 
     this.invoiceService.setFilter(tab);
+  }
+
+  openDetailsModal(invoice: Invoice): void {
+    this.selectedInvoice = invoice;
+    this.showDetailsModal = true;
+  }
+
+  handleDetailsModalConfirm(): void {
+    this.showDetailsModal = false;
+  }
+
+  handleDetailsModalCancel(): void {
+    this.showDetailsModal = false;
   }
 }

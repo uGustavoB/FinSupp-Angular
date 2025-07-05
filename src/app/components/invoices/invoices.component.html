@@ -64,7 +64,7 @@
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 p-6 pt-0">
-            <button class="flex items-center justify-center gap-2 text-sm font-medium border rounded-md h-9 px-3 bg-background hover:bg-accent hover:text-accent-foreground">
+            <button (click)="openDetailsModal(invoice)" class="flex items-center justify-center gap-2 text-sm font-medium border rounded-md h-9 px-3 bg-background hover:bg-accent hover:text-accent-foreground">
               <mat-icon fontSet="material-symbols-rounded" class="mr-2 h-4 w-4">visibility</mat-icon>
               Ver Detalhes
             </button>
@@ -86,3 +86,10 @@
     </div>
   </div>
 </main>
+
+<app-invoice-details
+  *ngIf="showDetailsModal"
+  [invoice]="selectedInvoice"
+  (cancel)="handleDetailsModalCancel()"
+  (confirm)="handleDetailsModalConfirm()">
+</app-invoice-details>
