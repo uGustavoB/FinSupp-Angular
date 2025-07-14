@@ -7,6 +7,7 @@ import { SubscriptionsComponent } from './components/subscriptions/subscriptions
 import { ProfileComponent } from './components/profile/profile.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { InvoicesComponent } from './components/invoices/invoices.component';
+import { authGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
   {
@@ -37,7 +38,8 @@ export const routes: Routes = [
         path: "invoices",
         component: InvoicesComponent
       }
-    ]
+    ],
+    canActivate: [authGuard]
   },
   {
     path: "auth",
