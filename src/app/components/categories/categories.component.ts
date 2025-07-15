@@ -1,24 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
 import { CategoriesService, Category } from '../../services/categories/categories.service';
 import { itemAnimation } from '../../animations/ItemAnimation';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-categories',
   imports: [
     MatIconModule,
     CommonModule,
-    DeleteModalComponent
+    DeleteModalComponent,
+    TranslateModule
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css',
   animations: [itemAnimation]
 })
 export class CategoriesComponent {
+  private translate = inject(TranslateService);
+
   categories: Category[] = [];
   showDeleteModal: boolean = false;
 

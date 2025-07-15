@@ -119,6 +119,23 @@
       "title": "Delete Account"
     }
   },
+  "categoryManagement": {
+    "name": "Categories",
+    "title": "Category Management",
+    "buttons": {
+      "addCategory": "Add category",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "emptyState": {
+      "imageAlt": "No categories",
+      "title": "No categories found.",
+      "message": "Click on \"Add category\" to get started."
+    },
+    "deleteModal": {
+      "title": "Delete Category"
+    }
+  },
   "notifications": {
     "accountSaveSuccess": "Account saved successfully!",
     "accountSaveError": "Error saving account. Please try again.",

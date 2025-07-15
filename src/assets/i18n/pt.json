@@ -119,6 +119,23 @@
       "title": "Excluir Conta"
     }
   },
+  "categoryManagement": {
+    "name": "Categorias",
+    "title": "Gerenciamento de Categorias",
+    "buttons": {
+      "addCategory": "Adicionar categoria",
+      "edit": "Editar",
+      "delete": "Excluir"
+    },
+    "emptyState": {
+      "imageAlt": "Sem categorias",
+      "title": "Nenhuma categoria encontrada.",
+      "message": "Clique em \"Adicionar categoria\" para começar."
+    },
+    "deleteModal": {
+      "title": "Excluir Categoria"
+    }
+  },
   "notifications": {
     "accountSaveSuccess": "Conta salva com sucesso!",
     "accountSaveError": "Erro ao salvar a conta. Por favor, tente novamente.",
