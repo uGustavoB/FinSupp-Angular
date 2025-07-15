@@ -250,6 +250,54 @@
       "errorFetchingSubscriptions": "Erro ao buscar assinaturas. Por favor, tente novamente."
     }
   },
+  "invoiceManagement": {
+    "name": "Faturas",
+    "singleName": "Fatura",
+    "title": "Gerenciamento de Faturas",
+    "buttons": {
+      "addInvoice": "Adicionar fatura",
+      "details": "Ver detalhes",
+      "pay": "Pagar fatura"
+    },
+    "tableHeaders": {
+      "date": "Data",
+      "description": "Descrição",
+      "amount": "Valor",
+      "status": "Status",
+      "actions": "Ações"
+    },
+    "date": {
+      "startDate": "Data de início",
+      "endDate": "Data de fechamento",
+      "dueDate": "Data de vencimento"
+    },
+    "status": {
+      "open": "Aberta",
+      "closed": "Fechada",
+      "paid": "Paga",
+      "overdue": "Vencida",
+      "all": "Todas"
+    },
+    "emptyState": {
+      "imageAlt": "Sem faturas",
+      "title": "Nenhuma fatura encontrada.",
+      "message": "Clique em \"Adicionar fatura\" para começar."
+    },
+    "deleteModal": {
+      "title": "Excluir Fatura"
+    },
+    "notifications": {
+      "invoiceSaveSuccess": "Fatura salva com sucesso!",
+      "invoiceSaveError": "Erro ao salvar a fatura. Por favor, tente novamente.",
+      "invoiceDeleteSuccess": "Fatura excluída com sucesso.",
+      "invoiceDeleteError": "Erro ao excluir a fatura. Por favor, tente novamente.",
+      "invoiceNotFound": "Fatura não encontrada.",
+      "invoiceAlreadyExists": "Já existe uma fatura com esta descrição.",
+      "noInvoiceSelected": "Nenhuma fatura selecionada.",
+      "invoiceConflictError": "Você não pode excluir uma fatura que possui transações ou assinaturas associadas a ela.",
+      "errorFetchingInvoices": "Erro ao buscar faturas. Por favor, tente novamente."
+    }
+  },
   "notifications": {
     "accountSaveSuccess": "Conta salva com sucesso!",
     "accountSaveError": "Erro ao salvar a conta. Por favor, tente novamente.",

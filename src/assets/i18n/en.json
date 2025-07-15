@@ -8,6 +8,7 @@
     "save": "Save",
     "edit": "Edit",
     "delete": "Delete",
+    "details": "See details",
     "add": "Add",
     "close": "Close",
     "filter": "Filter",
@@ -248,6 +249,54 @@
       "noSubscriptionSelected": "No subscription selected.",
       "subscriptionConflictError": "You cannot delete a subscription that has associated transactions.",
       "errorFetchingSubscriptions": "Error fetching subscriptions. Please try again."
+    }
+  },
+  "invoiceManagement": {
+    "name": "Invoices",
+    "singleName": "Invoice",
+    "title": "Invoice Management",
+    "buttons": {
+      "addInvoice": "Add invoice",
+      "details": "See details",
+      "pay": "Pay invoice"
+    },
+    "tableHeaders": {
+      "date": "Date",
+      "description": "Description",
+      "amount": "Amount",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "date": {
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "dueDate": "Due Date"
+    },
+    "status": {
+      "open": "Open",
+      "closed": "Closed",
+      "paid": "Paid",
+      "overdue": "Overdue",
+      "all": "All"
+    },
+    "emptyState": {
+      "imageAlt": "No invoices",
+      "title": "No invoices found.",
+      "message": "Click on \"Add invoice\" to get started."
+    },
+    "deleteModal": {
+      "title": "Delete Invoice"
+    },
+    "notifications": {
+      "invoiceSaveSuccess": "Invoice saved successfully!",
+      "invoiceSaveError": "Error saving invoice. Please try again.",
+      "invoiceDeleteSuccess": "Invoice deleted successfully.",
+      "invoiceDeleteError": "Error deleting invoice. Please try again.",
+      "invoiceNotFound": "Invoice not found.",
+      "invoiceAlreadyExists": "An invoice with this description already exists.",
+      "noInvoiceSelected": "No invoice selected.",
+      "invoiceConflictError": "You cannot delete an invoice that has associated transactions or subscriptions.",
+      "errorFetchingInvoices": "Error fetching invoices. Please try again."
     }
   },
   "notifications": {

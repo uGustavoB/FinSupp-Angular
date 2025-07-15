@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 import { ApiService } from '../API/api.service';
 import { map, Observable, tap } from 'rxjs';
 
-export type InvoiceStatus = 'OPEN' | 'PAID' | 'OVERDUE' | 'CANCELLED';
+export type InvoiceStatus = 'OPEN' | 'CLOSED' | 'PAID' | 'OVERDUE' | 'CANCELLED';
 
 export interface Invoice {
   id: number;

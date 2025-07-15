@@ -1,21 +1,25 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Signal } from '@angular/core';
+import { Component, inject, OnInit, Signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Invoice, InvoicesService } from '../../services/invoices/invoices.service';
 import { ToastrService } from 'ngx-toastr';
 import { InvoiceDetailsComponent } from './details/invoice-details.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-invoices',
   imports: [
     CommonModule,
     MatIconModule,
-    InvoiceDetailsComponent
+    InvoiceDetailsComponent,
+    TranslateModule
   ],
   templateUrl: './invoices.component.html',
   styleUrl: './invoices.component.css'
 })
 export class InvoicesComponent implements OnInit {
+  private translate = inject(TranslateService);
+
   showDetailsModal: boolean = false;
   selectedInvoice!: Invoice;
 
@@ -36,9 +40,9 @@ export class InvoicesComponent implements OnInit {
     this.invoices = this.invoiceService.filteredInvoices;
   }
 
-  openTab: 'OPEN' | 'PAID' | 'OVERDUE' | 'ALL' = 'OPEN';
+  openTab: 'OPEN' | 'CLOSED' | 'PAID' | 'OVERDUE' | 'ALL' = 'OPEN';
 
-  setOpenTab(tab: 'OPEN' | 'PAID' | 'OVERDUE' | 'ALL') {
+  setOpenTab(tab: 'OPEN' | 'CLOSED' | 'PAID' | 'OVERDUE' | 'ALL') {
     this.openTab = tab;
 
     this.invoiceService.setFilter(tab);
