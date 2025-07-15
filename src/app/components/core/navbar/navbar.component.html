@@ -1,6 +1,21 @@
 <header class="border-b bg-background px-4 py-3 sticky top-0 z-10">
   <div class="flex items-center justify-end">
     <div class="flex items-center gap-4">
+      <div class="relative inline-block text-left" #langMenuRef>
+        <button type="button" (click)="toggleLangMenu()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+          <mat-icon fontSet="material-symbols-rounded" class="h-4 w-4 font-light">translate</mat-icon>
+        </button>
+
+        <div *ngIf="langMenuOpen" class="absolute p-1 right-0 mt-1 w-40 bg-background border rounded-lg shadow-lg z-50">
+          <button (click)="setLanguage('pt')" class="rounded w-full text-left px-4 py-2 bg-background hover:bg-muted">
+            Português
+          </button>
+          <button (click)="setLanguage('en')" class="rounded w-full text-left px-4 py-2 bg-background hover:bg-muted">
+            English
+          </button>
+        </div>
+      </div>
+
       <div class="relative inline-block text-left">
 
         <div class="relative inline-block text-left" #menuRef>
@@ -15,11 +30,11 @@
 
           <div *ngIf="menuOpen" class="absolute p-1 right-0 mt-1 w-40 bg-background border rounded-lg shadow-lg z-50">
             <button (click)="setTheme('light')" class="rounded w-full text-left px-4 py-2 bg-background hover:bg-muted" >
-              Claro
+              {{  'navbar.themes.light' | translate }}
             </button>
 
             <button (click)="setTheme('dark')" class="rounded w-full text-left px-4 py-2 bg-background hover:bg-muted">
-              Escuro
+              {{  'navbar.themes.dark' | translate }}
             </button>
           </div>
         </div>
@@ -27,7 +42,7 @@
 
       <button onclick="" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 *:hover:bg-background">
         <span class="flex items-center justify-center rounded-full bg-muted h-8 w-8">
-            {{ user_inicial }}
+          {{ user_inicial }}
         </span>
       </button>
     </div>

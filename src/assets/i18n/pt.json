@@ -1,4 +1,32 @@
 {
+  "navbar": {
+    "title": "FinSupp",
+    "userMenu": {
+      "profile": "Perfil",
+      "settings": "Configurações",
+      "logout": "Sair"
+    },
+    "themes": {
+      "light": "Claro",
+      "dark": "Escuro",
+      "system": "Padrão do Sistema"
+    },
+    "language": {
+      "en": "Inglês",
+      "pt": "Português"
+    }
+  },
+  "sidebar": {
+    "dashboard": "Painel",
+    "accounts": "Contas",
+    "categories": "Categorias",
+    "transactions": "Transações",
+    "subscriptions": "Assinaturas",
+    "invoices": "Faturas",
+    "profile": "Perfil",
+    "settings": "Configurações",
+    "exit": "Sair"
+  },
   "accountManagement": {
     "name": "Contas",
     "title": "Gestão de Contas",

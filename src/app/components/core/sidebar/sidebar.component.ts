@@ -1,65 +1,59 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { itemAnimation } from '../../../animations/ItemAnimation';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-sidebar',
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
-  animations: [itemAnimation,
-    trigger('sidebarAnimation', [
-      state('closed', style({
-        transform: 'translateX(-100%)',
-        opacity: 0
-      })),
-      transition('open <=> closed', [
-        animate('300ms ease-in-out')
-      ]),
-    ])
-  ],
+  animations: [itemAnimation]
 })
 export class SidebarComponent {
+  private translate = inject(TranslateService);
+
   links = [
     {
-      name: 'Dashboard',
+      name: 'sidebar.dashboard',
       icon: 'home',
       route: '/dashboard'
     },
     {
-      name: 'Contas',
+      name: 'sidebar.accounts',
       icon: 'wallet',
       route: '/accounts'
     },
     {
-      name: 'Categorias',
+      name: 'sidebar.categories',
       icon: 'style',
       route: '/categories'
     },
     {
-      name: 'Transações',
+      name: 'sidebar.transactions',
       icon: 'swap_horiz',
       route: '/transactions'
     },
     {
-      name: 'Assinaturas',
+      name: 'sidebar.subscriptions',
       icon: 'autorenew',
       route: '/subscriptions'
     },
     {
-      name: 'Faturas',
+      name: 'sidebar.invoices',
       icon: 'receipt_long',
       route: '/invoices'
     },
     {
-      name: 'Perfil',
+      name: 'sidebar.profile',
       icon: 'person',
       route: '/profile'
     }
