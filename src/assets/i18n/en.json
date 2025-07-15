@@ -300,6 +300,41 @@
       "errorFetchingInvoices": "Error fetching invoices. Please try again."
     }
   },
+  "profileManagement": {
+    "name": "Profile",
+    "title": "Profile Management",
+    "generics": {
+      "title": "Personal information",
+      "description": "Keep your personal information up to date."
+    },
+    "buttons": {
+      "saveChanges": "Save changes",
+      "changePassword": "Change password"
+    },
+    "inputs": {
+      "name": {
+        "title": "Name",
+        "placeholder": "Enter your name"
+      },
+      "email": {
+        "title": "Email",
+        "placeholder": "Enter your email"
+      },
+      "newPassword": {
+        "title": "New Password",
+        "placeholder": "Enter your new password"
+      }
+    },
+    "notifications": {
+      "profileSaveSuccess": "Profile updated successfully!",
+      "profileSaveError": "Error updating profile. Please try again.",
+      "passwordChangeSuccess": "Password changed successfully!",
+      "passwordChangeError": "Error changing password. Please try again.",
+      "passwordMismatch": "New password and confirmation do not match.",
+      "invalidCurrentPassword": "Current password is incorrect.",
+      "fillAllFields": "Please fill in all required fields."
+    }
+  },
   "notifications": {
     "accountSaveSuccess": "Account saved successfully!",
     "accountSaveError": "Error saving account. Please try again.",

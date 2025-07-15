@@ -299,6 +299,41 @@
       "errorFetchingInvoices": "Erro ao buscar faturas. Por favor, tente novamente."
     }
   },
+  "profileManagement": {
+    "name": "Perfil",
+    "title": "Gerenciamento de Perfil",
+    "generics": {
+      "title": "Informações pessoais",
+      "description": "Mantenha suas informações pessoais atualizadas."
+    },
+    "buttons": {
+      "saveChanges": "Salvar alterações",
+      "changePassword": "Alterar senha"
+    },
+    "inputs": {
+      "name": {
+        "title": "Nome",
+        "placeholder": "Digite seu nome"
+      },
+      "email": {
+        "title": "Email",
+        "placeholder": "Digite seu email"
+      },
+      "newPassword": {
+        "title": "Nova Senha",
+        "placeholder": "Digite sua nova senha"
+      }
+    },
+    "notifications": {
+      "profileSaveSuccess": "Perfil atualizado com sucesso!",
+      "profileSaveError": "Erro ao atualizar o perfil. Por favor, tente novamente.",
+      "passwordChangeSuccess": "Senha alterada com sucesso!",
+      "passwordChangeError": "Erro ao alterar a senha. Por favor, tente novamente.",
+      "passwordMismatch": "A nova senha e a confirmação não correspondem.",
+      "invalidCurrentPassword": "A senha atual está incorreta.",
+      "fillAllFields": "Por favor, preencha todos os campos obrigatórios."
+    }
+  },
   "notifications": {
     "accountSaveSuccess": "Conta salva com sucesso!",
     "accountSaveError": "Erro ao salvar a conta. Por favor, tente novamente.",

@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ProfileService, UserProfile } from '../../services/profile/profile.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
-  imports: [],
+  imports: [
+    TranslateModule
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
+  private translate = inject(TranslateService);
+
   profile: UserProfile = {
     id: '',
     name: '',
