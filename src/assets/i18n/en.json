@@ -10,6 +10,7 @@
     "delete": "Delete",
     "add": "Add",
     "close": "Close",
+    "filter": "Filter",
     "pagination": {
       "previous": "Previous",
       "next": "Next",
@@ -201,6 +202,52 @@
       "noTransactionSelected": "No transaction selected.",
       "transactionConflictError": "You cannot delete a transaction that has associated invoices or subscriptions.",
       "errorFetchingTransactions": "Error fetching transactions. Please try again."
+    }
+  },
+  "subscriptionsManagement": {
+    "name": "Subscriptions",
+    "title": "Subscription Management",
+    "buttons": {
+      "addSubscription": "Add subscription"
+    },
+    "tableHeaders": {
+      "name": "Name",
+      "description": "Description",
+      "price": "Price",
+      "category": "Category",
+      "account": "Account",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "interval": {
+      "monthly": "Monthly",
+      "semi_annual": "Semi-Annual",
+      "quarterly": "Quarterly",
+      "yearly": "Yearly"
+    },
+    "emptyState": {
+      "imageAlt": "No subscriptions",
+      "title": "No subscriptions found.",
+      "message": "Click on \"Add subscription\" to get started."
+    },
+    "deleteModal": {
+      "title": "Delete Subscription"
+    },
+    "notifications": {
+      "subscriptionSaveSuccess": "Subscription saved successfully!",
+      "subscriptionSaveError": "Error saving subscription. Please try again.",
+      "subscriptionDeleteSuccess": "Subscription deleted successfully.",
+      "subscriptionDeleteError": "Error deleting subscription. Please try again.",
+      "subscriptionNotFound": "Subscription not found.",
+      "subscriptionAlreadyExists": "A subscription with this name already exists.",
+      "noSubscriptionSelected": "No subscription selected.",
+      "subscriptionConflictError": "You cannot delete a subscription that has associated transactions.",
+      "errorFetchingSubscriptions": "Error fetching subscriptions. Please try again."
     }
   },
   "notifications": {

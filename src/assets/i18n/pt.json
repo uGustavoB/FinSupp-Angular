@@ -10,6 +10,7 @@
     "delete": "Excluir",
     "add": "Adicionar",
     "close": "Fechar",
+    "filter": "Filtrar",
     "pagination": {
       "previous": "Anterior",
       "next": "Próximo",
@@ -201,6 +202,52 @@
       "noTransactionSelected": "Nenhuma transação selecionada.",
       "transactionConflictError": "Você não pode excluir uma transação que possui faturas ou assinaturas associadas a ela.",
       "errorFetchingTransactions": "Erro ao buscar transações. Por favor, tente novamente."
+    }
+  },
+  "subscriptionsManagement": {
+    "name": "Assinaturas",
+    "title": "Gerenciamento de Assinaturas",
+    "buttons": {
+      "addSubscription": "Adicionar assinatura"
+    },
+    "tableHeaders": {
+      "name": "Nome",
+      "description": "Descrição",
+      "price": "Valor",
+      "category": "Categoria",
+      "account": "Conta",
+      "startDate": "Data de Início",
+      "endDate": "Data de Término",
+      "actions": "Ações"
+    },
+    "status": {
+      "active": "Ativa",
+      "inactive": "Inativa"
+    },
+    "interval": {
+      "monthly": "Mensal",
+      "semi_annual": "Semestral",
+      "quarterly": "Trimestral",
+      "yearly": "Anual"
+    },
+    "emptyState": {
+      "imageAlt": "Sem assinaturas",
+      "title": "Nenhuma assinatura encontrada.",
+      "message": "Clique em \"Adicionar assinatura\" para começar."
+    },
+    "deleteModal": {
+      "title": "Excluir Assinatura"
+    },
+    "notifications": {
+      "subscriptionSaveSuccess": "Assinatura salva com sucesso!",
+      "subscriptionSaveError": "Erro ao salvar a assinatura. Por favor, tente novamente.",
+      "subscriptionDeleteSuccess": "Assinatura excluída com sucesso.",
+      "subscriptionDeleteError": "Erro ao excluir a assinatura. Por favor, tente novamente.",
+      "subscriptionNotFound": "Assinatura não encontrada.",
+      "subscriptionAlreadyExists": "Já existe uma assinatura com este nome.",
+      "noSubscriptionSelected": "Nenhuma assinatura selecionada.",
+      "subscriptionConflictError": "Você não pode excluir uma assinatura que possui transações associadas a ela.",
+      "errorFetchingSubscriptions": "Erro ao buscar assinaturas. Por favor, tente novamente."
     }
   },
   "notifications": {

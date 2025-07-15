@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Subscription, SubscriptionsService } from '../../services/subscriptions/subscriptions.service';
 import { AccountsService } from '../../services/accounts/accounts.service';
 import { itemAnimation } from '../../animations/ItemAnimation';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-subscriptions',
@@ -13,13 +14,16 @@ import { itemAnimation } from '../../animations/ItemAnimation';
     MatIconModule,
     CommonModule,
     MatDialogModule,
-    DeleteModalComponent
+    DeleteModalComponent,
+    TranslateModule
   ],
   templateUrl: './subscriptions.component.html',
   styleUrl: './subscriptions.component.css',
   animations: [itemAnimation]
 })
 export class SubscriptionsComponent {
+  private translate = inject(TranslateService);
+
   loaded: boolean = false;
   showDeleteModal: boolean = false;
   subscriptions: Subscription[] = [];
@@ -39,6 +43,10 @@ export class SubscriptionsComponent {
       });
     });
 
+  }
+
+  getSubscriptionInterval(interval: string): string {
+    return this.translate.instant(`subscriptionsManagement.interval.${interval.toLocaleLowerCase()}`);
   }
 
   ngOnInit(): void {
@@ -62,7 +70,7 @@ export class SubscriptionsComponent {
       if (account) {
         this.accountDescriptions.set(sub.accountId, account.description);
       } else {
-        this.accountDescriptions.set(sub.accountId, 'Carregando...');
+        this.accountDescriptions.set(sub.accountId, 'general.loading');
         this.accountsService.fetchAccountById(sub.accountId);
       }
     });
@@ -70,7 +78,7 @@ export class SubscriptionsComponent {
 
 
   getAccountDescription(accountId: number): string {
-    return this.accountDescriptions.get(accountId) || 'Carregando...';
+    return this.accountDescriptions.get(accountId) || 'general.loading';
   }
 
   // Lidar com a exclusão de assinatura
