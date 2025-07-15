@@ -1,13 +1,20 @@
 {
   "accountManagement": {
+    "name": "Contas",
     "title": "Gestão de Contas",
     "buttons": {
       "addAccount": "Adicionar conta",
       "edit": "Editar",
       "delete": "Excluir"
     },
+    "types": {
+      "checking": "Conta Corrente",
+      "savings": "Poupança",
+      "investment": "Investimento",
+      "other": "Outro"
+    },
     "card": {
-      "paymentDetails": "Fecho: dia {{closingDay}}, Pagamento: dia {{paymentDueDay}}"
+      "paymentDetails": "Dia de fechamento: {{closingDay}}, pagamento até: {{paymentDueDay}}"
     },
     "emptyState": {
       "imageAlt": "Carteira vazia",

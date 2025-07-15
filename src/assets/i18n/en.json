@@ -1,13 +1,20 @@
 {
   "accountManagement": {
+    "name": "Accounts",
     "title": "Account Management",
     "buttons": {
       "addAccount": "Add account",
       "edit": "Edit",
       "delete": "Delete"
     },
+    "types": {
+      "checking": "Checking Account",
+      "savings": "Savings Account",
+      "investment": "Investment Account",
+      "other": "Other"
+    },
     "card": {
-      "paymentDetails": "Closing day: {{closingDay}}, Payment due day: {{paymentDueDay}}"
+      "paymentDetails": "Closing day: {{closingDay}}, payment due by: {{paymentDueDay}}"
     },
     "emptyState": {
       "imageAlt": "Empty wallet",
