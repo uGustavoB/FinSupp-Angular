@@ -117,6 +117,7 @@
   },
   "accountManagement": {
     "name": "Accounts",
+    "singleName": "Account",
     "title": "Account Management",
     "buttons": {
       "addAccount": "Add account",

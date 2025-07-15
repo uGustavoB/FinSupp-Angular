@@ -95,7 +95,7 @@ export class TransactionsComponent implements OnInit {
       }
     }
 
-    return account ? account : 'Carregando...';
+    return account ? account : 'general.loading';
   }
 
   nextPage() {

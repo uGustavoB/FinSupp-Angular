@@ -70,7 +70,7 @@
                   {{  'invoiceManagement.status.overdue' | translate }}
               </span>
             </div>
-            <div class="text-sm text-muted-foreground">Account: Conta Principal</div>
+            <div class="text-sm text-muted-foreground">{{ 'accountManagement.singleName' | translate }}: {{ getAccountDescription(invoice.accountId) | translate }}</div>
           </div>
 
           <div class="p-6 pt-0">

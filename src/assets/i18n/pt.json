@@ -116,6 +116,7 @@
   },
   "accountManagement": {
     "name": "Contas",
+    "singleName": "Conta",
     "title": "Gestão de Contas",
     "buttons": {
       "addAccount": "Adicionar conta",

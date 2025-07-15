@@ -5,6 +5,7 @@ import { Invoice, InvoicesService } from '../../services/invoices/invoices.servi
 import { ToastrService } from 'ngx-toastr';
 import { InvoiceDetailsComponent } from './details/invoice-details.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AccountsService } from '../../services/accounts/accounts.service';
 
 @Component({
   selector: 'app-invoices',
@@ -23,11 +24,19 @@ export class InvoicesComponent implements OnInit {
   showDetailsModal: boolean = false;
   selectedInvoice!: Invoice;
 
-  constructor(private invoiceService: InvoicesService, private toastr: ToastrService) {}
+  constructor(
+    private invoiceService: InvoicesService,
+    private accountsService: AccountsService,
+    private toastr: ToastrService
+  ) {}
 
   invoices!: Signal<Invoice[]>;
 
+  accountsDescriptions = new Map<number, string>();
+
   ngOnInit() {
+    this.loadAccounts();
+    
     this.setOpenTab('OPEN');
 
     this.invoiceService.getInvoices().subscribe({
@@ -38,6 +47,27 @@ export class InvoicesComponent implements OnInit {
     });
 
     this.invoices = this.invoiceService.filteredInvoices;
+  }
+
+  loadAccounts() {
+    this.accountsService.getAccountsSignal().forEach(account => {
+      this.accountsDescriptions.set(account.id, account.description);
+    });
+  }
+
+  getAccountDescription(accountId: number): string {
+    let account = this.accountsDescriptions.get(accountId);
+
+    if (!account) {
+      const accountData = this.accountsService.getAccountByIdSignal(accountId);
+      if (accountData) {
+        account = accountData.description;
+        this.accountsDescriptions.set(accountId, accountData.description);
+        return accountData.description;
+      }
+    }
+
+    return account ? account : 'general.loading';
   }
 
   openTab: 'OPEN' | 'CLOSED' | 'PAID' | 'OVERDUE' | 'ALL' = 'OPEN';
