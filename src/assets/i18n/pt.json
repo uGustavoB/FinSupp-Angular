@@ -1,0 +1,31 @@
+{
+  "accountManagement": {
+    "title": "Gestão de Contas",
+    "buttons": {
+      "addAccount": "Adicionar conta",
+      "edit": "Editar",
+      "delete": "Excluir"
+    },
+    "card": {
+      "paymentDetails": "Fecho: dia {{closingDay}}, Pagamento: dia {{paymentDueDay}}"
+    },
+    "emptyState": {
+      "imageAlt": "Carteira vazia",
+      "title": "Nenhuma conta encontrada.",
+      "message": "Clique em \"Adicionar conta\" para começar."
+    },
+    "deleteModal": {
+      "title": "Excluir Conta"
+    }
+  },
+  "notifications": {
+    "accountSaveSuccess": "Conta salva com sucesso!",
+    "accountSaveError": "Erro ao salvar a conta. Por favor, tente novamente.",
+    "accountDeleteSuccess": "Conta excluída com sucesso.",
+    "accountDeleteError": "Erro ao excluir a conta. Por favor, tente novamente.",
+    "accountNotFound": "Conta não encontrada.",
+    "accountAlreadyExists": "Já existe uma conta com esta descrição.",
+    "noAccountSelected": "Nenhuma conta selecionada.",
+    "accountConflictError": "Você não pode excluir uma conta que possui transações ou assinaturas associadas a ela."
+  }
+}

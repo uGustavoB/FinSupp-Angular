@@ -1,0 +1,31 @@
+{
+  "accountManagement": {
+    "title": "Account Management",
+    "buttons": {
+      "addAccount": "Add account",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "card": {
+      "paymentDetails": "Closing day: {{closingDay}}, Payment due day: {{paymentDueDay}}"
+    },
+    "emptyState": {
+      "imageAlt": "Empty wallet",
+      "title": "No accounts found.",
+      "message": "Click on \"Add account\" to get started."
+    },
+    "deleteModal": {
+      "title": "Delete Account"
+    }
+  },
+  "notifications": {
+    "accountSaveSuccess": "Account saved successfully!",
+    "accountSaveError": "Error saving account. Please try again.",
+    "accountDeleteSuccess": "Account deleted successfully.",
+    "accountDeleteError": "Error deleting account. Please try again.",
+    "accountNotFound": "Account not found.",
+    "accountAlreadyExists": "An account with this description already exists.",
+    "noAccountSelected": "No account selected.",
+    "accountConflictError": "You cannot delete an account that has transactions or subscriptions associated with it."
+  }
+}

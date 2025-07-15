@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DeleteModalComponent } from '../util/delete-modal/delete-modal.component';
 import { Account, AccountsService, Bank } from '../../services/accounts/accounts.service';
 import { itemAnimation } from '../../animations/ItemAnimation';
 import { CreateAccountData, CreateAccountModalComponent } from '../inputs/create-accont-modal/create-accont-modal.component';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-accounts',
@@ -13,13 +14,16 @@ import { ToastrService } from 'ngx-toastr';
     CommonModule,
     MatIconModule,
     DeleteModalComponent,
-    CreateAccountModalComponent
+    CreateAccountModalComponent,
+    TranslateModule
   ],
   templateUrl: './accounts.component.html',
   styleUrl: './accounts.component.css',
   animations: [itemAnimation]
 })
 export class AccountsComponent implements OnInit, OnDestroy{
+  private translate = inject(TranslateService);
+
   showCreateAccountModal = false;
   showDeleteModal = false;
   selectedAccountIdToDelete: number | null = null;
@@ -78,15 +82,24 @@ export class AccountsComponent implements OnInit, OnDestroy{
       // EDIT
       this.accountsService.updateAccount(formData).subscribe({
         next: () => {
-          this.toastr.success('Conta atualizada com sucesso!');
+          // this.toastr.success('Conta atualizada com sucesso!');
+          this.translate.get('notifications.accountSaveSuccess').subscribe((message: string) => {
+            this.toastr.success(message);
+          });
         },
         error: (err) => {
           if (err.status === 404) {
-            this.toastr.error('Conta não encontrada.');
+            this.translate.get('notifications.accountNotFound').subscribe((message: string) => {
+              this.toastr.error(message);
+            });
           } else if (err.status === 409) {
-            this.toastr.error('Já existe uma conta com essa descrição.');
+            this.translate.get('notifications.accountAlreadyExists').subscribe((message: string) => {
+              this.toastr.error(message);
+            });
           } else {
-            this.toastr.error('Erro ao atualizar conta.');
+            this.translate.get('notifications.accountSaveError').subscribe((message: string) => {
+              this.toastr.error(message);
+            });
           }
         }
       });
@@ -94,13 +107,19 @@ export class AccountsComponent implements OnInit, OnDestroy{
       // CREATE
       this.accountsService.createAccount(formData).subscribe({
         next: () => {
-          this.toastr.success('Conta criada com sucesso!');
+          this.translate.get('notifications.accountCreateSuccess').subscribe((message: string) => {
+            this.toastr.success(message);
+          });
         },
         error: (err) => {
           if (err.status === 409) {
-            this.toastr.error('Já existe uma conta com essa descrição.');
+            this.translate.get('notifications.accountAlreadyExists').subscribe((message: string) => {
+              this.toastr.error(message);
+            });
           } else {
-            this.toastr.error('Erro ao criar conta.');
+            this.translate.get('notifications.accountSaveError').subscribe((message: string) => {
+              this.toastr.error(message);
+            });
           }
         }
       });
@@ -122,21 +141,31 @@ export class AccountsComponent implements OnInit, OnDestroy{
 
   handleDeleteAccountConfirm(): void {
     if (!this.selectedAccountIdToDelete) {
-      this.toastr.error('Nenhuma conta selecionada para exclusão.');
+      this.translate.get('notifications.noAccountSelected').subscribe((message: string) => {
+        this.toastr.error(message);
+      });
       return;
     }
 
     this.accountsService.deleteAccount(this.selectedAccountIdToDelete).subscribe({
       next: () => {
-        this.toastr.success('Conta excluída com sucesso!');
+        this.translate.get('notifications.accountDeleteSuccess').subscribe((message: string) => {
+          this.toastr.success(message);
+        });
       },
       error: (err) => {
         if (err.status === 404) {
-          this.toastr.error('Conta não encontrada.');
+          this.translate.get('notifications.accountNotFound').subscribe((message: string) => {
+            this.toastr.error(message);
+          });
         } else if (err.status === 409) {
-          this.toastr.error('Não é possível excluir uma conta com transações ou assinaturas.');
+          this.translate.get('notifications.account.deleteError').subscribe((message: string) => {
+            this.toastr.error(message);
+          });
         } else {
-          this.toastr.error('Erro ao excluir conta.');
+          this.translate.get('notifications.accountSaveError').subscribe((message: string) => {
+            this.toastr.error(message);
+          });
         }
       }
     });
@@ -148,4 +177,3 @@ export class AccountsComponent implements OnInit, OnDestroy{
     this.showDeleteModal = false;
   }
 }
-
