@@ -1,4 +1,24 @@
 {
+  "general": {
+    "loading": "Carregando...",
+    "error": "Ocorreu um erro. Por favor, tente novamente.",
+    "success": "Operação concluída com sucesso!",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Salvar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "add": "Adicionar",
+    "close": "Fechar",
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Próximo",
+      "first": "Primeiro",
+      "last": "Último",
+      "page": "Página",
+      "of": "de"
+    }
+  },
   "navbar": {
     "title": "FinSupp",
     "userMenu": {
@@ -134,6 +154,53 @@
     },
     "deleteModal": {
       "title": "Excluir Categoria"
+    },
+    "notifications": {
+      "categorySaveSuccess": "Categoria salva com sucesso!",
+      "categorySaveError": "Erro ao salvar a categoria. Por favor, tente novamente.",
+      "categoryDeleteSuccess": "Categoria excluída com sucesso.",
+      "categoryDeleteError": "Erro ao excluir a categoria. Por favor, tente novamente.",
+      "categoryNotFound": "Categoria não encontrada.",
+      "categoryAlreadyExists": "Já existe uma categoria com esta descrição.",
+      "noCategorySelected": "Nenhuma categoria selecionada.",
+      "categoryConflictError": "Você não pode excluir uma categoria que possui transações associadas a ela.",
+      "errorFetchingCategories": "Erro ao buscar categorias. Por favor, tente novamente."
+    }
+  },
+  "transactionManagement": {
+    "name": "Transações",
+    "title": "Gerenciamento de Transações",
+    "buttons": {
+      "addTransaction": "Adicionar transação"
+    },
+    "tableHeaders": {
+      "date": "Data",
+      "description": "Descrição",
+      "amount": "Valor",
+      "category": "Categoria",
+      "account": "Conta",
+      "type": "Tipo",
+      "actions": "Ações",
+      "bill": "Fatura"
+    },
+    "emptyState": {
+      "imageAlt": "Sem transações",
+      "title": "Nenhuma transação encontrada.",
+      "message": "Clique em \"Adicionar transação\" para começar."
+    },
+    "deleteModal": {
+      "title": "Excluir Transação"
+    },
+    "notifications": {
+      "transactionSaveSuccess": "Transação salva com sucesso!",
+      "transactionSaveError": "Erro ao salvar a transação. Por favor, tente novamente.",
+      "transactionDeleteSuccess": "Transação excluída com sucesso.",
+      "transactionDeleteError": "Erro ao excluir a transação. Por favor, tente novamente.",
+      "transactionNotFound": "Transação não encontrada.",
+      "transactionAlreadyExists": "Já existe uma transação com esta descrição.",
+      "noTransactionSelected": "Nenhuma transação selecionada.",
+      "transactionConflictError": "Você não pode excluir uma transação que possui faturas ou assinaturas associadas a ela.",
+      "errorFetchingTransactions": "Erro ao buscar transações. Por favor, tente novamente."
     }
   },
   "notifications": {

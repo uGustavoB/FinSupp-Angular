@@ -41,7 +41,9 @@ export class CategoriesComponent {
       },
       error: (err) => {
         this.loaded = true;
-        this.toastr.error('Erro ao buscar categorias');
+        this.translate.get('categoryManagement.notifications.errorFetchingCategories').subscribe((message: string) => {
+          this.toastr.error(message, 'Error');
+        });
         console.error('Erro ao buscar categorias', err)
       }
     });

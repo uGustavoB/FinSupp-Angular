@@ -1,12 +1,12 @@
 <main class="flex-1 overflow-y-auto p-4 md:p-6">
   <div class="space-y-6">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-      <h1 class="text-2xl sm:text-3xl font-bold">Transações</h1>
+      <h1 class="text-2xl sm:text-3xl font-bold">{{ 'transactionManagement.name' | translate }}</h1>
 
       <div class="flex flex-col sm:flex-row gap-2">
         <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-«rc8»" data-state="closed">
           <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-plus mr-2 h-4 w-4">add</mat-icon>
-          Adicionar transação
+          {{  'transactionManagement.buttons.addTransaction' | translate }}
         </button>
       </div>
     </div>
@@ -20,11 +20,11 @@
                 <thead class="bg-background">
                   <tr class="transition-colors hover:bg-muted/50 border-b">
                     <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground w-12"></th>
-                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Descrição</th>
-                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Categoria</th>
-                    <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground">Conta</th>
-                    <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground">Data</th>
-                    <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground">Valor</th>
+                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{{ 'transactionManagement.tableHeaders.description' | translate }}</th>
+                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground">{{ 'transactionManagement.tableHeaders.category' | translate }}</th>
+                    <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground">{{ 'transactionManagement.tableHeaders.account' | translate }}</th>
+                    <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground">{{ 'transactionManagement.tableHeaders.date' | translate }}</th>
+                    <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground">{{ 'transactionManagement.tableHeaders.amount' | translate }}</th>
                     <th class="h-12 px-4 text-center align-middle font-medium text-muted-foreground w-12"></th>
                   </tr>
                 </thead>
@@ -41,7 +41,7 @@
                         <div class="flex items-center gap-2 text-sm text-muted-foreground">
                           <div *ngIf="transaction.addToBill" class="text-xs inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card h-4 w-4 mr-1"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
-                            Fatura
+                            {{ 'transactionManagement.tableHeaders.bill' | translate }}
                           </div>
                           <div *ngIf="transaction.installments > 1" class="text-xs inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors">
                             {{ transaction.installments }}x
@@ -52,13 +52,13 @@
 
                     <td class="p-4 align-middle">
                       <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 text-xs">
-                        {{ getCategoryDescription(transaction.category) }}
+                        {{ getCategoryDescription(transaction.category) | translate }}
                       </div>
                     </td>
 
                     <td class="p-4 align-middle text-center text-sm text-muted-foreground">{{ getAccountDescription(transaction.accountId) }}</td>
 
-                    <td class="p-4 align-middle text-center text-sm text-muted-foreground">{{ transaction.transactionDate | date: "d 'de' MMM 'de' y" }}</td>
+                    <td class="p-4 align-middle text-center text-sm text-muted-foreground">{{ transaction.transactionDate | date }}</td>
 
                     <td class="p-4 align-middle text-center">
                       <span *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" class="font-medium text-red-600">- {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
@@ -108,7 +108,7 @@
           <div class="flex items-center justify-between text-sm">
             <div class="text-muted-foreground">
               <div>{{ getAccountDescription(transaction.accountId) }}</div>
-              <div>{{ transaction.transactionDate | date: "d 'de' MMM 'de' y" }}</div>
+              <div>{{ transaction.transactionDate | date }}</div>
             </div>
 
             <span *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" class="font-medium text-red-600">- {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
@@ -118,18 +118,18 @@
       </div>
     </div>
 
-    <div class="flex items-center justify-center space-x-2 py-4">
-        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-4" [disabled]="currentPage === 0" (click)="previousPage()">Previous</button>
+    <div *ngIf="loaded && transactions.length > 0" class="flex items-center justify-center space-x-2 py-4">
+        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-4" [disabled]="currentPage === 0" (click)="previousPage()">{{ 'general.pagination.previous' | translate }}</button>
 
-        <span class="text-sm px-4">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+        <span class="text-sm px-4">{{ 'general.pagination.page' | translate }} {{ currentPage + 1 }} {{ 'general.pagination.of' | translate }} {{ totalPages }}</span>
 
-        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-4" [disabled]="currentPage + 1 === totalPages" (click)="nextPage()">Next</button>
+        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-4" [disabled]="currentPage + 1 === totalPages" (click)="nextPage()">{{ 'general.pagination.next' | translate }}</button>
     </div>
 
     <div *ngIf="loaded && transactions.length === 0" class="text-center text-muted-foreground">
       <img src="assets/svg/Social.svg" alt="No transactions" class="mx-auto h-80">
-      <h2 class="text-lg font-semibold">Nenhuma transação encontrada</h2>
-      <p class="text-sm">Parece que você ainda não registrou nenhuma transação. Comece adicionando uma!</p>
+      <h2 class="text-lg font-semibold">{{ 'transactionManagement.emptyState.title' | translate }}</h2>
+      <p class="text-sm">{{ 'transactionManagement.emptyState.message' | translate }}</p>
     </div>
   </div>
 </main>

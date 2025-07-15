@@ -1,4 +1,24 @@
 {
+  "general": {
+    "loading": "Loading...",
+    "error": "An error occurred. Please try again.",
+    "success": "Operation completed successfully!",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "close": "Close",
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "first": "First",
+      "last": "Last",
+      "page": "Page",
+      "of": "of"
+    }
+  },
   "navbar": {
     "title": "FinSupp",
     "userMenu": {
@@ -134,6 +154,53 @@
     },
     "deleteModal": {
       "title": "Delete Category"
+    },
+    "notifications": {
+      "categorySaveSuccess": "Category saved successfully!",
+      "categorySaveError": "Error saving category. Please try again.",
+      "categoryDeleteSuccess": "Category deleted successfully.",
+      "categoryDeleteError": "Error deleting category. Please try again.",
+      "categoryNotFound": "Category not found.",
+      "categoryAlreadyExists": "A category with this name already exists.",
+      "noCategorySelected": "No category selected.",
+      "categoryConflictError": "You cannot delete a category that has transactions associated with it.",
+      "errorFetchingCategories": "Error fetching categories. Please try again."
+    }
+  },
+  "transactionManagement": {
+    "name": "Transactions",
+    "title": "Transaction Management",
+    "buttons": {
+      "addTransaction": "Add transaction"
+    },
+    "tableHeaders": {
+      "date": "Date",
+      "description": "Description",
+      "amount": "Amount",
+      "category": "Category",
+      "account": "Account",
+      "type": "Type",
+      "actions": "Actions",
+      "bill": "Bill"
+    },
+    "emptyState": {
+      "imageAlt": "No transactions",
+      "title": "No transactions found.",
+      "message": "Click on \"Add transaction\" to get started."
+    },
+    "deleteModal": {
+      "title": "Delete Transaction"
+    },
+    "notifications": {
+      "transactionSaveSuccess": "Transaction saved successfully!",
+      "transactionSaveError": "Error saving transaction. Please try again.",
+      "transactionDeleteSuccess": "Transaction deleted successfully.",
+      "transactionDeleteError": "Error deleting transaction. Please try again.",
+      "transactionNotFound": "Transaction not found.",
+      "transactionAlreadyExists": "A transaction with this description already exists.",
+      "noTransactionSelected": "No transaction selected.",
+      "transactionConflictError": "You cannot delete a transaction that has associated invoices or subscriptions.",
+      "errorFetchingTransactions": "Error fetching transactions. Please try again."
     }
   },
   "notifications": {
