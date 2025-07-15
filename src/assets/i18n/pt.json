@@ -27,6 +27,72 @@
     "settings": "Configurações",
     "exit": "Sair"
   },
+  "login": {
+    "description": "Sua solução completa para gerenciamento financeiro",
+    "activeTab": {
+      "login": {
+        "welcome": "Bem-vindo de volta!",
+        "description": "Entre para acessar sua conta."
+      },
+      "register": {
+        "welcome": "Criar nova conta",
+        "description": "Preencha os campos abaixo."
+      }
+    },
+    "inputs": {
+      "name": {
+        "title": "Nome:",
+        "placeholder": "Digite seu nome"
+      },
+      "email": {
+        "title": "Email:",
+        "placeholder": "Digite seu email"
+      },
+      "password": {
+        "title": "Senha:",
+        "placeholder": "Digite sua senha"
+      }
+    },
+    "buttons": {
+      "login": "Entrar",
+      "register": "Criar conta"
+    },
+    "notHaveAccount": {
+      "login": "Não tem uma conta?",
+      "register": "Já tem uma conta?",
+      "create": "Criar agora",
+      "enter": "Entrar"
+    },
+    "benefits": {
+      "title": "Gerencie suas finanças com facilidade.",
+      "trackExpenses": {
+        "title": "Rastreie suas despesas",
+        "description": "Monitore todas as suas transações em um só lugar."
+      },
+      "manageBankAccounts": {
+        "title": "Gerencie várias contas bancárias",
+        "description": "Acompanhe todas as suas contas bancárias."
+      },
+      "invoiceManagement": {
+        "title": "Gestão de faturas",
+        "description": "Nunca perca um pagamento com nosso sistema de rastreamento de faturas."
+      },
+      "subscriptionTracking": {
+        "title": "Rastreamento de assinaturas",
+        "description": "Fique de olho em suas despesas recorrentes."
+      }
+    },
+    "notifications": {
+      "loginSuccess": "Login bem-sucedido!",
+      "registerSuccess": "Registro realizado com sucesso!",
+      "loginFail": "Erro ao fazer login. Verifique as credenciais.",
+      "registerFail": "Erro ao registrar. Verifique os dados.",
+      "fillAllFields": {
+        "login": "Por favor, preencha todos os campos de login.",
+        "register": "Por favor, preencha todos os campos de registro."
+      }
+    }
+  },
   "accountManagement": {
     "name": "Contas",
     "title": "Gestão de Contas",
@@ -37,8 +103,8 @@
     },
     "types": {
       "checking": "Conta Corrente",
-      "savings": "Poupança",
-      "investment": "Investimento",
+      "savings": "Conta Poupança",
+      "investment": "Conta de Investimento",
       "other": "Outro"
     },
     "card": {

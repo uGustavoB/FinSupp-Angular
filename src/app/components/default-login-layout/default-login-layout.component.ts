@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginService } from '../../services/auth/login/login.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-default-login-layout',
@@ -13,12 +14,15 @@ import { ToastrService } from 'ngx-toastr';
     CommonModule,
     FormsModule,
     MatIconModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    TranslateModule
   ],
   templateUrl: './default-login-layout.component.html',
   styleUrls: ['./default-login-layout.component.css']
 })
 export class DefaultLoginLayoutComponent implements OnInit {
+  private translate = inject(TranslateService);
+
   theme = localStorage.getItem("theme") || 'dark';
   activeTab: 'login' | 'register' = 'login';
 
@@ -28,26 +32,77 @@ export class DefaultLoginLayoutComponent implements OnInit {
 
   benefits = [
     {
-      title: 'Rastreie suas despesas',
-      description: 'Monitore todas as suas transações em um só lugar.',
+      title: 'login.benefits.trackExpenses.title',
+      description: 'login.benefits.trackExpenses.description',
     },
     {
-      title: 'Gerencie várias contas bancárias',
-      description: 'Acompanhe todas as suas contas bancárias.',
+      title: 'login.benefits.manageBankAccounts.title',
+      description: 'login.benefits.manageBankAccounts.description',
     },
     {
-      title: 'Gestão de faturas',
-      description: 'Nunca perca um pagamento com nosso sistema de rastreamento de faturas.',
+      title: 'login.benefits.invoiceManagement.title',
+      description: 'login.benefits.invoiceManagement.description',
     },
     {
-      title: 'Rastreamento de assinaturas',
-      description: 'Fique de olho em suas despesas recorrentes.',
+      title: 'login.benefits.subscriptionTracking.title',
+      description: 'login.benefits.subscriptionTracking.description',
     }
   ];
+
+  get activeTabWelcomeKey(): string {
+    return this.activeTab === 'login'
+      ? 'login.activeTab.login.welcome'
+      : 'login.activeTab.register.welcome';
+  }
+
+  get activeTabDescriptionKey(): string {
+    return this.activeTab === 'login'
+      ? 'login.activeTab.login.description'
+      : 'login.activeTab.register.description';
+  }
+
+  get namePlaceholder(): string {
+    return this.activeTab === 'login'
+      ? 'login.inputs.name.placeholder'
+      : 'login.inputs.name.placeholder';
+  }
+
+  get emailPlaceholder(): string {
+    return this.activeTab === 'login'
+      ? 'login.inputs.email.placeholder'
+      : 'login.inputs.email.placeholder';
+  }
+
+  get passwordPlaceholder(): string {
+    return this.activeTab === 'login'
+      ? 'login.inputs.password.placeholder'
+      : 'login.inputs.password.placeholder';
+  }
+
+  get nameLabel(): string {
+    return this.activeTab === 'login'
+      ? 'login.inputs.name.title'
+      : 'login.inputs.name.title';
+  }
+
+  get emailLabel(): string {
+    return this.activeTab === 'login'
+      ? 'login.inputs.email.title'
+      : 'login.inputs.email.title';
+  }
+
+  get passwordLabel(): string {
+    return this.activeTab === 'login'
+      ? 'login.inputs.password.title'
+      : 'login.inputs.password.title';
+  }
 
   constructor(private loginService: LoginService, private router: Router, private toastr: ToastrService) {}
 
   ngOnInit(): void {
+    const lang = localStorage.getItem('language') || 'pt';
+    this.translate.use(lang);
+
     if (this.theme === 'light') {
       document.documentElement.classList.remove('dark');
     } else {
@@ -80,12 +135,16 @@ export class DefaultLoginLayoutComponent implements OnInit {
   login(email: string, password: string): void {
     this.loginService.login(email, password).subscribe({
       next: (response) => {
-        this.toastr.success('Login realizado com sucesso!');
+        this.translate.get('login.notifications.loginSuccess').subscribe((message: string) => {
+          this.toastr.success(message);
+        });
         this.router.navigate(['/accounts']);
       },
       error: (err) => {
         console.error('Erro no login:', err);
-        this.toastr.error('Erro ao fazer login. Verifique as credenciais.');
+        this.translate.get('login.notifications.loginFail').subscribe((message: string) => {
+          this.toastr.error(message);
+        });
       }
     });
   }
@@ -93,12 +152,16 @@ export class DefaultLoginLayoutComponent implements OnInit {
   register(name: string, email: string, password: string): void {
     this.loginService.register(name, email, password).subscribe({
       next: (response) => {
-        this.toastr.success('Registro realizado com sucesso!');
+        this.translate.get('login.notifications.registerSuccess').subscribe((message: string) => {
+          this.toastr.success(message);
+        });
         this.router.navigate(['/accounts']);
       },
       error: (err) => {
         console.error('Erro no registro:', err);
-        this.toastr.error('Erro ao registrar. Verifique os dados.');
+        this.translate.get('login.notifications.registerFail').subscribe((message: string) => {
+          this.toastr.error(message);
+        });
       }
     });
   }

@@ -27,6 +27,72 @@
     "settings": "Settings",
     "exit": "Exit"
   },
+  "login": {
+    "description": "Your complete financial management solution",
+    "activeTab": {
+      "login": {
+        "welcome": "Welcome back!",
+        "description": "Log in to access your account."
+      },
+      "register": {
+        "welcome": "Create new account",
+        "description": "Fill in the fields below."
+      }
+    },
+    "inputs": {
+      "name": {
+        "title": "Name:",
+        "placeholder": "Enter your name"
+      },
+      "email": {
+        "title": "Email:",
+        "placeholder": "Enter your email"
+      },
+      "password": {
+        "title": "Password:",
+        "placeholder": "Enter your password"
+      }
+    },
+    "buttons": {
+      "login": "Login",
+      "register": "Create account"
+    },
+    "notHaveAccount": {
+      "login": "Don't have an account?",
+      "register": "Already have an account?",
+      "create": "Create now",
+      "enter": "Login"
+    },
+    "benefits": {
+      "title": "Manage your finances with ease.",
+      "trackExpenses": {
+        "title": "Track your expenses",
+        "description": "Monitor all your transactions in one place."
+      },
+      "manageBankAccounts": {
+        "title": "Manage multiple bank accounts",
+        "description": "Keep track of all your bank accounts."
+      },
+      "invoiceManagement": {
+        "title": "Invoice management",
+        "description": "Never miss a payment with our invoice tracking system."
+      },
+      "subscriptionTracking": {
+        "title": "Subscription tracking",
+        "description": "Keep an eye on your recurring expenses."
+      }
+    },
+    "notifications": {
+      "loginSuccess": "Login successful!",
+      "registerSuccess": "Registration completed successfully!",
+      "loginFail": "Login failed. Please check your credentials.",
+      "registerFail": "Registration failed. Please check the data.",
+      "fillAllFields": {
+        "login": "Please fill in all login fields.",
+        "register": "Please fill in all registration fields."
+      }
+    }
+  },
   "accountManagement": {
     "name": "Accounts",
     "title": "Account Management",
