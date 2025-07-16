@@ -27,6 +27,13 @@ export class CategoriesService {
     );
   }
 
+  getCategoriesCached(): Observable<Category[]> {
+    if (this.categoryCache.size > 0) {
+      return of(Array.from(this.categoryCache.values()));
+    }
+
+    return this.getCategories();
+  }
 
   getCategoryById(id: number): Observable<Category> {
     const cached = this.categoryCache.get(id);

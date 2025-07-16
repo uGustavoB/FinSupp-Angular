@@ -3,7 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { itemAnimation } from '../../animations/ItemAnimation';
 import { Transaction, TransactionsService } from '../../services/transactions/transactions.service';
-import { CategoriesService } from '../../services/categories/categories.service';
+import { CategoriesService, Category } from '../../services/categories/categories.service';
 import { AccountsService } from '../../services/accounts/accounts.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -50,7 +50,7 @@ export class TransactionsComponent implements OnInit {
         this.loaded = true;
         this.currentPage = pagination ? pagination?.currentPage : 1;
         this.totalPages = pagination ? pagination?.totalPages : 1;
-        this.loadCategoriesForTransactions(data);
+        this.loadCategories();
       },
       error: (err) => {
         this.loaded = true;
@@ -59,17 +59,17 @@ export class TransactionsComponent implements OnInit {
     });
   }
 
-  loadCategoriesForTransactions(transactions: Transaction[]) {
-    transactions.forEach(transaction => {
-      const categoryId = transaction.category;
-
-      if (!this.categoriesDescriptions.has(categoryId)) {
-        this.categoriesService.getCategoryById(categoryId).subscribe({
-          next: (category) => this.categoriesDescriptions.set(categoryId, category.description),
-          error: (err) => console.warn(`Erro ao carregar categoria ${categoryId}`, err)
+  loadCategories() {
+    this.categoriesService.getCategoriesCached().subscribe({
+      next: (response) => {
+        response.forEach(category => {
+          this.categoriesDescriptions.set(category.id, category.description);
         });
-      }
-    })
+      },
+      error (err) {
+        console.error('Erro ao buscar categorias', err);
+      },
+    });
   }
 
   getCategoryDescription(categoryId: number): string {
@@ -81,7 +81,6 @@ export class TransactionsComponent implements OnInit {
       this.accountsDescriptions.set(account.id, account.description);
     });
   }
-
 
   getAccountDescription(accountId: number): string {
     let account = this.accountsDescriptions.get(accountId);
