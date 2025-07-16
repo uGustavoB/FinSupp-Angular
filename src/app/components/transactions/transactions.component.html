@@ -32,8 +32,8 @@
                 <tbody @itemAnimation>
                   <tr @itemAnimation *ngFor="let transaction of transactions" class="border-b transition-colors data-[state=selected]:bg-muted hover:bg-muted/50">
                     <td class="p-4 text-center">
-                      <mat-icon *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" fontSet="material-symbols-rounded" class="lucide h-7 w-7 text-destructive">output_circle</mat-icon>
-                      <mat-icon *ngIf="transaction.type === 'DEPOSIT'" fontSet="material-symbols-rounded" class="lucide h-5 w-5 text-emerald-500">input_circle</mat-icon>
+                      <mat-icon *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" fontSet="material-symbols-rounded" class="lucide h-7 w-7 text-red-600">output_circle</mat-icon>
+                      <mat-icon *ngIf="transaction.type === 'DEPOSIT'" fontSet="material-symbols-rounded" class="lucide h-5 w-5 text-green-500">input_circle</mat-icon>
                     </td>
                     <td class="p-4 align-middle">
                       <div class="space-y-1">
@@ -62,7 +62,7 @@
 
                     <td class="p-4 align-middle text-center">
                       <span *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" class="font-medium text-red-600">- {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
-                      <span *ngIf="transaction.type === 'DEPOSIT'" class="text-sm text-emerald-500">+ {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
+                      <span *ngIf="transaction.type === 'DEPOSIT'" class="text-sm text-green-500">+ {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
                     </td>
 
                     <td class="align-middle">
@@ -88,7 +88,7 @@
               <div>
                 <div class="flex gap-4 items-center">
                   <mat-icon *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" fontSet="material-symbols-rounded" class="lucide h-7 w-7 text-destructive">output_circle</mat-icon>
-                  <mat-icon *ngIf="transaction.type === 'DEPOSIT'" fontSet="material-symbols-rounded" class="lucide h-5 w-5 text-emerald-500">input_circle</mat-icon>
+                  <mat-icon *ngIf="transaction.type === 'DEPOSIT'" fontSet="material-symbols-rounded" class="lucide h-5 w-5 text-green-500">input_circle</mat-icon>
 
                   <h3 class="font-medium text-sm align-middle">{{ transaction.description }}</h3>
                 </div>
@@ -112,7 +112,7 @@
             </div>
 
             <span *ngIf="transaction.type === 'WITHDRAW' || transaction.type === 'TRANSFER'" class="font-medium text-red-600">- {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
-            <span *ngIf="transaction.type === 'DEPOSIT'" class="text-sm text-emerald-500">+ {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
+            <span *ngIf="transaction.type === 'DEPOSIT'" class="text-sm text-green-500">+ {{ transaction.amount | currency:'BRL':'symbol':'1.2-3' }}</span>
           </div>
         </div>
       </div>

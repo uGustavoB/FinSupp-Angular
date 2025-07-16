@@ -89,6 +89,10 @@ export class SidebarComponent {
 
   constructor(private Router: Router) {}
 
+  isActiveRoute(route: string): boolean {
+    return this.Router.url === route;
+  }
+
   redirectTo(route: string) {
     this.Router.navigate([route]);
   }
