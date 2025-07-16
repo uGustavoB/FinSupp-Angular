@@ -36,7 +36,7 @@ export class CategoriesService {
     }
 
     return this.api.get<Category[]>(`${this.apiUrl}/categories/?id=${id}`).pipe(
-      map(categories => categories.data[0]) // Pega o primeiro da lista
+      map(categories => categories.data[0])
     );
   }
 }

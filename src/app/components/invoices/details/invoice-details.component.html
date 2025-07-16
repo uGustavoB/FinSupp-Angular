@@ -54,7 +54,7 @@
                   <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{{ item.description }}</td>
 
                   <td class="p-4 align-middle [&:has([role=checkbox])]:pr-0 text-center">
-                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-purple-50 text-purple-700">
+                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 ">
                       {{ item.transactionId ? 'Transação' : 'Assinatura' }}
                     </div>
                   </td>
@@ -77,13 +77,7 @@
           </div>
         </div>
 
-
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <div class="rounded-lg border p-4 bg-muted/20">
+        <div class="rounded-lg border p-4 bg-muted/20">
           <h3 class="text-lg font-semibold mb-3">Resumo da Fatura</h3>
 
           <div class="space-y-2">
@@ -105,8 +99,14 @@
             </div>
           </div>
         </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div>
     <div class="sm:justify-end sm:space-x-2 pt-4 flex flex-col sm:flex-row gap-2">
-      <button class="ring-offset-background focus-visible:outline-hidden focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border-input bg-background hover:bg-accent hover:text-accent-foreground border h-10 px-4 py-2 w-full sm:w-auto">Close</button>
+      <button (click)="onCancel()" class="ring-offset-background focus-visible:outline-hidden focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border-input bg-background hover:bg-accent hover:text-accent-foreground border h-10 px-4 py-2 w-full sm:w-auto">Close</button>
     </div>
   </div>
 </div>

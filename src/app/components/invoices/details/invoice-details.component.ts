@@ -1,94 +1,30 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { fadeSlide } from '../../../animations/FadeSlide';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Invoice } from '../../../services/invoices/invoices.service';
+import { InvoiceDetailsService, InvoiceItem } from '../../../services/invoices/details/invoice-details.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-invoice-details',
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    TranslateModule
   ],
   templateUrl: './invoice-details.component.html',
   styleUrl: './invoice-details.component.css',
   animations: [fadeSlide]
 })
-export class InvoiceDetailsComponent {
-  invoiceItens = [
-    {
-      "id": 67,
-      "description": "Spotify Subscription",
-      "amount": 12,
-      "installmentNumber": 1,
-      "billId": 67,
-      "transactionId": null,
-      "subscriptionId": 67
-    },
-    {
-      "id": 79,
-      "description": "Youtube Member Subscription",
-      "amount": 13,
-      "installmentNumber": 1,
-      "billId": 67,
-      "transactionId": null,
-      "subscriptionId": 68
-    },
-    {
-      "id": 88,
-      "description": "Real Debrid",
-      "amount": 32.115,
-      "installmentNumber": 1,
-      "billId": 67,
-      "transactionId": 69,
-      "subscriptionId": null
-    },
-    {
-      "id": 92,
-      "description": "Oculos",
-      "amount": 55,
-      "installmentNumber": 1,
-      "billId": 67,
-      "transactionId": 71,
-      "subscriptionId": null
-    },
-    {
-      "id": 133,
-      "description": "Presente Bianca",
-      "amount": 264.96,
-      "installmentNumber": 1,
-      "billId": 67,
-      "transactionId": 68,
-      "subscriptionId": null
-    },
-    {
-      "id": 135,
-      "description": "Monitor Gamer",
-      "amount": 223.85,
-      "installmentNumber": 1,
-      "billId": 67,
-      "transactionId": 70,
-      "subscriptionId": null
-    },
-    {
-      "id": 137,
-      "description": "Hidratante Mãe",
-      "amount": 41,
-      "installmentNumber": 1,
-      "billId": 67,
-      "transactionId": 67,
-      "subscriptionId": null
-    },
-    {
-      "id": 138,
-      "description": "Crédito Celular",
-      "amount": 25,
-      "installmentNumber": 1,
-      "billId": 67,
-      "transactionId": 72,
-      "subscriptionId": null
-    }
-  ];
+export class InvoiceDetailsComponent implements OnInit{
+  constructor(private invoiceDetailsService: InvoiceDetailsService) { }
+
+  private translate = inject(TranslateService);
+
+  invoiceItens: InvoiceItem[] = [];
+
+  loaded: boolean = false;
 
   @Input() invoice: Invoice | null = null;
 
@@ -101,6 +37,21 @@ export class InvoiceDetailsComponent {
 
   onCancel(): void {
     this.cancel.emit();
+  }
+
+  ngOnInit(): void {
+    this.invoiceDetailsService.getCategoryById(this.invoice?.id || 0).subscribe({
+      next: (data) => {
+        this.invoiceItens = data;
+        this.loaded = true;
+      },
+      error: (err) => {
+        this.loaded = true;
+        this.translate.get('invoiceDetails.notifications.errorFetchingItems').subscribe((message: string) => {
+          console.error(message, err);
+        });
+      }
+    });
   }
 
   get transactionCount(): {length: number, total: number} {
