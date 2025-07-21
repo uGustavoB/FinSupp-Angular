@@ -23,7 +23,7 @@ export class InvoiceDetailsService {
   constructor(private api: ApiService) { }
 
   getCategoryById(id: number): Observable<InvoiceItem[]> {
-    return this.api.get<InvoiceItem[]>(`${this.apiUrl}/bills/${id}/items`).pipe(
+    return this.api.get<InvoiceItem[]>(`${this.apiUrl}/bills/${id}/items?page=0&size=50`).pipe(
       map(invoiceItems => invoiceItems.data)
     );
   }

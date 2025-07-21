@@ -16,35 +16,62 @@
         </div>
       </div>
 
-      <div class="relative inline-block text-left">
+      <div class="relative inline-block text-left" #menuRef>
+        <button type="button" (click)="toggleMenu()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+          <mat-icon *ngIf="theme === 'light'" fontSet="material-symbols-rounded" class="h-4 w-4 font-light">
+            light_mode
+          </mat-icon>
 
-        <div class="relative inline-block text-left" #menuRef>
-          <button type="button" (click)="toggleMenu()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-            <mat-icon *ngIf="theme === 'light'" fontSet="material-symbols-rounded" class="h-4 w-4 font-light">
-              light_mode
-            </mat-icon>
-            <mat-icon *ngIf="theme === 'dark'" fontSet="material-symbols-rounded" class="h-4 w-4 font-light">
-              dark_mode
-            </mat-icon>
+          <div role="separator" aria-orientation="horizontal" class="-mx-1 my-1 h-px bg-muted"></div>
+
+          <mat-icon *ngIf="theme === 'dark'" fontSet="material-symbols-rounded" class="h-4 w-4 font-light">
+            dark_mode
+          </mat-icon>
+        </button>
+
+        <div *ngIf="themeMenuOpen" class="absolute p-1 right-0 mt-1 w-40 bg-background border rounded-lg shadow-lg z-50">
+          <button (click)="setTheme('light')" class="rounded w-full text-left px-4 py-2 bg-background hover:bg-muted" >
+            {{  'navbar.themes.light' | translate }}
           </button>
 
-          <div *ngIf="menuOpen" class="absolute p-1 right-0 mt-1 w-40 bg-background border rounded-lg shadow-lg z-50">
-            <button (click)="setTheme('light')" class="rounded w-full text-left px-4 py-2 bg-background hover:bg-muted" >
-              {{  'navbar.themes.light' | translate }}
-            </button>
+          <div role="separator" aria-orientation="horizontal" class="-mx-1 my-1 h-px bg-muted"></div>
 
-            <button (click)="setTheme('dark')" class="rounded w-full text-left px-4 py-2 bg-background hover:bg-muted">
-              {{  'navbar.themes.dark' | translate }}
-            </button>
-          </div>
+          <button (click)="setTheme('dark')" class="rounded w-full text-left px-4 py-2 bg-background hover:bg-muted">
+            {{  'navbar.themes.dark' | translate }}
+          </button>
         </div>
       </div>
 
-      <button onclick="" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 *:hover:bg-background">
-        <span class="flex items-center justify-center rounded-full bg-muted h-8 w-8">
-          {{ user_inicial }}
-        </span>
-      </button>
+      <div class="relative inline-block text-left">
+        <button (click)="toggleProfileMenu()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground h-10 w-10 *:hover:bg-background" #profileMenuRef>
+          <span class="flex items-center justify-center rounded-full bg-muted h-8 w-8">
+            {{ user_inicial }}
+          </span>
+        </button>
+
+        <div *ngIf="profileMenuOpen" class="min-w-52 absolute p-1 right-0 mt-1 w-40 bg-background border rounded-lg shadow-lg z-50">
+          <div class="px-2 py-1.5 text-sm font-normal">
+            <div class="flex flex-col space-y-1">
+              <p class="text-sm font-medium leading-none">{{ user.name }}</p>
+              <p class="text-xs leading-none text-muted-foreground">{{ user.email }}</p>
+            </div>
+          </div>
+
+          <div role="separator" aria-orientation="horizontal" class="-mx-1 my-1 h-px bg-muted"></div>
+
+          <div (click)="goToProfile()" class="relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+            <mat-icon fontSet="material-symbols-rounded" class="h-4 w-4 mr-2 font-light">person</mat-icon>
+            <span>{{ 'sidebar.profile' | translate }}</span>
+          </div>
+
+          <div role="separator" aria-orientation="horizontal" class="-mx-1 my-1 h-px bg-muted"></div>
+
+          <div (click)="logout()" class="relative flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+            <mat-icon fontSet="material-symbols-rounded" class="h-4 w-4 mr-2 font-light">logout</mat-icon>
+            <span>{{ 'sidebar.exit' | translate }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
