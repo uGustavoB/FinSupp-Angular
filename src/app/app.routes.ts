@@ -8,12 +8,17 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { TransactionsComponent } from './components/transactions/transactions.component';
 import { InvoicesComponent } from './components/invoices/invoices.component';
 import { authGuard } from './auth/auth.guard';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 export const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
     children: [
+      {
+        path: "dashboard",
+        component: DashboardComponent
+      },
       {
         path: "accounts",
         component: AccountsComponent
