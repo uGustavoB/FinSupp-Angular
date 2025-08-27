@@ -36,16 +36,16 @@ export class NavbarComponent implements OnInit {
       document.documentElement.classList.add('dark');
     }
 
-    const user: Observable<User> = this.userService.getUser();
-    user.subscribe({
-      next: (data) => {
-        this.user = data;
-        this.user_inicial = data.name.charAt(0).toUpperCase();
-      },
-      error: (err) => {
-        console.error('Error fetching user data:', err);
-      }
-    });
+    // const user: Observable<User> = this.userService.getUser();
+    // user.subscribe({
+    //   next: (data) => {
+    //     this.user = data;
+    //     this.user_inicial = data.name.charAt(0).toUpperCase();
+    //   },
+    //   error: (err) => {
+    //     console.error('Error fetching user data:', err);
+    //   }
+    // });
 
     const lang = localStorage.getItem('language') || 'pt';
     this.translate.use(lang);

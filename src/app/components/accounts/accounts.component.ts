@@ -48,7 +48,7 @@ export class AccountsComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.accountsService.getAccountsSignal();
-    this.accountsService.getBanks();
+    // this.accountsService.getBanks();
   }
 
   ngOnDestroy(): void {
@@ -68,8 +68,8 @@ export class AccountsComponent implements OnInit, OnDestroy{
     this.selectedAccountToEdit = {
       id: account.id,
       description: account.description,
-      accountType: account.accountType as 'CHECKING' | 'SAVINGS' | 'INVESTMENTS',
-      bank: account.bank,
+      // accountType: account.accountType as 'CHECKING' | 'SAVINGS' | 'INVESTMENTS',
+      // bank: account.bank,
       balance: account.balance,
       closingDay: account.closingDay,
       paymentDueDay: account.paymentDueDay

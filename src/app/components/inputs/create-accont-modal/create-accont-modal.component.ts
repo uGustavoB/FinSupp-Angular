@@ -8,8 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 
 export interface CreateAccountData {
   description: string;
-  accountType: 'CHECKING' | 'SAVINGS' | 'INVESTMENTS';
-  bank: number;
+  // bank: number;
   balance: number;
   closingDay: number;
   paymentDueDay: number;
@@ -39,6 +38,7 @@ export class CreateAccountModalComponent implements OnInit, OnChanges {
   selectedAccountType: 'CHECKING' | 'SAVINGS' | 'INVESTMENTS' | null = null;
   closingDay: number | null = null;
   paymentDueDay: number | null = null;
+  userId: number | null = null;
 
   @Input() banks: Bank[] = [];
   @Input() accountTypes: any[] = [];
@@ -88,11 +88,11 @@ export class CreateAccountModalComponent implements OnInit, OnChanges {
     this.initialBalance = this.accountToEdit.balance ?? null;
     this.closingDay = this.accountToEdit.closingDay ?? null;
     this.paymentDueDay = this.accountToEdit.paymentDueDay ?? null;
-    this.selectedAccountType = this.accountToEdit.accountType || null;
+    // this.selectedAccountType = this.accountToEdit.accountType || null;
 
-    if (this.banks && this.banks.length > 0) {
-      this.selectedBank = this.banks.find(bank => bank.id === this.accountToEdit!.bank) || null;
-    }
+    // if (this.banks && this.banks.length > 0) {
+    //   this.selectedBank = this.banks.find(bank => bank.id === this.accountToEdit!.bank) || null;
+    // }
   }
 
   private resetForm(): void {
@@ -109,30 +109,19 @@ export class CreateAccountModalComponent implements OnInit, OnChanges {
   onCreate(event?: Event): void {
     event?.preventDefault();
 
-    if (!this.description || !this.selectedBank || !this.selectedAccountType || this.initialBalance === null || this.closingDay === null || this.paymentDueDay === null) {
+    if (!this.userId || !this.description || this.initialBalance === null || this.closingDay === null || this.paymentDueDay === null) {
       this.toastr.error('Por favor, preencha todos os campos obrigatórios.');
       return;
     }
 
-    if (this.closingDay < 1 || this.closingDay > 31) {
-      this.toastr.error('O dia de fechamento deve ser entre 1 e 31.');
-      return;
-    }
-    if (this.paymentDueDay < 1 || this.paymentDueDay > 31) {
-      this.toastr.error('O dia de vencimento deve ser entre 1 e 31.');
-      return;
-    }
-
-    const accountData: CreateAccountData = {
+    const accountData: CreateAccountData & { userId: number } = {
+      userId: this.userId,
       description: this.description,
-      accountType: this.selectedAccountType,
-      bank: this.selectedBank?.id,
       balance: this.initialBalance,
       closingDay: this.closingDay,
       paymentDueDay: this.paymentDueDay
     };
 
-    // Incluir ID se estiver em modo de edição
     if (this.isEditMode && this.accountToEdit?.id) {
       accountData.id = this.accountToEdit.id;
     }

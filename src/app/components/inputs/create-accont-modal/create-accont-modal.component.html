@@ -8,6 +8,19 @@
 
   <form (ngSubmit)="onCreate($event)">
     <div class="grid gap-4 py-4">
+
+      <div class="grid gap-2">
+        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="userId">ID do usuário</label>
+        <input
+          [(ngModel)]="userId"
+          name="userId"
+          type="number"
+          class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+          id="userId"
+          required
+          placeholder="Ex: 123">
+      </div>
+
       <div class="grid gap-2">
         <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="description">Descrição</label>
         <input
@@ -20,7 +33,7 @@
           placeholder="Ex: Conta principal">
       </div>
 
-      <div class="grid gap-2">
+      <!-- <div class="grid gap-2">
         <div class="relative">
           <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="bankDropdown">Banco</label>
 
@@ -52,7 +65,7 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
 
       <div class="grid gap-2">
         <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" for="balance">{{ isEditMode ? 'Saldo atual' : 'Saldo inicial' }}</label>
