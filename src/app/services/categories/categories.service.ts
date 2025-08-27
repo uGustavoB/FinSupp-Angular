@@ -27,12 +27,21 @@ export class CategoriesService {
     );
   }
 
+  getAllCategories(): Observable<Category[]> {
+    return this.api.get<Category[]>(`${this.apiUrl}/categories/?visibility=ALL`).pipe(
+      map(response => response.data),
+      tap(categories => {
+        categories.forEach(category => this.categoryCache.set(category.id, category));
+      })
+    );
+  }
+
   getCategoriesCached(): Observable<Category[]> {
     if (this.categoryCache.size > 0) {
       return of(Array.from(this.categoryCache.values()));
     }
 
-    return this.getCategories();
+    return this.getAllCategories();
   }
 
   getCategoryById(id: number): Observable<Category> {
@@ -42,7 +51,7 @@ export class CategoriesService {
       return of(cached);
     }
 
-    return this.api.get<Category[]>(`${this.apiUrl}/categories/?id=${id}`).pipe(
+    return this.api.get<Category[]>(`${this.apiUrl}/categories/?id=${id}&visibility=ALL`).pipe(
       map(categories => categories.data[0])
     );
   }
