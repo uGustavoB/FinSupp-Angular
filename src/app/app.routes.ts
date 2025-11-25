@@ -24,7 +24,7 @@ export const routes: Routes = [
         component: AccountsComponent
       },
       {
-        path: "categories",
+        path: "",
         component: CategoriesComponent
       },
       {
@@ -32,15 +32,15 @@ export const routes: Routes = [
         component: TransactionsComponent
       },
       {
-        path: "subscriptions",
+        path: "",
         component: SubscriptionsComponent
       },
       {
-        path: "profile",
+        path: "",
         component: ProfileComponent
       },
       {
-        path: "invoices",
+        path: "",
         component: InvoicesComponent
       }
     ],
