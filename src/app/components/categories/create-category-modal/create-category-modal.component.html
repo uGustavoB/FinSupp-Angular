@@ -1,0 +1,80 @@
+<!-- Backdrop -->
+<div
+  [@fadeSlide]
+  (click)="close()"
+  class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm"
+></div>
+
+<!-- Modal -->
+<div
+  [@fadeSlide]
+  class="fixed left-1/2 top-1/2 z-50 w-[90vw] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-lg border bg-background p-6 shadow-lg"
+>
+  <!-- Header -->
+  <div class="flex flex-col space-y-1.5 text-center sm:text-left">
+    <h2 class="text-lg font-semibold leading-none tracking-tight">
+      {{ isEditMode ? 'Editar categoria' : 'Nova categoria' }}
+    </h2>
+    <p class="text-sm text-muted-foreground">
+      {{ isEditMode
+        ? 'Edite o nome da categoria'
+        : 'Crie uma nova categoria para organizar suas transações'
+      }}
+    </p>
+  </div>
+
+  <!-- Form -->
+  <form (ngSubmit)="submit()">
+    <div class="grid gap-4 py-4">
+
+      <!-- Descrição -->
+      <div class="grid gap-2">
+        <label
+          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        >
+          Descrição
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="description"
+          name="description"
+          required
+          placeholder="Ex: Alimentação"
+          class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base
+                 ring-offset-background file:border-0 file:bg-transparent file:text-sm
+                 file:font-medium file:text-foreground placeholder:text-muted-foreground
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+                 focus-visible:ring-offset-2 disabled:cursor-not-allowed
+                 disabled:opacity-50 md:text-sm"
+        />
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="md:w-[calc(50%-8px)] grid grid-cols-1 md:grid-cols-2 gap-4 ml-auto">
+      <button
+        type="button"
+        (click)="close()"
+        class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium
+               ring-offset-background transition-colors focus-visible:outline-none
+               focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+               disabled:pointer-events-none disabled:opacity-50 border border-input
+               bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4"
+      >
+        Cancelar
+      </button>
+
+      <button
+        type="submit"
+        class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium
+               ring-offset-background transition-colors focus-visible:outline-none
+               focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+               disabled:pointer-events-none disabled:opacity-50 bg-primary
+               text-primary-foreground hover:bg-primary/90 h-10 px-4 py-1"
+      >
+        {{ isEditMode ? 'Salvar alterações' : 'Criar categoria' }}
+      </button>
+    </div>
+  </form>
+</div>

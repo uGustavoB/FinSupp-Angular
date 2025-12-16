@@ -2,58 +2,58 @@
   <div class="space-y-6">
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div>
-        <h1 class="text-2xl md:text-3xl font-bold">Financial Dashboard</h1>
-        <p class="text-sm text-muted-foreground mt-1">Overview of your financial health for julho de 2025</p>
+        <h1 class="text-2xl md:text-3xl font-bold">{{ 'dashboard.title' | translate}}</h1>
+        <p class="text-sm text-muted-foreground mt-1">{{ 'dashboard.subtitle' | translate:{ monthYear: 'julho de 2025' } }}</p>
       </div>
     </div>
 
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <div class="rounded-lg border bg-card text-card-foreground shadow-2xs relative overflow-hidden">
         <div class="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
-          <h3 class="tracking-tight text-lm font-medium">Monthly Income</h3>
+          <h3 class="tracking-tight text-lm font-medium">{{ 'dashboard.cards.monthlyIncome.title' | translate }}</h3>
           <mat-icon fontSet="material-symbols-rounded" class="lucide mr-2 h-4 w-4 text-green-600">trending_up</mat-icon>
         </div>
 
         <div class="p-6 pt-0">
           <div class="text-2xl font-bold text-green-600">+{{ summary.monthlyIncome | currency:'BRL' }}</div>
-          <p class="text-xs text-muted-foreground">Total deposits this month</p>
+          <p class="text-xs text-muted-foreground">{{ 'dashboard.cards.monthlyIncome.description' | translate }}</p>
         </div>
       </div>
 
       <div class="rounded-lg border bg-card text-card-foreground shadow-2xs relative overflow-hidden">
         <div class="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
-          <h3 class="tracking-tight text-lm font-medium">Monthly Expenses</h3>
+          <h3 class="tracking-tight text-lm font-medium">{{ 'dashboard.savings.title' | translate }}</h3>
           <mat-icon fontSet="material-symbols-rounded" class="lucide mr-2 h-4 w-4 text-red-600">trending_down</mat-icon>
         </div>
 
         <div class="p-6 pt-0">
           <div class="text-2xl font-bold text-red-600">-{{ summary.monthlyExpense | currency:'BRL' }}</div>
-          <p class="text-xs text-muted-foreground">Total expenses this month</p>
+          <p class="text-xs text-muted-foreground">{{ 'dashboard.savings.description' | translate }}</p>
         </div>
       </div>
 
       <div class="rounded-lg border bg-card text-card-foreground shadow-2xs relative overflow-hidden">
         <div class="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
-          <h3 class="tracking-tight text-lm font-medium">Net balance</h3>
+          <h3 class="tracking-tight text-lm font-medium">{{ 'dashboard.cards.netBalance.title' | translate }}</h3>
           <mat-icon fontSet="material-symbols-rounded" class="lucide mr-2 h-4 w-4 text-green-600">attach_money</mat-icon>
         </div>
 
         <div class="p-6 pt-0">
           <div *ngIf="summary.netBalance > 0" class="text-2xl font-bold text-green-600">+ {{ summary.netBalance | currency:'BRL' }}</div>
           <div *ngIf="summary.netBalance <= 0" class="text-2xl font-bold text-red-600">{{ summary.netBalance | currency:'BRL' }}</div>
-          <p class="text-xs text-muted-foreground">Total deposits this month</p>
+          <p class="text-xs text-muted-foreground">{{ 'dashboard.cards.netBalance.description' | translate }}</p>
         </div>
       </div>
 
       <div class="rounded-lg border bg-card text-card-foreground shadow-2xs relative overflow-hidden">
         <div class="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
-          <h3 class="tracking-tight text-lm font-medium">Active Subscriptions</h3>
+          <h3 class="tracking-tight text-lm font-medium">{{ 'dashboard.cards.activeSubscriptions.title' | translate }}</h3>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(66.6% 0.179 58.318)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-repeat h-5 w-5"><path d="m17 2 4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="m7 22-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path></svg>
         </div>
 
         <div class="p-6 pt-0">
           <div class="text-2xl font-bold text-amber-600">-{{ summary.totalValueForActiveSubscriptions | currency:'BRL' }}</div>
-          <p class="text-xs text-muted-foreground">Monthly subscription costs</p>
+          <p class="text-xs text-muted-foreground">{{ 'dashboard.cards.activeSubscriptions.description' | translate }}</p>
         </div>
       </div>
     </div>
@@ -64,10 +64,10 @@
           <div class="flex flex-row gap-2">
             <mat-icon fontSet="material-symbols-rounded" class="lucid h-4 w-4">nest_thermostat_gen_3</mat-icon>
             <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2">
-              Total saving
+              {{ 'dashboard.savings.title' | translate }}
             </h3>
           </div>
-          <p class="text-sm text-muted-foreground">Your savings portfolio value</p>
+          <p class="text-sm text-muted-foreground">{{ 'dashboard.savings.description' | translate }}</p>
         </div>
 
         <div class="p-6 pt-0">
@@ -75,12 +75,12 @@
 
           <div class="space-y-2">
             <div class="flex justify-between text-sm">
-              <span>Investment Accounts</span>
+              <span>{{ 'dashboard.savings.investmentAccounts' | translate }}</span>
               <div class="flex-grow border-b border-dotted h-4"></div>
-              <span>0 accounts</span>
+              <span>{{ 'dashboard.savings.accountsCount' | translate:{ count: 0 } }}</span>
             </div>
 
-            <div class="text-xs text-muted-foreground">Diversify your portfolio for better returns</div>
+            <div class="text-xs text-muted-foreground">{{ 'dashboard.savings.tip' | translate }}</div>
           </div>
         </div>
       </div>
@@ -89,9 +89,9 @@
         <div class="flex flex-col space-y-1.5 p-6">
           <div class="flex flex-row gap-2">
             <mat-icon fontSet="material-symbols-rounded" class="lucid h-4 w-4 text-amber-600">data_usage</mat-icon>
-            <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2">Spending by Category</h3>
+            <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2">{{ 'dashboard.charts.spendingByCategory.title' | translate }}</h3>
           </div>
-          <p class="text-sm text-muted-foreground">Breakdown of your expenses by category</p>
+          <p class="text-sm text-muted-foreground">{{ 'dashboard.charts.spendingByCategory.description' | translate }}</p>
         </div>
 
         <div class="p-6 pt-0 h-80">
@@ -113,9 +113,9 @@
       <div class="flex flex-col space-y-1.5 p-6">
         <div class="flex flex-row gap-2">
           <mat-icon fontSet="material-symbols-rounded" class="lucid h-4 w-4 text-amber-600">finance</mat-icon>
-          <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2">Monthly Financial Trends</h3>
+          <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2">{{ 'dashboard.charts.monthlyTrends.title' | translate }}</h3>
         </div>
-        <p class="text-sm text-muted-foreground">Income, expenses, and net balance over the last 6 months</p>
+        <p class="text-sm text-muted-foreground">{{ 'dashboard.charts.monthlyTrends.description' | translate }}</p>
       </div>
 
       <div class="p-6 pt-0 h-80">

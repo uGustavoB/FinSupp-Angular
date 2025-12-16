@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DashboardService, DashboardSummary } from '../../services/dashboard/dashboard.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,8 @@ import { ChartConfiguration } from 'chart.js';
     CommonModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    BaseChartDirective
+    BaseChartDirective,
+    TranslateModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -20,6 +22,8 @@ import { ChartConfiguration } from 'chart.js';
 export class DashboardComponent implements OnInit{
   summary = {} as DashboardSummary;
   isLoading = true;
+
+  private translate = inject(TranslateService);
 
   constructor(private dashboardService: DashboardService) { }
 

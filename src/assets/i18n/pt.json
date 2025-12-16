@@ -114,6 +114,48 @@
       }
     }
   },
+  "dashboard": {
+    "title": "Painel Financeiro",
+    "subtitle": "Visão geral da sua saúde financeira para {{monthYear}}",
+
+    "cards": {
+      "monthlyIncome": {
+        "title": "Receita Mensal",
+        "description": "Total de entradas neste mês"
+      },
+      "monthlyExpenses": {
+        "title": "Despesas Mensais",
+        "description": "Total de despesas neste mês"
+      },
+      "netBalance": {
+        "title": "Saldo Líquido",
+        "description": "Resultado líquido do mês"
+      },
+      "activeSubscriptions": {
+        "title": "Assinaturas Ativas",
+        "description": "Custos mensais com assinaturas"
+      }
+    },
+
+    "savings": {
+      "title": "Total em Poupança",
+      "description": "Valor total do seu portfólio de economia",
+      "investmentAccounts": "Contas de investimento",
+      "accountsCount": "{{count}} contas",
+      "tip": "Diversifique seu portfólio para obter melhores retornos"
+    },
+
+    "charts": {
+      "spendingByCategory": {
+        "title": "Gastos por Categoria",
+        "description": "Distribuição das suas despesas por categoria"
+      },
+      "monthlyTrends": {
+        "title": "Tendências Financeiras Mensais",
+        "description": "Receitas, despesas e saldo líquido nos últimos 6 meses"
+      }
+    }
+  },
   "accountManagement": {
     "name": "Contas",
     "singleName": "Conta",

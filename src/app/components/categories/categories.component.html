@@ -3,7 +3,7 @@
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <h1 class="text-2xl sm:text-3xl font-bold">{{ 'categoryManagement.name' | translate }}</h1>
 
-      <button class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" type="button">
+      <button (click)="openCreateCategoryModal()" class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" type="button">
         <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-plus mr-2 h-4 w-4">add</mat-icon>
         {{ 'categoryManagement.buttons.addCategory' | translate }}
       </button>
@@ -22,12 +22,12 @@
 
         <div class="p-4 pt-0">
           <div class="flex flex-wrap justify-end gap-2">
-            <button class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+            <button (click)="onEditCategory(category)" class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
               <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-pencil mr-2 h-4 w-4 font-light">ink_pen</mat-icon>
               <span class="text-sm">{{ 'categoryManagement.buttons.edit' | translate }}</span>
             </button>
 
-            <button (click)="openDeleteCategoryModal()" class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 rounded-md px-3">
+            <button (click)="onDeleteCategory(category)" class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 rounded-md px-3">
               <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-trash mr-2 h-4 w-4 font-light">delete</mat-icon>
               <span class="text-sm">{{ 'categoryManagement.buttons.delete' | translate }}</span>
             </button>
@@ -50,3 +50,11 @@
   (cancel)="handleDeleteCategoryCancel()"
   (confirm)="handleDeleteCategoryConfirm()">
 </app-delete-modal>
+
+<app-create-category-modal
+  *ngIf="showCreateCategoryModal && categoriesLoaded"
+  [initialData]="selectedCategory"
+  [isEditMode]="!!selectedCategory"
+  (create)="handleSaveCategory($event)"
+  (cancel)="resetModals()">
+</app-create-category-modal>

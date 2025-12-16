@@ -42,16 +42,16 @@ export class SidebarComponent {
       icon: 'swap_horiz',
       route: '/transactions'
     },
-    {
-      name: 'sidebar.subscriptions',
-      icon: 'autorenew',
-      route: '/subscriptions'
-    },
-    {
-      name: 'sidebar.invoices',
-      icon: 'receipt_long',
-      route: '/invoices'
-    },
+    // {
+    //   name: 'sidebar.subscriptions',
+    //   icon: 'autorenew',
+    //   route: '/subscriptions'
+    // },
+    // {
+    //   name: 'sidebar.invoices',
+    //   icon: 'receipt_long',
+    //   route: '/invoices'
+    // },
     {
       name: 'sidebar.profile',
       icon: 'person',
