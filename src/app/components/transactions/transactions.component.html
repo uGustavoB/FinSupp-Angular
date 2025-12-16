@@ -1,10 +1,17 @@
+<div
+  *ngIf="openMenuTransactionId !== null"
+  class="fixed inset-0 z-40"
+  (click)="closeMenu()"
+></div>
+
+
 <main class="flex-1 overflow-y-auto p-4 md:p-6">
   <div class="space-y-6">
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <h1 class="text-2xl sm:text-3xl font-bold">{{ 'transactionManagement.name' | translate }}</h1>
 
       <div class="flex flex-col sm:flex-row gap-2">
-        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-«rc8»" data-state="closed">
+        <button (click)="openCreateTransactionModal()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-«rc8»" data-state="closed">
           <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-plus mr-2 h-4 w-4">add</mat-icon>
           {{  'transactionManagement.buttons.addTransaction' | translate }}
         </button>
@@ -66,10 +73,40 @@
                     </td>
 
                     <td class="align-middle">
-                      <button type="button" class="ring-offset-background focus-visible:outline-hidden focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground rounded-md h-8 w-8 p-0">
-                        <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-dots-vertical">more_horiz</mat-icon>
+                      <button
+                        type="button"
+                        (click)="toggleMenu(transaction.id)"
+                        class="ring-offset-background focus-visible:outline-hidden focus-visible:ring-ring inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground rounded-md h-8 w-8 p-0"
+                      >
+                        <mat-icon fontSet="material-symbols-rounded">more_horiz</mat-icon>
                       </button>
                     </td>
+
+                    <div class="relative">
+                      <div
+                        *ngIf="openMenuTransactionId === transaction.id"
+                        class="absolute right-0 mt-2 w-36 rounded-md border bg-background shadow-lg z-50"
+                      >
+                        <button
+                          type="button"
+                          (click)="onEditTransaction(transaction)"
+                          class="flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-accent"
+                        >
+                          <mat-icon fontSet="material-symbols-rounded" class="h-4 w-4">edit</mat-icon>
+                          Editar
+                        </button>
+
+                        <button
+                          type="button"
+                          (click)="onDeleteTransaction(transaction)"
+                          class="flex w-full items-center gap-2 px-3 py-2 text-sm text-destructive hover:bg-destructive/10"
+                        >
+                          <mat-icon fontSet="material-symbols-rounded" class="h-4 w-4">delete</mat-icon>
+                          Excluir
+                        </button>
+                      </div>
+                    </div>
+
                   </tr>
                 </tbody>
               </table>
@@ -133,3 +170,20 @@
     </div>
   </div>
 </main>
+
+<app-create-transaction-modal
+  *ngIf="showCreateTransactionModal"
+  [categories]="categories"
+  [accounts]="accounts"
+  [initialData]="selectedTransaction"
+  [isEditMode]="!!selectedTransaction"
+  (create)="handleSaveTransaction($event)"
+  (cancel)="resetModals()"
+/>
+
+<app-delete-modal
+  *ngIf="showDeleteTransactionModal"
+  title="Transação"
+  (confirm)="confirmDeleteTransaction()"
+  (cancel)="resetModals()"
+/>
