@@ -8,6 +8,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-invoice-details',
+  standalone: true, // Garante que é standalone conforme seu padrão
   imports: [
     CommonModule,
     MatIconModule,
@@ -17,32 +18,33 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   styleUrl: './invoice-details.component.css',
   animations: [fadeSlide]
 })
-export class InvoiceDetailsComponent implements OnInit{
-  constructor(private invoiceDetailsService: InvoiceDetailsService) { }
-
+export class InvoiceDetailsComponent implements OnInit {
+  private invoiceDetailsService = inject(InvoiceDetailsService);
   private translate = inject(TranslateService);
 
-  invoiceItens: InvoiceItem[] = [];
-
-  loaded: boolean = false;
-
   @Input() invoice: Invoice | null = null;
-
   @Output() confirm = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
-  onConfirm(): void {
-    this.confirm.emit();
-  }
+  loaded: boolean = false;
 
-  onCancel(): void {
-    this.cancel.emit();
-  }
+  transactions: InvoiceItem[] = [];
+  subscriptions: InvoiceItem[] = [];
+
+  totalTransactions = 0;
+  totalSubscriptions = 0;
 
   ngOnInit(): void {
-    this.invoiceDetailsService.getCategoryById(this.invoice?.id || 0).subscribe({
+    if (!this.invoice) return;
+
+    this.invoiceDetailsService.getCategoryById(this.invoice.id).subscribe({
       next: (data) => {
-        this.invoiceItens = data;
+        this.transactions = data.filter(item => item.transactionId !== null);
+        this.subscriptions = data.filter(item => item.transactionId === null && item.subscriptionId !== null);
+
+        this.totalTransactions = this.transactions.reduce((acc, item) => acc + item.amount, 0);
+        this.totalSubscriptions = this.subscriptions.reduce((acc, item) => acc + item.amount, 0);
+
         this.loaded = true;
       },
       error: (err) => {
@@ -54,16 +56,11 @@ export class InvoiceDetailsComponent implements OnInit{
     });
   }
 
-  get transactionCount(): {length: number, total: number} {
-    const transactions = this.invoiceItens.filter(item => item.transactionId !== null);
-    const total = transactions.reduce((sum, item) => sum + item.amount, 0);
-    return { length: transactions.length, total };
+  onConfirm(): void {
+    this.confirm.emit();
   }
 
-  get subscriptionCount(): {length: number, total: number} {
-    const subscriptions = this.invoiceItens.filter(item => item.transactionId === null);
-    const total = subscriptions.reduce((sum, item) => sum + item.amount, 0);
-    return { length: subscriptions.length, total };
+  onCancel(): void {
+    this.cancel.emit();
   }
-
 }
