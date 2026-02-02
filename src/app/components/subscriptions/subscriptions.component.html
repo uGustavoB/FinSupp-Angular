@@ -1,78 +1,111 @@
 <main class="flex-1 overflow-y-auto p-4 md:p-6">
   <div class="space-y-6">
+
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <h1 class="text-2xl sm:text-3xl font-bold">{{ 'subscriptionsManagement.name' | translate }}</h1>
 
       <div class="flex flex-col sm:flex-row gap-2">
-        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
-          <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-filter mr-2 h-4 w-4 font-light">filter_alt</mat-icon>
+        <button (click)="showFilterModal = true" class="inline-flex items-center justify-center gap-2 rounded-md border border-input bg-background h-10 px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground relative">
+          <mat-icon fontSet="material-symbols-rounded" class="lucide mr-2 h-4 w-4">filter_alt</mat-icon>
           <span>{{ 'general.filter' | translate }}</span>
+          <span *ngIf="activeFilterCount() > 0" class="ml-2 inline-flex items-center justify-center rounded-full bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground">
+            {{ activeFilterCount() }}
+          </span>
         </button>
 
-        <button class="inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" type="button">
-        <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-plus mr-2 h-4 w-4">add</mat-icon>
-        {{ 'subscriptionsManagement.buttons.addSubscription' | translate }}
-      </button>
+        <button (click)="openCreateModal()" class="inline-flex items-center justify-center gap-2 rounded-md bg-primary text-primary-foreground h-10 px-4 py-2 text-sm font-medium hover:bg-primary/90">
+          <mat-icon fontSet="material-symbols-rounded" class="lucide mr-2 h-4 w-4">add</mat-icon>
+          {{ 'subscriptionsManagement.buttons.addSubscription' | translate }}
+        </button>
       </div>
     </div>
 
-    <div *ngIf="loaded && subscriptions.length >= 0" @itemAnimation class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div *ngIf="loaded && subscriptions.length > 0" @itemAnimation class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <div *ngFor="let subscription of subscriptions" class="rounded-lg border bg-card text-card-foreground shadow-sm">
         <div class="flex flex-col space-y-1.5 px-6 pt-6 pb-2">
           <div class="flex items-center justify-between">
-            <div class="text-2xl font-semibold leading-none tracking-tight">
+            <div class="text-xl font-semibold leading-none tracking-tight">
               <span>{{ subscription.description | titlecase }}</span>
             </div>
-
-            <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-repeat h-5 w-5 text-green-500">repeat</mat-icon>
+            <mat-icon fontSet="material-symbols-rounded" class="h-5 w-5 text-green-500">repeat</mat-icon>
           </div>
 
           <div class="text-sm text-muted-foreground">
-            <span>{{ getSubscriptionInterval(subscription.interval) | titlecase | translate }} • {{ getAccountDescription(subscription.accountId) | translate }}</span>
+            <span>{{ getIntervalLabel(subscription.interval) }} • {{ getAccountName(subscription.accountId) }}</span>
           </div>
         </div>
 
-        <div class="p-6 pt-0">
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-muted-foreground">{{ 'subscriptionsManagement.tableHeaders.price' | translate }}:</span>
-              <span class="font-medium">{{ subscription.price | currency:'BRL':'symbol':'1.2-2' }}</span>
+        <div class="p-6 pt-0 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-muted-foreground">{{ 'subscriptionsManagement.tableHeaders.price' | translate }}:</span>
+            <span class="font-medium">{{ subscription.price | currency:'BRL':'symbol':'1.2-2' }}</span>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-muted-foreground">Status:</span>
+            <div *ngIf="subscription.status === 'ACTIVE'" class="inline-flex items-center rounded-full border border-transparent bg-primary text-primary-foreground px-2.5 py-0.5 text-xs font-semibold">
+              {{ 'subscriptionsManagement.status.active' | translate }}
             </div>
-
-            <div class="flex items-center justify-between">
-              <span class="text-sm text-muted-foreground">Status:</span>
-
-              <div *ngIf="subscription.status === 'ACTIVE'" class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80">{{ 'subscriptionsManagement.status.active' | translate }}</div>
-              <div *ngIf="subscription.status != 'ACTIVE'" class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80">{{ 'subscriptionsManagement.status.inactive' | translate }}</div>
+            <div *ngIf="subscription.status !== 'ACTIVE'" class="inline-flex items-center rounded-full border border-transparent bg-destructive text-destructive-foreground px-2.5 py-0.5 text-xs font-semibold">
+              {{ 'subscriptionsManagement.status.inactive' | translate }}
             </div>
           </div>
         </div>
 
         <div class="items-center p-6 pt-0 flex justify-between">
-          <button class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
-            <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-pencil mr-2 h-4 w-4 font-light">ink_pen</mat-icon>
-            <span class="text-sm">{{ 'general.edit' | translate }}</span>
+          <button (click)="openEditModal(subscription)" class="inline-flex items-center justify-center gap-2 text-sm font-medium border border-input bg-background h-9 rounded-md px-3 hover:bg-accent hover:text-accent-foreground">
+            <mat-icon fontSet="material-symbols-rounded" class="mr-2 h-4 w-4">ink_pen</mat-icon>
+            {{ 'general.edit' | translate }}
           </button>
 
-          <button (click)="openDeleteModal()" class="inline-flex items-center justify-center gap-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-destructive text-destructive-foreground hover:bg-destructive/90 h-9 rounded-md px-3">
-            <mat-icon fontSet="material-symbols-rounded" class="lucide lucide-trash mr-2 h-4 w-4 font-light">delete</mat-icon>
-            <span class="text-sm">{{ 'general.delete' | translate }}</span>
+          <button (click)="openDeleteModal(subscription.id)" class="inline-flex items-center justify-center gap-2 text-sm font-medium bg-destructive text-destructive-foreground h-9 rounded-md px-3 hover:bg-destructive/90">
+            <mat-icon fontSet="material-symbols-rounded" class="mr-2 h-4 w-4">delete</mat-icon>
+            {{ 'general.delete' | translate }}
           </button>
         </div>
       </div>
     </div>
 
-    <div *ngIf="loaded && subscriptions.length === 0" class="text-center text-muted-foreground">
-      <img src="assets/svg/E-Commerce.svg" alt="Assinatura" class="mx-auto h-80 w-80" />
+    <div *ngIf="loaded && subscriptions.length === 0" class="text-center text-muted-foreground py-10">
+      <img src="assets/svg/E-Commerce.svg" alt="Assinatura" class="mx-auto h-64 w-64 mb-4" />
       <p class="text-lg font-semibold">{{ 'subscriptionsManagement.emptyState.title' | translate }}</p>
       <p class="text-sm">{{ 'subscriptionsManagement.emptyState.message' | translate }}</p>
     </div>
+
+    <div *ngIf="loaded && pagination.totalPages > 1" class="flex items-center justify-center space-x-2 py-4">
+      <button (click)="changePage(pagination.currentPage - 1)" [disabled]="pagination.currentPage === 0" class="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium hover:bg-accent disabled:opacity-50 disabled:pointer-events-none">
+        Anterior
+      </button>
+      <span class="text-sm font-medium">
+        Página {{ pagination.currentPage + 1 }} de {{ pagination.totalPages }}
+      </span>
+      <button (click)="changePage(pagination.currentPage + 1)" [disabled]="pagination.currentPage + 1 >= pagination.totalPages" class="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium hover:bg-accent disabled:opacity-50 disabled:pointer-events-none">
+        Próximo
+      </button>
+    </div>
+
   </div>
 </main>
+
+<app-create-subscription-modal
+  *ngIf="showCreateModal"
+  [accounts]="accounts()"
+  [subscriptionToEdit]="selectedSubscription"
+  (save)="handleSaveSubscription($event)"
+  (cancel)="showCreateModal = false">
+</app-create-subscription-modal>
+
+<app-filter-subscription-modal
+  *ngIf="showFilterModal"
+  [accounts]="accounts()"
+  [currentFilters]="filters"
+  (apply)="applyFilters($event)"
+  (cancel)="showFilterModal = false">
+</app-filter-subscription-modal>
 
 <app-delete-modal
   *ngIf="showDeleteModal"
   [title]="'Assinatura'"
-  (cancel)="handleCancel()"
-  (confirm)="handleConfirm()">
+  (confirm)="confirmDelete()"
+  (cancel)="showDeleteModal = false">
 </app-delete-modal>

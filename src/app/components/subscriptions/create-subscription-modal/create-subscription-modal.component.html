@@ -1,0 +1,70 @@
+<div [@fadeSlide] (click)="onCancel()" class="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm"></div>
+
+<div [@fadeSlide] class="fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 rounded-lg">
+  <div class="flex flex-col space-y-1.5 text-center sm:text-left">
+    <h2 class="text-lg font-semibold leading-none tracking-tight">{{ modalTitle }}</h2>
+    <p class="text-sm text-muted-foreground">{{ isEditMode ? 'Atualize os dados da assinatura' : 'Adicione uma nova assinatura recorrente' }}</p>
+  </div>
+
+  <form (ngSubmit)="onSubmit($event)">
+    <div class="grid gap-4 py-4">
+
+      <div class="grid gap-2">
+        <label class="text-sm font-medium">Descrição</label>
+        <input [(ngModel)]="description" name="description" type="text" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-ring" required placeholder="Ex: Netflix">
+      </div>
+
+      <div class="grid gap-2">
+        <label class="text-sm font-medium">Preço</label>
+        <input [(ngModel)]="price" name="price" type="number" step="0.01" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-ring" required placeholder="0.00">
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="grid gap-2 relative">
+          <label class="text-sm font-medium">Intervalo</label>
+          <button type="button" (click)="toggleIntervalDropdown()" class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-ring">
+            {{ getLabel(intervals, selectedInterval) }}
+            <mat-icon class="h-4 w-4 opacity-50">{{ intervalDropdownOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+          </button>
+          <ul *ngIf="intervalDropdownOpen" class="absolute z-10 top-full mt-1 w-full rounded-md border bg-background shadow-lg">
+            <li *ngFor="let i of intervals" (click)="selectInterval(i.value)" class="cursor-pointer px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground">
+              {{ i.label }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="grid gap-2 relative">
+          <label class="text-sm font-medium">Status</label>
+          <button type="button" (click)="toggleStatusDropdown()" class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-ring">
+            {{ getLabel(statuses, selectedStatus) }}
+            <mat-icon class="h-4 w-4 opacity-50">{{ statusDropdownOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+          </button>
+          <ul *ngIf="statusDropdownOpen" class="absolute z-10 top-full mt-1 w-full rounded-md border bg-background shadow-lg">
+            <li *ngFor="let s of statuses" (click)="selectStatus(s.value)" class="cursor-pointer px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground">
+              {{ s.label }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid gap-2 relative">
+        <label class="text-sm font-medium">Conta</label>
+        <button type="button" (click)="toggleAccountDropdown()" class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-ring">
+          {{ selectedAccount?.description || 'Selecione uma conta' }}
+          <mat-icon class="h-4 w-4 opacity-50">{{ accountDropdownOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+        </button>
+        <ul *ngIf="accountDropdownOpen" class="absolute z-10 top-full mt-1 w-full max-h-60 overflow-auto rounded-md border bg-background shadow-lg">
+          <li *ngFor="let acc of accounts" (click)="selectAccount(acc)" class="cursor-pointer px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground">
+            {{ acc.description }}
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="flex justify-end gap-4">
+      <button type="button" (click)="onCancel()" class="px-4 py-2 border rounded-md text-sm hover:bg-accent">Cancelar</button>
+      <button type="submit" class="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm hover:bg-primary/90">{{ submitButtonText }}</button>
+    </div>
+  </form>
+</div>
