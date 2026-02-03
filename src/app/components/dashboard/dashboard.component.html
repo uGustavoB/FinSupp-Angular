@@ -119,6 +119,17 @@
       </div>
 
       <div class="p-6 pt-0 h-80">
+         <div *ngIf="isLoadingTrends" class="flex items-center justify-center h-full">
+            <mat-spinner diameter="40"></mat-spinner>
+        </div>
+
+        <div *ngIf="!isLoadingTrends" class="h-full w-full">
+           <canvas baseChart
+               [data]="barChartData"
+               [options]="barChartOptions"
+               [type]="barChartType">
+           </canvas>
+        </div>
       </div>
     </div>
   </div>
